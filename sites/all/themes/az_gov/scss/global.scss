@@ -53,6 +53,9 @@ html, body {
     margin: 10px 0px 10px;
     padding: 0px;
     letter-spacing: 0px;
+    &.accordion-clicker {
+      text-transform: none;
+    }
   }
   h1 {
     font-weight: bold;

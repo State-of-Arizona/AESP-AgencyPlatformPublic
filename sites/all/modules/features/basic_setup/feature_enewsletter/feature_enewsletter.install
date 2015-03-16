@@ -2,15 +2,41 @@
 
 
 /**
+ *  Implements hook_schema().
+ */
+function feature_enewsletter_schema() {
+  $schema['enewsletter_pro'] = array(
+    'description' => 'Table for enewsletter nodes',
+    'fields' => array(
+      'nid' => array(
+        'description' => 'The primary identifier for a node.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'newsletters' => array(
+        'description' => 'The newsletters chosen',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'demographics' => array(
+        'description' => 'Which demographics are enabled',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    ),
+  );
+  return $schema;
+}
+
+
+/**
  *  Implements hook_uninstall().
  */
 function feature_enewsletter_uninstall() {
-  $query = db_select('variable', 'v')
-    ->condition('name', 'feature_enewsletter', 'like')
-    ->fields('v', array('name'))
-    ->execute();
-
-  while($row = $query->fetchAssoc()){
-      variable_del($row['name']);
-  }
+  variable_del('feature_enewsletter');
 }
