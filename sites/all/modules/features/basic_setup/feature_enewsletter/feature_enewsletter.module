@@ -70,7 +70,6 @@ function feature_enewsletter_form_enewsletter_subscription_node_form_alter(&$for
       '#options' => $list_options,
       '#default_value' => isset($node_settings['newsletters']) ? unserialize($node_settings['newsletters']) : array(),
       '#multiple' => TRUE,
-      '#chosen' => $settings['chosen'],
     );
     if ($demo_options) {
       $form['demographics'] = array(
@@ -169,7 +168,6 @@ function feature_enewsletter_node_view($node, $view_mode, $langcode) {
     $lists = unserialize($node_settings['newsletters']);
     $demographics = unserialize($node_settings['demographics']);
     $vars['demographics'] = $demographics;
-
 
     foreach ($lists as $key) {
       if ($node->field_enews_descriptions['und'][0]['value']) {

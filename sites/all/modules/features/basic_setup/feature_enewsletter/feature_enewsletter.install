@@ -45,14 +45,19 @@ function feature_enewsletter_uninstall() {
  * Moves variables to database table
  */
 function feature_enewsletter_update_7010() {
+  if (!db_table_exists('enewsletter_pro')){
+    $schema = feature_enewsletter_schema();
+    db_create_table('enewsletter_pro', $schema['enewsletter_pro']);
+  }
+
   $query = db_select('variable', 'v')
-    ->condition('name', 'feature_enewsletter_', 'like')
-    ->fields('v')
+    ->condition('name', 'feature_enewsletter_%', 'like')
+    ->fields('v', array('name'))
     ->execute();
 
-  while ($row = $query->fetchAssoc()) {
-    $nid = substr($row['name'], 19);
-    $lists = explode(',', $row['value']);
+  while ($name = $query->fetchField()) {
+    $nid = substr($name, 20);
+    $lists = explode(',', variable_get($name));
     $lists = array_flip($lists);
     foreach ($lists as $key => &$value) {
       $value = $key;
@@ -62,10 +67,15 @@ function feature_enewsletter_update_7010() {
       ->key(array('nid' => $nid))
       ->fields(array(
         'nid' => $nid,
-        'newsletters' => serialize($lists)
+        'newsletters' => serialize($lists),
+        'demographics' => serialize(array()),
       ))
       ->execute();
 
-    variable_del($row['name']);
+    variable_del($name);
   }
+
+  $settings = variable_get('feature_enewsletter');
+  $settings['chosen'] = 0;
+  variable_set('feature_enewsletter', $settings);
 }
