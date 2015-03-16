@@ -40,3 +40,32 @@ function feature_enewsletter_schema() {
 function feature_enewsletter_uninstall() {
   variable_del('feature_enewsletter');
 }
+
+/**
+ * Moves variables to database table
+ */
+function feature_enewsletter_update_7010() {
+  $query = db_select('variable', 'v')
+    ->condition('name', 'feature_enewsletter_', 'like')
+    ->fields('v')
+    ->execute();
+
+  while ($row = $query->fetchAssoc()) {
+    $nid = substr($row['name'], 19);
+    $lists = explode(',', $row['value']);
+    $lists = array_flip($lists);
+    foreach ($lists as $key => &$value) {
+      $value = $key;
+    }
+
+    db_merge('enewsletter_pro')
+      ->key(array('nid' => $nid))
+      ->fields(array(
+        'nid' => $nid,
+        'newsletters' => serialize($lists)
+      ))
+      ->execute();
+
+    variable_del($row['name']);
+  }
+}
