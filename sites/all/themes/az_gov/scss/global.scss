@@ -18,7 +18,7 @@ html, body {
   }
 
   .region {
-    padding: 0px 15px 25px;
+    padding: 0 15px 25px;
   }
 
   .region-header-first, .region-header-second {
@@ -50,9 +50,9 @@ html, body {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 500;
     text-transform: uppercase;
-    margin: 10px 0px 10px;
-    padding: 0px;
-    letter-spacing: 0px;
+    margin: 10px 0 10px;
+    padding: 0;
+    letter-spacing: 0;
     &.accordion-clicker {
       text-transform: none;
     }
@@ -65,7 +65,7 @@ html, body {
   }
   h2 {
     border-bottom: 4px solid #dcd2c3;
-    padding: 15px 0px 7px;
+    padding: 15px 0 7px;
     margin-bottom: 10px;
     font-size: 1.3em;
     text-transform: none;
@@ -159,7 +159,7 @@ html, body {
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
     }
     ul.quicktabs-tabs.quicktabs-style-zen {
       background: none;
@@ -174,7 +174,7 @@ html, body {
 #zone-branding {
   position: relative;
   z-index: 50;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
   -moz-box-shadow: 0 8px 8px #000;
   -webkit-box-shadow: 0 8px 8px #000;
 
@@ -201,9 +201,9 @@ html, body {
         text-decoration: none;
         font-style: normal;
         font-weight: 300;
-        padding: 7px 0px 0px;
+        padding: 7px 0 0;
         letter-spacing: 1px;
-        text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
       }
       .site-slogan {
         font-size: 0.9em;
@@ -283,7 +283,7 @@ html, body {
             text-indent: -9999px;
           }
           .mobile-menu-expand.mobile-menu-open {
-            background: url("../img/menu-buttons.png") 0px -25px no-repeat;
+            background: url("../img/menu-buttons.png") 0 -25px no-repeat;
           }
         }
       }
@@ -292,9 +292,9 @@ html, body {
 }
 
 #zone-header {
-  margin: 0px 0px 10px;
+  margin: 0 0 10px;
   .region {
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
   }
 }
 
@@ -309,7 +309,7 @@ html, body {
 }
 
 #preface-group {
-  box-shadow: 6px 0px 5px -6px rgba(0, 0, 0, 0.5), -6px 0px 5px -6px rgba(0, 0, 0, 0.5);
+  box-shadow: 6px 0 5px -6px rgba(0, 0, 0, 0.5), -6px 0 5px -6px rgba(0, 0, 0, 0.5);
   .region {
     padding: 0;
   }
@@ -341,7 +341,7 @@ html, body {
 }
 
 #content-wrapper {
-  box-shadow: 6px 0px 5px -6px rgba(0, 0, 0, 0.5), -6px 0px 5px -6px rgba(0, 0, 0, 0.5);
+  box-shadow: 6px 0 5px -6px rgba(0, 0, 0, 0.5), -6px 0 5px -6px rgba(0, 0, 0, 0.5);
 }
 
 #content {
@@ -349,7 +349,7 @@ html, body {
   h1#page-title, h1#node-page-title {
     line-height: 130%;
     padding: 17px 15px 15px 25px;
-    margin: 0px;
+    margin: 0;
   }
 
   /*
@@ -449,7 +449,7 @@ html, body {
 }
 
 #postscript-group {
-  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6px 7px -1px rgba(0, 0, 0, 0.5);
   .mbp-defaults-row {
     width: 100%;
   }
@@ -548,7 +548,7 @@ html, body {
     color: #474848;
     border-bottom: 1px solid #ccc;
     margin-bottom: 10px;
-    padding-bottom: 0px;
+    padding-bottom: 0;
     font-size: 1.2em;
     padding-top: 10px;
   }
@@ -594,11 +594,11 @@ html, body {
 }
 
 #breadcrumb {
-  box-shadow: 6px 0px 5px -6px rgba(0, 0, 0, 0.5), -6px 0px 5px -6px rgba(0, 0, 0, 0.5);
+  box-shadow: 6px 0 5px -6px rgba(0, 0, 0, 0.5), -6px 0 5px -6px rgba(0, 0, 0, 0.5);
 
   ul.breadcrumb {
     font-family: Georgia, serif;
-    margin: 7px 3px 0px 20px;
+    margin: 7px 3px 0 20px;
     font-style: italic;
     font-size: 0.9em;
     padding: 0.7em;
@@ -666,7 +666,7 @@ blockquote {
   font-family: Georgia, serif;
   padding: 25px 30px 15px;
   background: url('../img/bg-quote.gif') repeat scroll 0% 0% transparent;
-  margin: 20px 0px;
+  margin: 20px 0;
   color: #333;
   font-style: italic;
   font-size: 1em;
@@ -679,20 +679,20 @@ blockquote {
   display: inline-block;
   width: auto;
   max-width: 100%;
-  margin: 5px 0px;
+  margin: 5px 0;
   white-space: normal;
   background: url('../img/bullet-arrow.png') no-repeat scroll 95% center transparent;
   padding: 7px 45px 7px 20px;
   border-radius: 50px;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   font-weight: normal;
 
   .media & {
     display: inherit;
-    margin: 0px;
+    margin: 0;
     background: none;
-    padding: 0px;
-    border-radius: 0px;
+    padding: 0;
+    border-radius: 0;
     box-shadow: none;
   }
 }

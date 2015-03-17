@@ -25,8 +25,8 @@ h1, h2, h3, h4, h5 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 500;
   text-transform: uppercase;
-  padding: 0px;
-  letter-spacing: 0px;
+  padding: 0;
+  letter-spacing: 0;
 }
 
 /* line 27, ../scss/wysiwyg.scss */
@@ -56,12 +56,12 @@ h3, h4, h5, h6 {
   display: inline-block;
   width: auto;
   max-width: 100%;
-  margin: 5px 0px;
+  margin: 5px 0;
   white-space: normal;
   background: url("../img/bullet-arrow.png") no-repeat scroll 95% center transparent;
   padding: 7px 45px 7px 20px;
   border-radius: 50px;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   font-weight: normal;
 }
 
@@ -117,7 +117,7 @@ blockquote {
   font-family: Georgia, serif;
   padding: 25px 30px 15px;
   background: url("../img/bg-quote.gif") repeat scroll 0% 0% transparent;
-  margin: 20px 0px;
+  margin: 20px 0;
   color: #333;
   font-style: italic;
   font-size: 1em;
