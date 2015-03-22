@@ -32,9 +32,17 @@ function feature_enewsletter_uninstall() {
 }
 
 /**
- * Moves variables to database table
+ * Moves variables to fields
  */
 function feature_enewsletter_update_7010() {
+  $features = array(
+    'feature_enewsletter' => array(
+      'field_base',
+      'field_instance',
+    )
+  );
+  features_revert($features);
+
   $query = db_select('variable', 'v')
     ->condition('name', 'feature_enewsletter_%', 'like')
     ->fields('v', array('name'))

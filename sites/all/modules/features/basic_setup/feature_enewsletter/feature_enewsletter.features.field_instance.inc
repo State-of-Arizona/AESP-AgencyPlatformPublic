@@ -133,12 +133,11 @@ function feature_enewsletter_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 3,
+      'weight' => 2,
     ),
   );
 
   if (module_exists('feature_basic_content')) {
-    // Exported field_instance: 'node-enewsletter_subscription-field_basic_block_block_sections'
     // Exported field_instance: 'node-enewsletter_subscription-field_basic_block_block_sections'
     $field_instances['node-enewsletter_subscription-field_basic_block_block_sections'] = array(
       'bundle' => 'enewsletter_subscription',
@@ -172,11 +171,11 @@ function feature_enewsletter_field_default_field_instances() {
       ),
       'widget' => array(
         'active' => 1,
-        'module' => 'options',
+        'module' => 'menu_block_placement',
         'settings' => array(
           'apply_chosen' => '',
         ),
-        'type' => 'options_select',
+        'type' => 'menu_block_placement_widget',
         'weight' => 21,
       ),
     );
