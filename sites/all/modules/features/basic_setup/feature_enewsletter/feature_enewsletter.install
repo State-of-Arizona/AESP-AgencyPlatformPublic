@@ -2,37 +2,27 @@
 
 
 /**
- *  Implements hook_schema().
+ *  Implements hook_field_schema().
  */
-function feature_enewsletter_schema() {
-  $schema['enewsletter_pro'] = array(
-    'description' => 'Table for enewsletter nodes',
-    'fields' => array(
-      'nid' => array(
-        'description' => 'The primary identifier for a node.',
+function feature_enewsletter_field_schema($field) {
+  $schema = array();
+  switch ($field['type']) {
+    case 'enewsletters':
+      $schema['columns']['value'] = array(
         'type' => 'int',
-        'not null' => TRUE,
-        'default' => 0,
-      ),
-      'newsletters' => array(
-        'description' => 'The newsletters chosen',
+        'not null' => FALSE
+      );
+      break;
+    case 'enews_demographics':
+      $schema['columns']['value'] = array(
         'type' => 'varchar',
         'length' => 255,
-        'not null' => TRUE,
-        'default' => '',
-      ),
-      'demographics' => array(
-        'description' => 'Which demographics are enabled',
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-        'default' => '',
-      ),
-    ),
-  );
+        'not null' => FALSE
+      );
+      break;
+  }
   return $schema;
 }
-
 
 /**
  *  Implements hook_uninstall().
@@ -45,11 +35,6 @@ function feature_enewsletter_uninstall() {
  * Moves variables to database table
  */
 function feature_enewsletter_update_7010() {
-  if (!db_table_exists('enewsletter_pro')){
-    $schema = feature_enewsletter_schema();
-    db_create_table('enewsletter_pro', $schema['enewsletter_pro']);
-  }
-
   $query = db_select('variable', 'v')
     ->condition('name', 'feature_enewsletter_%', 'like')
     ->fields('v', array('name'))
@@ -58,19 +43,15 @@ function feature_enewsletter_update_7010() {
   while ($name = $query->fetchField()) {
     $nid = substr($name, 20);
     $lists = explode(',', variable_get($name));
-    $lists = array_flip($lists);
-    foreach ($lists as $key => &$value) {
-      $value = $key;
+    foreach ($lists as &$value) {
+      $value = array('value' => $value);
     }
 
-    db_merge('enewsletter_pro')
-      ->key(array('nid' => $nid))
-      ->fields(array(
-        'nid' => $nid,
-        'newsletters' => serialize($lists),
-        'demographics' => serialize(array()),
-      ))
-      ->execute();
+    $node = node_load($nid);
+    $node->field_enews_letters = array(
+      'und' => $lists,
+    );
+    node_save($node);
 
     variable_del($name);
   }

@@ -7,6 +7,70 @@
 include_once 'feature_enewsletter.features.inc';
 
 /**
+ *  Implements hook_field_info().
+ */
+function feature_enewsletter_field_info() {
+  return array(
+    'enewsletters' => array(
+      'label' => t('Enewsletters'),
+      'description' => t('This field stores varchar text in the database.'),
+      'default_widget' => 'options_select',
+      'default_formatter' => 'text_default',
+    ),
+    'enews_demographics' => array(
+      'label' => t('Enewsletter Demographics'),
+      'description' => t('This field stores varchar text in the database.'),
+      'default_widget' => 'options_buttons',
+      'default_formatter' => 'text_default',
+    ),
+  );
+}
+
+
+/**
+ *  Implements hook_field_widget_info_alter().
+ */
+function feature_enewsletter_field_widget_info_alter(&$info) {
+  $widgets = array(
+    'options_select' => array('enewsletters', 'enews_demographics'),
+    'options_buttons' => array('enews_demographics'),
+  );
+  foreach ($widgets as $widget => $field_types) {
+    $info[$widget]['field types'] = array_merge($info[$widget]['field types'], $field_types);
+  }
+}
+
+/**
+ *  Implements hook_options_list().
+ */
+function feature_enewsletter_options_list($field, $instance, $entity_type, $entity) {
+  $settings = variable_get('feature_enewsletter');
+  $options = array();
+
+  switch ($field['type']) {
+    case 'enewsletters':
+      foreach ($settings['lists'] as $key => $value) {
+        $options[$key] = $value['name'];
+      }
+
+      break;
+    case 'enews_demographics':
+      foreach ($settings['demos'] as $key => $value) {
+        $options[$key] = $value['name'];
+      }
+      break;
+  }
+  return $options;
+}
+
+/*
+ * Implements hook_filed_is_empty()
+ */
+function feature_enewsletter_field_is_empty($item, $field) {
+  return !is_array($item) ? TRUE : FALSE;
+}
+
+/**
  *  Implements hook_permission().
  */
 function feature_enewsletter_permission() {
@@ -33,98 +97,6 @@ function feature_enewsletter_menu() {
     'file path' => drupal_get_path('module', 'feature_enewsletter'),
   );
   return $items;
-}
-
-/**
- *  Implements hook_form_ID_alter().
- *
- *  programtically adds a field based on module configurations
- *  which provides a select list of available newsletter listings
- */
-function feature_enewsletter_form_enewsletter_subscription_node_form_alter(&$form, &$form_state, $form_id) {
-  $settings = variable_get('feature_enewsletter');
-  $list_options = array();
-  $demo_options = array();
-  $node_settings = array();
-
-  if (isset($settings['lists'])) {
-    if (isset($form_state['node']->nid)) {
-      $node_settings = db_select('enewsletter_pro', 'e')
-        ->fields('e')
-        ->condition('nid', $form_state['node']->nid)
-        ->execute()
-        ->fetchAssoc();
-    }
-
-    foreach ($settings['lists'] as $id => $list) {
-      $list_options[$id] = $list['name'];
-    }
-
-    foreach ($settings['demos'] as $key => $value) {
-      $demo_options[$key] = $value['name'];
-    }
-
-    $form['enewsletters'] = array(
-      '#type' => 'select',
-      '#title' => t('Enewsletter Listings'),
-      '#options' => $list_options,
-      '#default_value' => isset($node_settings['newsletters']) ? unserialize($node_settings['newsletters']) : array(),
-      '#multiple' => TRUE,
-    );
-    if ($demo_options) {
-      $form['demographics'] = array(
-        '#type' => 'checkboxes',
-        '#title' => t('Demographics'),
-        '#options' => $demo_options,
-        '#default_value' => isset($node_settings['demographics']) ? unserialize($node_settings['demographics']) : array(),
-      );
-    }
-    $form['actions']['submit']['#submit'][] = 'az_enews_save_node';
-  }
-  else {
-    drupal_set_message(t('Module not configured for enewsletters. Please set the settings at <a href="/admin/config/content/az-enewsletter">module settings</a>'), 'warning');
-    foreach ($form as $key => &$value) {
-      if (is_array($value) && isset($value['#type'])) {
-        $value['#disabled'] = TRUE;
-      }
-    }
-  }
-}
-
-
-/**
- * @param $form
- * @param $form_state
- *
- * Custom save function to set variable for newsletter list
- */
-function az_enews_save_node($form, $form_state) {
-  if (isset($form_state['values']['enewsletters']) && !empty($form_state['values']['enewsletters'])) {
-    $lists = serialize($form_state['values']['enewsletters']);
-  }
-  else {
-    $settings = variable_get('feature_enewsletter', array());
-    $lists = serialize(array_keys($settings['lists']));
-  }
-  db_merge('enewsletter_pro')
-    ->key(array('nid' => $form_state['nid']))
-    ->fields(array(
-      'nid' => $form_state['nid'],
-      'newsletters' => $lists,
-      'demographics' => serialize($form_state['values']['demographics']),
-    ))
-    ->execute();
-}
-
-/**
- *  Implements hook_node_delete().
- *
- * Deletes the variable for newsletter settings.
- */
-function feature_enewsletter_node_delete($node) {
-  if ($node->type == 'enewsletter_subscription') {
-    variable_del('feature_enewsletter_' . $node->nid);
-  }
 }
 
 /**
@@ -158,26 +130,22 @@ function feature_enewsletter_node_view($node, $view_mode, $langcode) {
       'update_demo' => isset($node_wrapper->field_enews_update_demo) ? $node_wrapper->field_enews_update_demo->value() : 0,
       'list' => array(),
     );
-
-    $node_settings = db_select('enewsletter_pro', 'e')
-      ->fields('e')
-      ->condition('nid', $node->nid)
-      ->execute()
-      ->fetchAssoc();
-
-    $lists = unserialize($node_settings['newsletters']);
-    $demographics = unserialize($node_settings['demographics']);
-    $vars['demographics'] = $demographics;
-
-    foreach ($lists as $key) {
-      if ($node->field_enews_descriptions['und'][0]['value']) {
-        $vars['list'][$key] = t($settings['lists'][$key]['name'] . ' - ' . $settings['lists'][$key]['description']);
-      }
-      else {
-        $vars['list'][$key] = t($settings['lists'][$key]['name']);
+    
+    foreach ($node->field_enews_letters['und'] as $value) {
+      if(!is_null($value['value'])) {
+        if ($node->field_enews_descriptions['und'][0]['value']) {
+          $vars['list'][$value['value']] = t($settings['lists'][$value['value']]['name'] . ' - ' . $settings['lists'][$value['value']]['description']);
+        }
+        else {
+          $vars['list'][$value['value']] = t($settings['lists'][$value['value']]['name']);
+        }
       }
     }
 
+    $vars['demographics'] = array();
+    foreach($node->field_enews_demos['und'] as $value){
+      $vars['demographics'][$value['value']] = $value['value'];
+    }
 
     // build form for either subscripotion or unsubscripe form
     if ($vars['create_form'] == 'in') {
