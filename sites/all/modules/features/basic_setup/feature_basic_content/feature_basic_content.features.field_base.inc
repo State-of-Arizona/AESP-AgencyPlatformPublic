@@ -188,6 +188,56 @@ function feature_basic_content_field_default_field_bases() {
     'type' => 'text_long',
   );
 
+  // Exported field_base: 'field_basic_slideshow_effect'
+  $field_bases['field_basic_slideshow_effect'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_basic_slideshow_effect',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'blindX' => 'blindX',
+        'blindY' => 'blindY',
+        'blindZ' => 'blindZ',
+        'cover' => 'cover',
+        'curtainX' => 'curtainX',
+        'curtainY' => 'curtainY',
+        'fade' => 'fade',
+        'fadeZoom' => 'fadeZoom',
+        'growX' => 'growX',
+        'growY' => 'growY',
+        'scrollUp' => 'scrollUp',
+        'scrollDown' => 'scrollDown',
+        'scrollLeft' => 'scrollLeft',
+        'scrollRight' => 'scrollRight',
+        'scrollHorz' => 'scrollHorz',
+        'scrollVert' => 'scrollVert',
+        'shuffle' => 'shuffle',
+        'slideX' => 'slideX',
+        'slideY' => 'slideY',
+        'toss' => 'toss',
+        'turnUp' => 'turnUp',
+        'turnDown' => 'turnDown',
+        'turnLeft' => 'turnLeft',
+        'turnRight' => 'turnRight',
+        'uncover' => 'uncover',
+        'wipe' => 'wipe',
+        'zoom' => 'zoom',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
   // Exported field_base: 'field_basic_slideshow_images'
   $field_bases['field_basic_slideshow_images'] = array(
     'active' => 1,
@@ -208,6 +258,31 @@ function feature_basic_content_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'field_collection',
+  );
+
+  // Exported field_base: 'field_basic_slideshow_style'
+  $field_bases['field_basic_slideshow_style'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_basic_slideshow_style',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'basic-slideshow-style-1' => 'Side by Side',
+        'basic-slideshow-style-2' => 'Large Image',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
   );
 
   // Exported field_base: 'field_slideshow_image'

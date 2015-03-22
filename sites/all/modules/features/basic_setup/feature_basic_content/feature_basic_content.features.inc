@@ -42,8 +42,8 @@ function feature_basic_content_image_default_styles() {
       1 => array(
         'name' => 'image_scale_and_crop',
         'data' => array(
-          'width' => 620,
-          'height' => 280,
+          'width' => 960,
+          'height' => 440,
         ),
         'weight' => 1,
       ),
