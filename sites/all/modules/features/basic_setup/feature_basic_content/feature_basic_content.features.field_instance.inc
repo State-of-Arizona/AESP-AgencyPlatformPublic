@@ -140,7 +140,7 @@ function feature_basic_content_field_default_field_instances() {
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
       'max_resolution' => '',
-      'min_resolution' => '620x280',
+      'min_resolution' => '960x440',
       'title_field' => 1,
       'user_register_form' => FALSE,
     ),
