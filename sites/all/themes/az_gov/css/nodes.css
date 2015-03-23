@@ -119,6 +119,9 @@
     position: relative;
     z-index: 10;
   }
+  #page .node-basic-slideshow.basic-slideshow-style-2 .field-slideshow-wrapper, #colorbox .node-basic-slideshow.basic-slideshow-style-2 .field-slideshow-wrapper {
+    position: relative;
+  }
   #page .node-basic-slideshow.basic-slideshow-style-2 .field-slideshow-pager, #colorbox .node-basic-slideshow.basic-slideshow-style-2 .field-slideshow-pager {
     position: absolute;
     left: 50%;
