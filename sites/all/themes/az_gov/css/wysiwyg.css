@@ -1,5 +1,6 @@
 html {
-  font: 13px/1.5 Verdana, Helvetica, Arial, sans-serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 12px;
 }
 
 img, iframe, table, p, input {
@@ -20,8 +21,8 @@ h1, h2, h3, h4, h5 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 500;
   text-transform: uppercase;
-  padding: 0px;
-  letter-spacing: 0px;
+  padding: 0;
+  letter-spacing: 0;
 }
 
 h1 {
@@ -33,10 +34,10 @@ h1 {
 
 h2 {
   border-bottom: 4px solid #DCD2C3;
-  padding: 0 0px 7px;
+  padding: 15px 0 7px;
   margin-bottom: 10px;
   font-size: 1.3em;
-  text-transform: none;
+  text-transform: uppercase;
   color: #600;
 }
 
@@ -48,12 +49,12 @@ h3, h4, h5, h6 {
   display: inline-block;
   width: auto;
   max-width: 100%;
-  margin: 5px 0px;
+  margin: 5px 0;
   white-space: normal;
   background: url("../img/bullet-arrow.png") no-repeat scroll 95% center transparent;
   padding: 7px 45px 7px 20px;
   border-radius: 50px;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   font-weight: normal;
 }
 
@@ -100,7 +101,7 @@ blockquote {
   font-family: Georgia, serif;
   padding: 25px 30px 15px;
   background: url("../img/bg-quote.gif") repeat scroll 0% 0% transparent;
-  margin: 20px 0px;
+  margin: 20px 0;
   color: #333;
   font-style: italic;
   font-size: 1em;

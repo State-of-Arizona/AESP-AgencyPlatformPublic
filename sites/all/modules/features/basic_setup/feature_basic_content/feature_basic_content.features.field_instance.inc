@@ -252,13 +252,14 @@ function feature_basic_content_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'body',
     'label' => 'Body',
-    'required' => FALSE,
+    'required' => 0,
     'settings' => array(
-      'display_summary' => TRUE,
+      'display_summary' => 0,
       'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
+      'active' => 1,
       'module' => 'text',
       'settings' => array(
         'rows' => 20,
@@ -447,7 +448,7 @@ function feature_basic_content_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 1,
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -471,6 +472,42 @@ function feature_basic_content_field_default_field_instances() {
       ),
       'type' => 'menu_block_placement_widget',
       'weight' => 1,
+    ),
+  );
+
+  // Exported field_instance: 'node-basic_slideshow-field_basic_slideshow_effect'
+  $field_instances['node-basic_slideshow-field_basic_slideshow_effect'] = array(
+    'bundle' => 'basic_slideshow',
+    'default_value' => array(
+      0 => array(
+        'value' => 'fade',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 1,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_basic_slideshow_effect',
+    'label' => 'Transition Effect',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'apply_chosen' => '',
+      ),
+      'type' => 'options_select',
+      'weight' => 3,
     ),
   );
 
@@ -500,8 +537,8 @@ function feature_basic_content_field_default_field_instances() {
           'slideshow_colorbox_slideshow_speed' => 4000,
           'slideshow_colorbox_speed' => 350,
           'slideshow_colorbox_transition' => 'elastic',
-          'slideshow_controls' => 0,
-          'slideshow_controls_pause' => 1,
+          'slideshow_controls' => 1,
+          'slideshow_controls_pause' => 0,
           'slideshow_controls_position' => 'after',
           'slideshow_field_collection_image' => 'field_slideshow_image',
           'slideshow_fx' => 'fade',
@@ -538,7 +575,43 @@ function feature_basic_content_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 3,
+      'weight' => 5,
+    ),
+  );
+
+  // Exported field_instance: 'node-basic_slideshow-field_basic_slideshow_style'
+  $field_instances['node-basic_slideshow-field_basic_slideshow_style'] = array(
+    'bundle' => 'basic_slideshow',
+    'default_value' => array(
+      0 => array(
+        'value' => 'basic-slideshow-style-1',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 2,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_basic_slideshow_style',
+    'label' => 'Style',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'apply_chosen' => '',
+      ),
+      'type' => 'options_select',
+      'weight' => 2,
     ),
   );
 
@@ -556,9 +629,11 @@ function feature_basic_content_field_default_field_instances() {
   t('Select the menu item where this block will live. If the front page is desired, use the checkbox below.');
   t('Slideshow Assignment');
   t('Slideshow Images');
+  t('Style');
   t('Tab Body');
   t('Tab Label');
   t('Tabs');
+  t('Transition Effect');
 
   return $field_instances;
 }

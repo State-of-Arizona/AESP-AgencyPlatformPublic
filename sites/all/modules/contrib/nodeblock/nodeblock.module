@@ -79,8 +79,6 @@ function nodeblock_type_node_overrides($type) {
  */
 function _nodeblock_defaults($type) {
   return array(
-    'custom_machine_name' => FALSE,
-    'custom_block_title' => FALSE,
     'enabled' => TRUE,
     'view_mode' => nodeblock_type_view_mode($type),
     'node_link' => nodeblock_type_node_link($type),
@@ -109,6 +107,11 @@ function nodeblock_form_node_type_form_alter(&$form, &$form_state) {
     '#group' => 'additional_settings',
     '#attributes' => array(
       'class' => array('node-block-settings'),
+    ),
+    '#attached' => array(
+      'js' => array(
+        'vertical-tabs' => drupal_get_path('module', 'nodeblock') . '/nodeblock.js',
+      ),
     ),
     'nodeblock' => array(
       '#type' => 'radios',
@@ -239,11 +242,6 @@ function nodeblock_form_node_form_alter(&$form, &$form_state) {
         $view_modes = array();
         $view_modes['node_block_default'] = t('Default');
         $view_modes += nodeblock_get_view_modes($node->type);
-        $options = array(
-          'node_block_default' => t('Default'),
-          '0' => t('Hide'),
-          '1' => t('Show'),
-        );
 
         $form['nodeblock']['view_mode'] = array(
           '#type' => 'select',
@@ -254,6 +252,11 @@ function nodeblock_form_node_form_alter(&$form, &$form_state) {
         );
       }
 
+      $options = array(
+        'node_block_default' => t('Default'),
+        '0' => t('Hide'),
+        '1' => t('Show'),
+      );
       if (isset($overrides['node_link'])) {
         $form['nodeblock']['node_link'] = array(
           '#type' => 'select',
@@ -295,7 +298,6 @@ function _nodeblock_machine_name_exists($value) {
   $query = db_select('nodeblock', 'nb')
     ->condition('machine_name', $value);
   $query->addExpression('count(*)', 'counts');
-
   return $query->execute()->fetchColumn() > 0;
 }
 
@@ -304,17 +306,26 @@ function _nodeblock_machine_name_exists($value) {
  */
 function nodeblock_node_delete($node) {
   if (_nodeblock_table_exists()) {
+    $machine_names[] = $node->nid;
+    if (isset($node->nodeblock['machine_name'])) {
+      $machine_names[] = $node->nodeblock['machine_name'];
+    }
+
     $result = db_delete('nodeblock')
       ->condition('nid', $node->nid)
       ->execute();
     if ($result) {
       db_delete('block')
         ->condition('module', 'nodeblock')
-        ->condition('delta', $node->nid)
+        ->condition('delta', $machine_names, 'IN')
         ->execute();
       db_delete('block_role')
         ->condition('module', 'nodeblock')
-        ->condition('delta', $node->nid)
+        ->condition('delta', $machine_names, 'IN')
+        ->execute();
+      db_delete('block_node_type')
+        ->condition('module', 'nodeblock')
+        ->condition('delta', $machine_names, 'IN')
         ->execute();
     }
   }
@@ -366,16 +377,17 @@ function nodeblock_node_update($node) {
 
   if ($nid) {
     $values = _nodeblock_defaults($node->type);
+    $overrides = nodeblock_type_node_overrides($node->type);
+
     if (isset($node->nodeblock)) {
       $values = $node->nodeblock + $values;
     }
 
-    if (!$values['custom_machine_name']) {
+    if ((isset($values['custom_machine_name']) && !$values['custom_machine_name']) || !isset($values['machine_name']) || !isset($overrides['machine_name'])) {
       $values['machine_name'] = $node->nid;
     }
     unset($values['custom_machine_name']);
-
-    if (!$values['custom_block_title']) {
+    if ((isset($values['custom_block_title']) && !$values['custom_block_title']) || !isset($values['block_title']) || !isset($overrides['block_title'])) {
       $values['block_title'] = $node->title;
     }
     unset($values['custom_block_title']);
@@ -410,21 +422,17 @@ function nodeblock_node_update($node) {
  */
 function nodeblock_node_insert($node) {
   if (nodeblock_type_enabled($node->type)) {
-    if ($node->status && user_access('administer blocks')) {
-      drupal_set_message(t('The block you just created is now available on the <a href="@url">block configuration page</a>.', array('@url' => url('admin/structure/block'))));
-    }
-
     $values = _nodeblock_defaults($node->type);
     if (isset($node->nodeblock)) {
       $values = $node->nodeblock + $values;
     }
 
-    if (!$values['custom_machine_name']) {
+    if ((isset($values['custom_machine_name']) && !$values['custom_machine_name']) || !isset($values['machine_name']) || _nodeblock_machine_name_exists($values['machine_name'])) {
       $values['machine_name'] = $node->nid;
     }
     unset($values['custom_machine_name']);
 
-    if (!$values['custom_block_title']) {
+    if ((isset($values['custom_block_title']) && !$values['custom_block_title']) || !isset($values['block_title'])) {
       $values['block_title'] = $node->title;
     }
     unset($values['custom_block_title']);
@@ -455,7 +463,9 @@ function nodeblock_node_insert($node) {
         );
 
         drupal_alter('block_info', $blocks, $theme, $blocks);
-        drupal_write_record('block', $blocks['nodeblock'][$node->nid]);
+        if (isset($blocks['nodeblock'][$node->nid])) {
+          drupal_write_record('block', $blocks['nodeblock'][$node->nid]);
+        }
       }
     }
   }
@@ -468,25 +478,32 @@ function nodeblock_block_info() {
   $blocks = array();
   if (_nodeblock_table_exists()) {
     $types = node_type_get_types();
-    foreach ($types as $type) {
-      if (nodeblock_type_enabled($type)) {
-        // Fetch all nodes of this type, excluding translations.
-        $request = db_select('node', 'n')
-          ->fields('n', array('title'))
-          ->condition('n.type', $type->type)
-          ->condition(db_or()->where('n.nid = n.tnid')->condition('n.tnid', 0));
 
-        $request->addJoin('INNER', 'nodeblock', 'nb', 'nb.nid = n.nid');
-        $request->fields('nb', array('machine_name'))
-          ->condition('nb.enabled', 1);
+    // Deselect types that aren't nodeblock enabled
+    foreach ($types as $key => $type) {
+      if(!nodeblock_type_enabled($type)){
+        unset($types[$key]);
+      }
+    }
 
-        $results = $request->execute();
-        foreach ($results as $node) {
-          $blocks[$node->machine_name] = array('info' => $node->title);
-        }
+    if ($types) {
+      // Fetch all nodes of the selected types, excluding translations.
+      $request = db_select('node', 'n')
+        ->fields('n', array('title', 'nid'))
+        ->condition('n.type', array_keys($types), 'IN')
+        ->condition(db_or()->where('n.nid = n.tnid')->condition('n.tnid', 0));
+
+      $request->addJoin('INNER', 'nodeblock', 'nb', 'nb.nid = n.nid');
+      $request->fields('nb', array('machine_name'))
+        ->condition('nb.enabled', 1);
+
+      $results = $request->execute();
+      foreach ($results as $node) {
+        $blocks[$node->machine_name] = array('info' => $node->title, 'nid' => $node->nid);
       }
     }
   }
+
   return $blocks;
 }
 
@@ -496,6 +513,7 @@ function nodeblock_block_info() {
 function nodeblock_load_nodeblock($machine_name) {
   $nid = db_select('nodeblock', 'nb')
     ->condition('machine_name', $machine_name)
+    ->condition('enabled', 1)
     ->fields('nb', array('nid'))
     ->execute()->fetchColumn();
   if ($nid) {
@@ -512,7 +530,7 @@ function nodeblock_block_view($delta = '') {
   }
 
   $node = nodeblock_load_nodeblock($delta);
-  if (!node_access('view', $node) || !nodeblock_type_enabled($node->type)) {
+  if (!node_access('view', $node) || !nodeblock_type_enabled($node->type) || !isset($node->nodeblock)) {
     return;
   }
 
@@ -533,13 +551,18 @@ function nodeblock_block_view($delta = '') {
     // Otherwise we just use the main node.
   }
 
+  // Make sure we work on a copy of the node object.
+  $node = clone $node;
 
   $view_mode = $node->nodeblock['view_mode'];
+  $node->nodeblock['shown_as_block'] = TRUE;
   if ($view_mode == 'node_block_default') {
     $view_mode = nodeblock_type_view_mode($node->type);
   }
+
+  $title = $node->nodeblock['block_title'];
   $block = array(
-    'subject' => check_plain($node->nodeblock['block_title']),
+    'subject' => $title == '<none>' ? '' : check_plain($title),
     'content' => node_view($node, $view_mode),
     '#node' => $node,
   );
@@ -571,50 +594,51 @@ function nodeblock_block_configure($delta = '') {
   $form = array();
 
   $node = nodeblock_load_nodeblock($delta);
-
-  $view_modes = array();
-  $view_modes['node_block_default'] = t('Default');
-  $view_modes += nodeblock_get_view_modes($node->type);
-  $options = array(
-    'node_block_default' => t('Default'),
-    '0' => t('Hide'),
-    '1' => t('Show'),
-  );
-
-   // Add a Node Block Group
-  $form['nodeblock'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Node Block Settings'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-    '#attributes' => array(
-      'class' => array('node-block-settings'),
-    ),
-    '#weight' => 0,
-    'view_mode' => array(
-      '#type' => 'select',
-      '#options' => $view_modes,
-      '#title' => t('View mode'),
-      '#default_value' => $node->nodeblock['view_mode'],
-      '#group' => 'nodeblock',
-    ),
-    'node_link' => array(
-      '#type' => 'select',
-      '#options' => $options,
-      '#default_value' => $node->nodeblock['node_link'],
-      '#title' => t('Node Link Display'),
-      '#group' => 'nodeblock',
-    ),
-  );
-
-  if (module_exists('comment')) {
-    $form['nodeblock']['comment_link'] = array(
-      '#type' => 'select',
-      '#options' => $options,
-      '#default_value' => $node->nodeblock['comment_link'],
-      '#title' => t('Node Comments Display'),
-      '#group' => 'nodeblock',
+  if ($node) {
+    $view_modes = array();
+    $view_modes['node_block_default'] = t('Default');
+    $view_modes += nodeblock_get_view_modes($node->type);
+    $options = array(
+      'node_block_default' => t('Default'),
+      '0' => t('Hide'),
+      '1' => t('Show'),
     );
+
+     // Add a Node Block Group
+    $form['nodeblock'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Node Block Settings'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+      '#attributes' => array(
+        'class' => array('node-block-settings'),
+      ),
+      '#weight' => 0,
+      'view_mode' => array(
+        '#type' => 'select',
+        '#options' => $view_modes,
+        '#title' => t('View mode'),
+        '#default_value' => $node->nodeblock['view_mode'],
+        '#group' => 'nodeblock',
+      ),
+      'node_link' => array(
+        '#type' => 'select',
+        '#options' => $options,
+        '#default_value' => $node->nodeblock['node_link'],
+        '#title' => t('Node Link Display'),
+        '#group' => 'nodeblock',
+      ),
+    );
+
+    if (module_exists('comment')) {
+      $form['nodeblock']['comment_link'] = array(
+        '#type' => 'select',
+        '#options' => $options,
+        '#default_value' => $node->nodeblock['comment_link'],
+        '#title' => t('Node Comments Display'),
+        '#group' => 'nodeblock',
+      );
+    }
   }
 
   return $form;
@@ -640,29 +664,31 @@ function nodeblock_block_save($delta = '', $edit = array()) {
 }
 
 /**
- * Implementation of hook_preprocess_node().
+ * Implements hook_preprocess_node().
  *
- * Add node--nodeblock, node--nodeblock--[content-type] and node--nodeblock--[nid]
- * to the suggested theme files for all nodeblock enabled nodes. Note that the
- * order of templates is as follows (last is highest priority):
- * - node.tpl.php
+ * Adds theme hook suggestions for nodeblock enabled nodes in this order:
  * - node--nodeblock.tpl.php
- * - node--nodeblock--default.tpl.php
+ * - node--nodeblock--default.tpl.php,
  * - node--[content-type].tpl.php
  * - node--nodeblock--[content-type].tpl.php
  * - node--[nid].tpl.php
  * - node--nodeblock--[nid].tpl.php
  */
 function nodeblock_preprocess_node(&$variables) {
-  if (isset($variables['node']->nodeblock)) {
-    $variables['theme_hook_suggestions'] = array(
+  if (isset($variables['nodeblock']) && isset($variables['nodeblock']['shown_as_block'])) {
+    // Make sure content type is added between the node--[nid] and node--[content-type] suggestion.
+    array_splice($variables['theme_hook_suggestions'], 1, 0 , array(
+      'node__nodeblock__' . $variables['node']->type,
+    ));
+
+    // Make sure content type is added as the first suggestion.
+    $variables['theme_hook_suggestions'][] = 'node__nodeblock__' . $variables['node']->nid;
+
+    // Set these as the last suggestions.
+    array_splice($variables['theme_hook_suggestions'], 0, 0 , array(
       'node__nodeblock',
       'node__nodeblock__default',
-      'node__' . $variables['node']->type,
-      'node__nodeblock__' . $variables['node']->type,
-      'node__' . $variables['node']->nid,
-      'node__nodeblock__' . $variables['node']->nid,
-    );
+    ));
   }
 }
 
