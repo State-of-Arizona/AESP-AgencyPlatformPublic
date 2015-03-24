@@ -1,5 +1,19 @@
 <?php
 
+function az_gov_preprocess_node(&$vars) {
+
+  if (isset($vars['field_basic_slideshow_style'])) {
+    if (!empty($vars['field_basic_slideshow_style'][LANGUAGE_NONE][0]['value'])) {
+      $style = $vars['field_basic_slideshow_style'][LANGUAGE_NONE][0]['value'];
+      $vars['content']['field_basic_slideshow_images'][0]['#js_variables']['fx'] = $vars['field_basic_slideshow_effect']['und'][0]['value'];
+    }
+    else {
+      $style = 'basic-slideshow-style-1';
+    }
+    $vars['classes_array'][] = $style;
+  }
+}
+
 /**
  * Establishes variables to be used in page template
  */

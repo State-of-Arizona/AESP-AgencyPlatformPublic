@@ -275,7 +275,7 @@ function feature_basic_content_strongarm() {
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '2',
+          'weight' => '4',
         ),
       ),
       'display' => array(),
@@ -457,7 +457,7 @@ function feature_basic_content_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'pathauto_node_basic_page_pattern';
-  $strongarm->value = '[node:menu-link:parents:join-path]/[node:title]';
+  $strongarm->value = '[node:menu-link:parents:join-path]/[node:menu-link:link-or-title]';
   $export['pathauto_node_basic_page_pattern'] = $strongarm;
 
   $strongarm = new stdClass();

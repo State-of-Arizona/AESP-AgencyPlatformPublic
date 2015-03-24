@@ -5,6 +5,40 @@
  */
 
 /**
+ * Implements hook_requirements().
+ */
+function new_relic_rpm_requirements($phase) {
+  $requirements = array();
+  $t = get_t();
+
+  if ($phase == 'install') {
+    if (!extension_loaded('newrelic')) {
+      $requirements['newrelic'] = array(
+        'title' => $t('none.'),
+        'value' => NULL,
+        'description' => $t('New Relic PHP Library missing. Check <a href="https://newrelic.com/docs/php/new-relic-for-php">Install New Relic for PHP</a> for more information.'),
+        'severity' => REQUIREMENT_ERROR,
+      );
+    }
+  }
+  if ($phase == 'runtime') {
+    $new_relic_loaded = extension_loaded('newrelic');
+    $requirements['newrelic'] = array(
+      'title' => $t('New Relic PHP Library'),
+      'value' =>  $new_relic_loaded ? $t('Exists') : $t('Not loaded'),
+      'severity' => $new_relic_loaded ? REQUIREMENT_OK : REQUIREMENT_ERROR,
+    );
+    $requirements['newrelic_apikey'] = array(
+      'title' => $t('New Relic API key'),
+      'value' => (variable_get('new_relic_rpm_api_key', 0) == '' ? $t('Not set') : $t('Available')) . ' (' . l('Configure', 'admin/config/development/new-relic-rpm') . ')',
+      'severity' => variable_get('new_relic_rpm_api_key', 0) == '' ? REQUIREMENT_INFO : REQUIREMENT_OK,
+    );
+  }
+
+  return $requirements;
+}
+
+/**
  * Implements hook_install().
  */
 function new_relic_rpm_install() {
@@ -18,19 +52,6 @@ function new_relic_rpm_install() {
   ))
   ->condition('name', 'new_relic_rpm')
   ->execute();
-}
-
-/**
- * Implemenation of hook enable().
- *
- * This checks for the existence of the New Relic RPM PHP extension by checking
- * for functions. If it is not found, the module is uninstalled.
- */
-function new_relic_rpm_enable() {
-  if (!function_exists('newrelic_background_job')) {
-    drupal_set_message(t('The New Relic RPM PHP extension is missing. This extension must be installed and functional on your server before this module can be enabled. Visit <a href="@installation-guide">New Relic for PHP installation instructions</a> for assistance.', array('@installation-guide' => url('https://newrelic.com/docs/php/new-relic-for-php#installation'))), 'error');
-    module_disable(array('new_relic_rpm'));
-  }
 }
 
 /**
