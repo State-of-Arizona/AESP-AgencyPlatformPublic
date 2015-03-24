@@ -1,6 +1,6 @@
 /* line 1, ../scss/wysiwyg.scss */
 html {
-  font: 13px/1.5 Verdana, Helvetica, Arial, sans-serif;
+  font: 13px/1.4em Verdana, Helvetica, Arial, sans-serif;
 }
 
 /* line 5, ../scss/wysiwyg.scss */
@@ -25,8 +25,8 @@ h1, h2, h3, h4, h5 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 500;
   text-transform: uppercase;
-  padding: 0px;
-  letter-spacing: 0px;
+  padding: 0;
+  letter-spacing: 0;
 }
 
 /* line 27, ../scss/wysiwyg.scss */
@@ -39,44 +39,43 @@ h1 {
 
 /* line 34, ../scss/wysiwyg.scss */
 h2 {
-  border-bottom: 4px solid #DCD2C3;
-  padding: 0 0px 7px;
+  padding: 15px 0 7px;
   margin-bottom: 10px;
   font-size: 1.3em;
-  text-transform: none;
   color: #600;
+  text-transform: uppercase;
 }
 
-/* line 43, ../scss/wysiwyg.scss */
+/* line 42, ../scss/wysiwyg.scss */
 h3, h4, h5, h6 {
   font-size: 1.0em;
 }
 
-/* line 47, ../scss/wysiwyg.scss */
+/* line 46, ../scss/wysiwyg.scss */
 .file {
   display: inline-block;
   width: auto;
   max-width: 100%;
-  margin: 5px 0px;
+  margin: 5px 0;
   white-space: normal;
   background: url("../img/bullet-arrow.png") no-repeat scroll 95% center transparent;
   padding: 7px 45px 7px 20px;
   border-radius: 50px;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   font-weight: normal;
 }
 
-/* line 60, ../scss/wysiwyg.scss */
+/* line 59, ../scss/wysiwyg.scss */
 table {
   border: 1px solid #CCC;
   margin-top: 10px;
   margin-bottom: 10px;
 }
-/* line 64, ../scss/wysiwyg.scss */
+/* line 63, ../scss/wysiwyg.scss */
 table tbody {
   border: medium none;
 }
-/* line 67, ../scss/wysiwyg.scss */
+/* line 66, ../scss/wysiwyg.scss */
 table th {
   background: none repeat scroll 0% 0% #F7F7F7;
   border-bottom: 1px solid #CCC;
@@ -86,44 +85,44 @@ table th {
   padding: 4px 8px;
   vertical-align: middle;
 }
-/* line 76, ../scss/wysiwyg.scss */
+/* line 75, ../scss/wysiwyg.scss */
 table tr {
   border-bottom: 1px solid #CCC;
 }
-/* line 79, ../scss/wysiwyg.scss */
+/* line 78, ../scss/wysiwyg.scss */
 table tr.odd {
   background: #eee;
 }
-/* line 82, ../scss/wysiwyg.scss */
+/* line 81, ../scss/wysiwyg.scss */
 table tr.even {
   background: #fff;
 }
-/* line 85, ../scss/wysiwyg.scss */
+/* line 84, ../scss/wysiwyg.scss */
 table tr.even:hover td, table tr.odd:hover td {
   background: #fffeee;
 }
-/* line 88, ../scss/wysiwyg.scss */
+/* line 87, ../scss/wysiwyg.scss */
 table td {
   padding: 4px 8px;
   vertical-align: middle;
 }
 
-/* line 94, ../scss/wysiwyg.scss */
+/* line 93, ../scss/wysiwyg.scss */
 p.file, div.file, span.file, a.file {
   background-color: #d9cfc6;
 }
 
-/* line 98, ../scss/wysiwyg.scss */
+/* line 97, ../scss/wysiwyg.scss */
 blockquote {
   font-family: Georgia, serif;
   padding: 25px 30px 15px;
   background: url("../img/bg-quote.gif") repeat scroll 0% 0% transparent;
-  margin: 20px 0px;
+  margin: 20px 0;
   color: #333;
   font-style: italic;
   font-size: 1em;
 }
-/* line 106, ../scss/wysiwyg.scss */
+/* line 105, ../scss/wysiwyg.scss */
 blockquote p {
   font-size: 1em;
 }

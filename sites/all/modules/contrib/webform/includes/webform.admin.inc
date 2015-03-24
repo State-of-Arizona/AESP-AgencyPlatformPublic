@@ -146,15 +146,6 @@ function webform_admin_settings() {
     '#weight' => 20,
   );
 
-  $form['advanced']['webform_search_index']  = array(
-    '#type' => 'checkbox',
-    '#checked_value' => 1,
-    '#title' => t('Include webform forms in search index'),
-    '#default_value' => webform_variable_get('webform_search_index'),
-    '#description' => t('When selected, all Webform nodes will have their form components indexed by the search engine.'),
-    '#access' => module_exists('search'),
-  );
-
   $form['advanced']['webform_tracking_mode']  = array(
     '#type' => 'radios',
     '#title' => t('Track anonymous users by:'),
@@ -199,6 +190,17 @@ function webform_admin_settings() {
       '.'  => t('Period (.)'),
       ' '  => t('Space ( )'),
     ),
+  );
+
+  $form['advanced']['webform_export_wordwrap'] = array(
+    '#type' => 'radios',
+    '#title' => t('Export word-wrap'),
+    '#options' => array(
+      '0' => t('Only text containing return characters'),
+      '1' => t('All text'),
+    ),
+    '#default_value' => webform_variable_get('webform_export_wordwrap'),
+    '#description' => t('Some export formats, such as Microsoft Excel, support word-wrapped text cells.'),
   );
 
   $form['advanced']['webform_submission_access_control']  = array(
@@ -276,6 +278,12 @@ function theme_webform_admin_settings($variables) {
  * Menu callback for admin/content/webform. Displays all webforms on the site.
  */
 function webform_admin_content() {
+  // Determine whether views or hard-coded tables should be used for the webforms table.
+  if (!webform_variable_get('webform_table')) {
+    $view = views_get_view('webform_webforms');
+    return $view->preview('default');
+  }
+
   $query = db_select('webform', 'w');
   $query->join('node', 'n', 'w.nid = n.nid');
   $query->fields('n');
