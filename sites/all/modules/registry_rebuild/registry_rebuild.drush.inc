@@ -70,9 +70,7 @@ function drush_registry_rebuild() {
     $include_dir . '/schema.inc',
     $include_dir . '/actions.inc',
     $include_dir . '/entity.inc',
-    $module_dir . '/entity/entity.module',
-    $module_dir . '/entity/entity.controller.inc',
-    $module_dir . '/system/system.module',
+    $module_dir  . '/system/system.module',
     $include_dir . '/database/query.inc',
     $include_dir . '/database/select.inc',
     $include_dir . '/registry.inc',
@@ -90,11 +88,11 @@ function drush_registry_rebuild() {
       // is accessible. Otherwise we use the core lock.inc as fallback.
       if (is_readable($cache_lock_path_relative) && is_file($cache_lock_path_relative)) {
         $includes[] = $cache_lock_path_relative;
-        drush_log(dt("We will use relative variant of lock.inc: %lock", array('%lock' => $cache_lock_path_relative)));
+        drush_log(dt("We will use relative variant of lock.inc: @lock", array('@lock' => $cache_lock_path_relative)));
       }
       elseif (is_readable($cache_lock_path_absolute) && is_file($cache_lock_path_absolute)) {
         $includes[] = $cache_lock_path_absolute;
-        drush_log(dt("We will use absolute variant of lock.inc: %lock", array('%lock' => $cache_lock_path_absolute)));
+        drush_log(dt("We will use absolute variant of lock.inc: @lock", array('@lock' => $cache_lock_path_absolute)));
       }
       else {
         drush_log(dt('We will use core implementation of lock.inc as fallback.'));
@@ -108,6 +106,8 @@ function drush_registry_rebuild() {
   elseif (drush_drupal_major_version() > 7) {
     // TODO
     // http://api.drupal.org/api/drupal/namespace/Drupal!Core!Lock/8
+    $includes[] = $module_dir . '/entity/entity.module';
+    $includes[] = $module_dir . '/entity/entity.controller.inc';
   }
   // In Drupal 6 the configured lock.inc is already loaded during
   // DRUSH_BOOTSTRAP_DRUPAL_DATABASE
@@ -116,6 +116,13 @@ function drush_registry_rebuild() {
     if (file_exists($include)) {
       require_once($include);
     }
+  }
+
+  // We may need to clear also Drush 5+ internal cache first.
+  drush_log(dt("This DRUSH_MAJOR_VERSION is: @ver", array('@ver' => DRUSH_MAJOR_VERSION)));
+  if (DRUSH_MAJOR_VERSION > 4) {
+    drush_cache_clear_drush();
+    drush_log(dt('Internal Drush cache cleared with drush_cache_clear_drush (1).'));
   }
 
   // This section is not functionally important. It's just using the
@@ -140,16 +147,21 @@ function drush_registry_rebuild() {
     drush_log(dt('Bootstrap caches have been cleared in DRUSH_BOOTSTRAP_DRUPAL_DATABASE.'));
   }
 
-  // We later run system_rebuild_module_data() on Drupal 7+ via D7-only,
-  // registry_rebuild() wrapper, which is run inside drupal_flush_all_caches().
+  // We later run system_rebuild_module_data() and registry_update() on Drupal 7 via
+  // D7-only registry_rebuild() wrapper, which is run inside drupal_flush_all_caches().
   // It is an equivalent of module_rebuild_cache() in D5-D6 and is normally run via
-  // our universal wrapper drush_registry_rebuild_cc_all() -- see further below.
-  // However, we are still on the DRUSH_BOOTSTRAP_DRUPAL_DATABASE level here,
+  // our universal wrapper registry_rebuild_cc_all() -- see further below.
+  // However, we are still on the DRUPAL_BOOTSTRAP_SESSION level here,
   // and we want to make the initial rebuild as atomic as possible, so we can't
-  // run everything from drush_registry_rebuild_cc_all() yet.
+  // run everything from registry_rebuild_cc_all() yet, so we run an absolute
+  // minimum we can at this stage, core specific.
   drush_log(dt('We are on the DRUSH_BOOTSTRAP_DRUPAL_DATABASE level still.'));
-  if (drush_drupal_major_version() >= 7) {
-    system_rebuild_module_data(); // D7+
+  if (drush_drupal_major_version() == 7) {
+    registry_rebuild(); // D7 only
+    drush_log(dt('The registry has been rebuilt via registry_rebuild (A).'), 'success');
+  }
+  elseif (drush_drupal_major_version() > 7) {
+    system_rebuild_module_data(); // D8+
     drush_log(dt('The registry has been rebuilt via system_rebuild_module_data (A).'), 'success');
   }
   else { // D5-D6
@@ -158,8 +170,14 @@ function drush_registry_rebuild() {
     drush_log(dt('The registry has been rebuilt via module_rebuild_cache (A).'), 'success');
   }
 
+  // We may need to clear also Drush 5+ internal cache at this point again.
+  if (DRUSH_MAJOR_VERSION > 4) {
+    drush_cache_clear_drush();
+    drush_log(dt('Internal Drush cache cleared with drush_cache_clear_drush (2).'));
+  }
+
   drush_log(dt('Bootstrapping to DRUPAL_BOOTSTRAP_FULL.'));
-  drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+  drush_bootstrap_to_phase(DRUSH_BOOTSTRAP_DRUPAL_FULL);
   // We can run our wrapper now, since we are in a full bootstrap already.
   // Note that the wrapper normally honors the --no-cache-clear option if used.
   drush_registry_rebuild_cc_all();
@@ -266,8 +284,12 @@ function drush_registry_rebuild_cc_all() {
     drush_log(dt('All caches have been cleared with drush_registry_rebuild_cc_all.'), 'success');
   }
   else {
-    if (drush_drupal_major_version() >= 7) {
-      system_rebuild_module_data(); // D7+
+    if (drush_drupal_major_version() == 7) {
+      registry_rebuild(); // D7 only
+      drush_log(dt('The registry has been rebuilt via registry_rebuild (no-cache-clear).'), 'success');
+    }
+    elseif (drush_drupal_major_version() > 7) {
+      system_rebuild_module_data(); // D8+
       drush_log(dt('The registry has been rebuilt via system_rebuild_module_data (no-cache-clear).'), 'success');
     }
     else { // D5-D6

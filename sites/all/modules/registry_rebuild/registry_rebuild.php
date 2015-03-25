@@ -31,9 +31,7 @@ $includes = array(
   $include_dir . '/schema.inc',
   $include_dir . '/actions.inc',
   $include_dir . '/entity.inc',
-  $module_dir . '/entity/entity.module',
-  $module_dir . '/entity/entity.controller.inc',
-  $module_dir . '/system/system.module',
+  $module_dir  . '/system/system.module',
   $include_dir . '/database/query.inc',
   $include_dir . '/database/select.inc',
   $include_dir . '/registry.inc',
@@ -69,6 +67,8 @@ if (function_exists('registry_rebuild')) { // == D7
 elseif (!function_exists('cache_clear_all')) { // D8+
   // TODO
   // http://api.drupal.org/api/drupal/namespace/Drupal!Core!Lock/8
+  $includes[] = $module_dir . '/entity/entity.module';
+  $includes[] = $module_dir . '/entity/entity.controller.inc';
 }
 // In Drupal 6 the configured lock.inc is already loaded during
 // DRUSH_BOOTSTRAP_DRUPAL_DATABASE
@@ -130,14 +130,19 @@ function registry_rebuild_rebuild() {
     print "Bootstrap caches have been cleared in DRUPAL_BOOTSTRAP_SESSION<br/>\n";
   }
 
-  // We later run system_rebuild_module_data() on Drupal 7+ via D7-only,
-  // registry_rebuild() wrapper, which is run inside drupal_flush_all_caches().
+  // We later run system_rebuild_module_data() and registry_update() on Drupal 7 via
+  // D7-only registry_rebuild() wrapper, which is run inside drupal_flush_all_caches().
   // It is an equivalent of module_rebuild_cache() in D5-D6 and is normally run via
   // our universal wrapper registry_rebuild_cc_all() -- see further below.
   // However, we are still on the DRUPAL_BOOTSTRAP_SESSION level here,
   // and we want to make the initial rebuild as atomic as possible, so we can't
-  // run everything from registry_rebuild_cc_all() yet.
-  if (function_exists('system_rebuild_module_data')) { // D7+
+  // run everything from registry_rebuild_cc_all() yet, so we run an absolute
+  // minimum we can at this stage, core specific.
+  if (function_exists('registry_rebuild')) { // D7 only
+    print "Doing registry_rebuild() in DRUPAL_BOOTSTRAP_SESSION<br/>\n";
+    registry_rebuild();
+  }
+  elseif (!function_exists('registry_rebuild') && function_exists('system_rebuild_module_data')) { // D8+
     print "Doing system_rebuild_module_data() in DRUPAL_BOOTSTRAP_SESSION<br/>\n";
     system_rebuild_module_data();
   }

@@ -1,4 +1,3 @@
-@charset "UTF-8";
 html, body {
   margin: 0;
   padding: 0;
@@ -52,6 +51,9 @@ html, body {
   margin: 10px 0px 10px;
   padding: 0px;
   letter-spacing: 0px;
+}
+#page h1.accordion-clicker, #page h2.accordion-clicker, #page h3.accordion-clicker, #page h4.accordion-clicker, #page h5.accordion-clicker, #colorbox h1.accordion-clicker, #colorbox h2.accordion-clicker, #colorbox h3.accordion-clicker, #colorbox h4.accordion-clicker, #colorbox h5.accordion-clicker {
+  text-transform: none;
 }
 #page h1, #colorbox h1 {
   font-weight: bold;

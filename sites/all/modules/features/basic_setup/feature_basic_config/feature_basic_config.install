@@ -47,10 +47,7 @@ function feature_basic_config_install() {
 
   db_query('update views_display set display_options = replace(display_options,\'s:9:"full_html\', \'s:10:"basic_html\') where display_options like \'%full_html%\';');
 
-  variable_set('search404_page_text', t('The page you requested could not be found. You may try one of the links listed below or try searching again.'));
-  variable_set('search404_disable_error_message', '1');
-  variable_set('search404_do_custom_search', '1');
-  variable_set('search404_custom_search_path', 'search/node/@keys');
+  feature_basic_config_update_7010();
 }
 
 function feature_basic_config_update_7010() {
@@ -60,16 +57,50 @@ function feature_basic_config_update_7010() {
   variable_set('search404_do_custom_search', '1');
   variable_set('search404_custom_search_path', 'search/node/@keys');
 
+  $dir = scandir(drupal_realpath('public://'));
+
+  foreach($dir as $file){
+    if(strpos($file, '.doc') === FALSE && strpos($file, '.gif') === FALSE && strpos($file, '.ppt') === FALSE && strpos($file, '.xls') === FALSE && strpos($file, '.jpg') === FALSE && strpos($file, '.png') === FALSE && strpos($file, '.pdf') === FALSE){
+      dpm($file);
+    }
+  }
+
+
   if (module_exists('admin_menu')) {
     $permissions = array(
       'Contributor' => array(
         'access administration menu' => 1,
+        'create files' => 1,
+        'view own files' => 1,
+        'access media browser' => 1,
+        'add media from remote sources' => 1,
+        'use media wysiwyg' => 1,
+        'access own broken links report' => 1,
       ),
       'Editor' => array(
         'access administration menu' => 1,
+        'bypass file access' => 1,
+        'administer files' => 1,
+        'create files' => 1,
+        'view own files' => 1,
+        'access media browser' => 1,
+        'add media from remote sources' => 1,
+        'use media wysiwyg' => 1,
+        'access own broken links report' => 1,
+        'flush caches' => 1,
       ),
       'Power User' => array(
         'access administration menu' => 1,
+        'bypass file access' => 1,
+        'administer files' => 1,
+        'create files' => 1,
+        'view own files' => 1,
+        'access media browser' => 1,
+        'add media from remote sources' => 1,
+        'use media wysiwyg' => 1,
+        'access own broken links report' => 1,
+        'access broken links report' => 1,
+        'flush caches' => 1,
       ),
     );
 

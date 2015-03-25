@@ -173,14 +173,6 @@ function feature_enewsletter_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_enews_link_text',
-    'foreign keys' => array(
-      'format' => array(
-        'columns' => array(
-          'format' => 'format',
-        ),
-        'table' => 'filter_format',
-      ),
-    ),
     'indexes' => array(
       'format' => array(
         0 => 'format',
@@ -456,6 +448,36 @@ function feature_enewsletter_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_boolean',
+  );
+
+  // Exported field_base: 'field_enews_letters'
+  $field_bases['field_enews_letters'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_enews_letters',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'feature_enewsletter',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'enewsletters',
+  );
+
+  // Exported field_base: 'field_enews_demos'
+  $field_bases['field_enews_demos'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_enews_demos',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'feature_enewsletter',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'enews_demographics',
   );
 
   return $field_bases;

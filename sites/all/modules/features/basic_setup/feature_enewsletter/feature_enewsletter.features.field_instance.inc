@@ -54,6 +54,89 @@ function feature_enewsletter_field_default_field_instances() {
       'weight' => 3,
     ),
   );
+
+  // Exported field_instance: 'node-enewsletter_subscription-field_enews_letters'
+  $field_instances['node-enewsletter_subscription-field_enews_letters'] = array(
+    'bundle' => 'enewsletter_subscription',
+    'default_value' => array(
+      0 => array(
+        'value' => NULL,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 2,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_enews_letters',
+    'label' => 'Enewsletter Listings',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'apply_chosen' => '',
+      ),
+      'type' => 'options_select',
+      'weight' => 1,
+    ),
+  );
+
+  // Exported field_instance: 'node-enewsletter_subscription-field_enews_demos'
+  $field_instances['node-enewsletter_subscription-field_enews_demos'] = array(
+    'bundle' => 'enewsletter_subscription',
+    'default_value' => array(
+      0 => array(
+        'value' => NULL,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 1,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_enews_demos',
+    'label' => 'Demographics',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 2,
+    ),
+  );
+
   if (module_exists('feature_basic_content')) {
     // Exported field_instance: 'node-enewsletter_subscription-field_basic_block_block_sections'
     $field_instances['node-enewsletter_subscription-field_basic_block_block_sections'] = array(
@@ -70,7 +153,7 @@ function feature_enewsletter_field_default_field_instances() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 7,
+          'weight' => 9,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -88,130 +171,12 @@ function feature_enewsletter_field_default_field_instances() {
       ),
       'widget' => array(
         'active' => 1,
-        'module' => 'options',
-        'settings' => array(),
-        'type' => 'options_select',
+        'module' => 'menu_block_placement',
+        'settings' => array(
+          'apply_chosen' => '',
+        ),
+        'type' => 'menu_block_placement_widget',
         'weight' => 21,
-      ),
-    );
-
-    // Exported field_instance: 'node-enewsletter_subscription-field_basic_block_front_page'
-    $field_instances['node-enewsletter_subscription-field_basic_block_front_page'] = array(
-      'bundle' => 'enewsletter_subscription',
-      'default_value' => array(
-        0 => array(
-          'value' => 0,
-        ),
-      ),
-      'deleted' => 0,
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 8,
-        ),
-        'teaser' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_basic_block_front_page',
-      'label' => 'Display This Block On The Front Page',
-      'required' => 0,
-      'settings' => array(
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'options',
-        'settings' => array(
-          'display_label' => 1,
-        ),
-        'type' => 'options_onoff',
-        'weight' => 24,
-      ),
-    );
-
-    // Exported field_instance: 'node-enewsletter_subscription-field_basic_block_region'
-    $field_instances['node-enewsletter_subscription-field_basic_block_region'] = array(
-      'bundle' => 'enewsletter_subscription',
-      'default_value' => NULL,
-      'deleted' => 0,
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 5,
-        ),
-        'teaser' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_basic_block_region',
-      'label' => 'Block Region Display',
-      'required' => 0,
-      'settings' => array(
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'options',
-        'settings' => array(),
-        'type' => 'options_select',
-        'weight' => 22,
-      ),
-    );
-
-    // Exported field_instance: 'node-enewsletter_subscription-field_basic_individual_page'
-    $field_instances['node-enewsletter_subscription-field_basic_individual_page'] = array(
-      'bundle' => 'enewsletter_subscription',
-      'default_value' => array(
-        0 => array(
-          'value' => 0,
-        ),
-      ),
-      'deleted' => 0,
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 6,
-        ),
-        'teaser' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_basic_individual_page',
-      'label' => 'Show only on selected pages',
-      'required' => 0,
-      'settings' => array(
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'options',
-        'settings' => array(
-          'display_label' => 1,
-        ),
-        'type' => 'options_onoff',
-        'weight' => 23,
       ),
     );
   }
