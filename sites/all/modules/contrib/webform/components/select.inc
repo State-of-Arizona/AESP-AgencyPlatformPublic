@@ -332,48 +332,36 @@ function _webform_render_select($component, $value = NULL, $filter = TRUE) {
   // Set the component options.
   $element['#options'] = $options;
 
+  // Use the component's default value if the component is currently empty.
+  if (!isset($value)) {
+    // The default for multiple selects is a comma-delimited list, without white-space or empty entries.
+    $value = $component['extra']['multiple'] ? array_filter(array_map('trim', explode(',', $default_value)), 'strlen') : $default_value;
+  }
+
+  // Convert all values into an array; component may now be single but was previously multiple, or vice-versa
+  $value = (array)$value;
+
   // Set the default value. Note: "No choice" is stored as an empty string,
   // which will match a 0 key for radios; NULL is used to avoid unintentional
   // defaulting to the 0 option.
-  if (isset($value)) {
-    if ($component['extra']['multiple']) {
-      // Set the value as an array.
-      $element['#default_value'] = array();
-      foreach ((array) $value as $key => $option_value) {
-        $element['#default_value'][] = $option_value === '' ? NULL : $option_value;
-      }
-    }
-    else {
-      // Set the value as a single string.
-      $element['#default_value'] = '';
-      foreach ((array) $value as $option_value) {
-        $element['#default_value'] = $option_value === '' ? NULL : $option_value;
-      }
-    }
-  }
-  elseif ($default_value !== '') {
-    // Convert default value to a list if necessary.
-    if ($component['extra']['multiple']) {
-      $varray = explode(',', $default_value);
-      foreach ($varray as $key => $v) {
-        $v = trim($v);
-        if ($v !== '') {
-          $element['#default_value'][] = $v;
-        }
-      }
-    }
-    else {
-      $element['#default_value'] = $default_value;
-    }
-  }
-  elseif ($component['extra']['multiple']) {
+  if ($component['extra']['multiple']) {
+    // Set the value as an array.
     $element['#default_value'] = array();
+    foreach ($value as $option_value) {
+      $element['#default_value'][] = $option_value === '' ? NULL : $option_value;
+    }
   }
-
+  else {
+    // Set the value as a single string.
+    $option_value = reset($value);
+    $element['#default_value'] = $option_value === '' ? NULL : $option_value;
+  }
+  
   if ($component['extra']['other_option'] && module_exists('select_or_other')) {
     // Set display as a select_or_other element:
     $element['#type'] = 'select_or_other';
     $element['#other'] = !empty($component['extra']['other_text']) ? check_plain($component['extra']['other_text']) : t('Other...');
+    $element['#translatable'][] = 'other';
     $element['#other_title'] = $element['#title'] . ' ' . $element['#other'];
     $element['#other_title_display'] = 'invisible';
     $element['#other_unknown_defaults'] = 'other';
@@ -410,11 +398,6 @@ function _webform_render_select($component, $value = NULL, $filter = TRUE) {
       $element['#type'] = 'checkboxes';
       $element['#theme_wrappers'] = array_merge(array('checkboxes'), $element['#theme_wrappers']);
       $element['#process'] = array_merge(element_info_property('checkboxes', '#process'), array('webform_expand_select_ids'));
-
-      // Entirely replace the normal expand checkboxes with our custom version.
-      // This helps render checkboxes in multipage forms.
-      $process_key = array_search('form_process_checkboxes', $element['#process']);
-      $element['#process'][$process_key] = 'webform_expand_checkboxes';
     }
     else {
       // Set display as a radio set.
@@ -460,35 +443,6 @@ function webform_expand_select_or_other($element) {
 }
 
 /**
- * Webform-specific checkbox #process function. Sanitize values before output.
- */
-function webform_expand_checkboxes($element) {
-  // Elements that have a value set are already in the form structure cause
-  // them not to be written when the expand_checkboxes function is called.
-  $default_value = array();
-  foreach (element_children($element) as $key) {
-    if (isset($element[$key]['#default_value'])) {
-      $default_value[$key] = $element[$key]['#default_value'];
-      unset($element[$key]);
-    }
-  }
-
-  $element = form_process_checkboxes($element);
-
-  // Escape the values of checkboxes.
-  foreach (element_children($element) as $key) {
-    $element[$key]['#return_value'] = check_plain($element[$key]['#return_value']);
-    $element[$key]['#name'] = $element['#name'] . '[' . $element[$key]['#return_value'] . ']';
-  }
-
-  foreach ($default_value as $key => $val) {
-    $element[$key]['#default_value'] = $val;
-  }
-
-  return $element;
-}
-
-/**
  * FAPI process function to rename IDs attached to checkboxes and radios.
  */
 function webform_expand_select_ids($element) {
@@ -509,6 +463,10 @@ function webform_expand_select_ids($element) {
  * Implements _webform_display_component().
  */
 function _webform_display_select($component, $value, $format = 'html') {
+  // Sort values by numeric key. These may be in alphabetic order from the database query,
+  // which is not numeric order for keys '10' and higher.
+  $value = (array) $value;
+  ksort($value, SORT_NUMERIC);
   return array(
     '#title' => $component['name'],
     '#title_display' => $component['extra']['title_display'] ? $component['extra']['title_display'] : 'before',
@@ -518,7 +476,7 @@ function _webform_display_select($component, $value, $format = 'html') {
     '#theme_wrappers' => $format == 'html' ? array('webform_element') : array('webform_element_text'),
     '#format' => $format,
     '#options' => _webform_select_options($component, !$component['extra']['aslist']),
-    '#value' => (array) $value,
+    '#value' => $value,
     '#translatable' => array('title', 'options'),
   );
 }
@@ -553,7 +511,7 @@ function _webform_submit_select($component, $value) {
         // Checkboxes submit an integer value of 0 when unchecked. A checkbox
         // with a value of '0' is valid, so we can't use empty() here.
         if ($option_value === 0 && !$component['extra']['aslist'] && $component['extra']['multiple']) {
-          unset($value[$option_value]);
+          // Don't save unchecked values
         }
         else {
           $return[] = $option_value;
@@ -564,6 +522,11 @@ function _webform_submit_select($component, $value) {
       elseif ($component['extra']['other_option'] && module_exists('select_or_other') && $option_value != 'select_or_other') {
         $return[] = $option_value;
       }
+    }
+
+    // If no elements are selected, then save an empty string to indicate that this components should not be defaulted again
+    if (!$return) {
+      $return = array('');
     }
   }
   elseif (is_string($value)) {
@@ -644,65 +607,69 @@ function theme_webform_display_select($variables) {
  */
 function _webform_analysis_select($component, $sids = array(), $single = FALSE) {
   $options = _webform_select_options($component, TRUE);
-  $show_other_results = $single;
 
-  // Gather the normal results first (not "other" options).
+  // Create a generic query for the component.
   $query = db_select('webform_submitted_data', 'wsd', array('fetch' => PDO::FETCH_ASSOC))
-    ->fields('wsd', array('data'))
     ->condition('nid', $component['nid'])
     ->condition('cid', $component['cid'])
-    ->condition('data', '', '<>')
-    ->groupBy('data');
-  $query->addExpression('COUNT(data)', 'datacount');
-
-  if (count($sids)) {
+    ->condition('data', '', '<>');
+  if ($sids) {
     $query->condition('sid', $sids, 'IN');
   }
 
-  // Duplicate the query for other options.
-  if ($show_other_results) {
-    $other_query = clone($query);
-    $other_query->condition('data', array_keys($options), 'NOT IN');
-    $other_query->orderBy('datacount', 'DESC');
+  // Clone the query for later use, if needed.
+  if ($component['extra']['other_option']) {
+    $count_query = clone $query;
+    if ($single) {
+      $other_query = clone $query;
+    }
   }
 
-  $query->condition('data', array_keys($options), 'IN');
-
-  $result = $query->execute();
   $rows = array();
   $other = array();
   $normal_count = 0;
-  foreach ($result as $data) {
-    $display_option = isset($options[$data['data']]) ? $options[$data['data']] : $data['data'];
-    $rows[$data['data']] = array(webform_filter_xss($display_option), $data['datacount']);
-    $normal_count += $data['datacount'];
+
+  if ($options) {
+    // Gather the normal results first (not "other" options).
+    $query->addExpression('COUNT(data)', 'datacount');
+    $result = $query
+      ->condition('data', array_keys($options), 'IN')
+      ->fields('wsd', array('data'))
+      ->groupBy('data')
+      ->execute();
+    foreach ($result as $data) {
+      $display_option = isset($options[$data['data']]) ? $options[$data['data']] : $data['data'];
+      $rows[$data['data']] = array(webform_filter_xss($display_option), $data['datacount']);
+      $normal_count += $data['datacount'];
+    }
+
+    // Order the results according to the normal options array.
+    $ordered_rows = array();
+    foreach (array_intersect_key($options, $rows) as $key => $label) {
+      $ordered_rows[] = $rows[$key];
+    }
+    $rows = $ordered_rows;
   }
 
-  // Order the results according to the normal options array.
-  $ordered_rows = array();
-  foreach (array_intersect_key($options, $rows) as $key => $label) {
-    $ordered_rows[] = $rows[$key];
-  }
-  $rows = $ordered_rows;
 
   // Add a row for displaying the total unknown or user-entered values.
   if ($component['extra']['other_option']) {
-    $count_query = db_select('webform_submitted_data', 'wsd', array('fetch' => PDO::FETCH_ASSOC))
-      ->condition('nid', $component['nid'])
-      ->condition('cid', $component['cid'])
-      ->condition('data', '', '<>');
     $count_query->addExpression('COUNT(*)', 'datacount');
-    if (count($sids)) {
-      $count_query->condition('sid', $sids, 'IN');
-    }
     $full_count = $count_query->execute()->fetchField();
     $other_count = $full_count - $normal_count;
     $display_option = !empty($component['extra']['other_text']) ? check_plain($component['extra']['other_text']) : t('Other...');
-    $other_text = ($other_count && !$show_other_results) ? $other_count . ' (' . l(t('view'), 'node/' . $component['nid'] . '/webform-results/analysis/' . $component['cid']) . ')' : $other_count;
+    $other_text = ($other_count && !$single) ? $other_count . ' (' . l(t('view'), 'node/' . $component['nid'] . '/webform-results/analysis/' . $component['cid']) . ')' : $other_count;
     $rows[] = array($display_option, $other_text);
 
     // If showing all results, execute the "other" query and append their rows.
-    if ($show_other_results) {
+    if ($single) {
+      $other_query->addExpression('COUNT(data)', 'datacount');
+      $other_query
+        ->fields('wsd', array('data'))
+        ->groupBy('data');
+      if ($options) {
+        $other_query->condition('data', array_keys($options), 'NOT IN');
+      }
       $other_result = $other_query->execute();
       foreach ($other_result as $data) {
         $other[] = array(check_plain($data['data']), $data['datacount']);

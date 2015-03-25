@@ -103,16 +103,19 @@ function password_tab_submit($form, &$form_state) {
   drupal_set_message(t('Password has been changed.'));
 
   if (variable_get('password_tab_redirect', '') && !preg_match('/[?&]destination=/', $form['#action'])) {
-    $redirect = drupal_parse_url(format_string(variable_get('password_tab_redirect', ''), array('%uid' => $user->uid)));
-    $opts = array();
-
-    if (!empty($redirect['fragment'])) {
-      $opts['fragment'] = $redirect['fragment'];
-    }
+    $redirect = drupal_parse_url(strtr(variable_get('password_tab_redirect', ''), array('%uid' => $user->uid)));
     if (!empty($redirect['query'])) {
-      parse_str($redirect['query'], $params);
-      $opts['query'] = $params;
+        $redirect_url = array(
+            $redirect['path'],
+            array(
+                'query' => $redirect['query'],
+                'fragment' => $redirect['fragment'],
+            ),
+        );
     }
-    drupal_goto($redirect['path'], $redirect);
+    else {
+        $redirect_url = $redirect['path'];
+    }
+    $form_state['redirect'] = $redirect_url;
   }
 }

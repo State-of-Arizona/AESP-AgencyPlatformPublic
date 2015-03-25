@@ -6,245 +6,99 @@
 
 include_once 'feature_enewsletter.features.inc';
 
+/**
+ *  Implements hook_field_info().
+ */
+function feature_enewsletter_field_info() {
+  return array(
+    'enewsletters' => array(
+      'label' => t('Enewsletters'),
+      'description' => t('This field stores varchar text in the database.'),
+      'default_widget' => 'options_select',
+      'default_formatter' => 'text_default',
+    ),
+    'enews_demographics' => array(
+      'label' => t('Enewsletter Demographics'),
+      'description' => t('This field stores varchar text in the database.'),
+      'default_widget' => 'options_buttons',
+      'default_formatter' => 'text_default',
+    ),
+  );
+}
+
+
+/**
+ *  Implements hook_field_widget_info_alter().
+ */
+function feature_enewsletter_field_widget_info_alter(&$info) {
+  $widgets = array(
+    'options_select' => array('enewsletters', 'enews_demographics'),
+    'options_buttons' => array('enews_demographics'),
+  );
+  foreach ($widgets as $widget => $field_types) {
+    $info[$widget]['field types'] = array_merge($info[$widget]['field types'], $field_types);
+  }
+}
+
+/**
+ *  Implements hook_options_list().
+ */
+function feature_enewsletter_options_list($field, $instance, $entity_type, $entity) {
+  $settings = variable_get('feature_enewsletter');
+  $options = array();
+
+  switch ($field['type']) {
+    case 'enewsletters':
+      foreach ($settings['lists'] as $key => $value) {
+        $options[$key] = $value['name'];
+      }
+
+      break;
+    case 'enews_demographics':
+      if(!empty($settings['demos'])) {
+        foreach ($settings['demos'] as $key => $value) {
+          $options[$key] = $value['name'];
+        }
+      }
+      break;
+  }
+  return $options;
+}
+
+/*
+ * Implements hook_filed_is_empty()
+ */
+function feature_enewsletter_field_is_empty($item, $field) {
+  return !is_array($item) ? TRUE : FALSE;
+}
+
+/**
+ *  Implements hook_permission().
+ */
+function feature_enewsletter_permission() {
+  return array(
+    'administer enewsletter' => array(
+      'title' => t('Administer Enewsletter'),
+      'description' => t('Change settings for enewsletter lists and demographics.'),
+    ),
+  );
+}
 
 /**
  *  Implements hook_menu().
  */
 function feature_enewsletter_menu() {
   $items['admin/config/content/az-enewsletter'] = array(
-    'title' => 'Configure Enewsletter Settings',
+    'title' => 'Enewsletter Settings',
     'description' => t('Set Enewsletter Pro Settings'),
     'type' => MENU_NORMAL_ITEM,
     'page callback' => 'drupal_get_form',
     'page arguments' => array('feature_enewsletter_config'),
-    'access arguments' => array('administer permissions'),
+    'access arguments' => array('administer enewsletter'),
+    'file' => 'feature_enewsletter.admin.inc',
+    'file path' => drupal_get_path('module', 'feature_enewsletter'),
   );
-
   return $items;
-}
-
-/**
- * @param $form
- * @param $form_state
- * @param bool $no_js_use
- * @return mixed
- *
- * Module Configuration page with ajax fields
- */
-function feature_enewsletter_config($form, &$form_state, $no_js_use = FALSE) {
-  drupal_add_css(drupal_get_path('module', 'feature_enewsletter') . '/enewsletter_config.css');
-  $settings = variable_get('feature_enewsletter');
-  if (isset($settings['lists'])) {
-    $lists_keys = array_keys($settings['lists']);
-  }
-
-  $form['#tree'] = TRUE;
-  $form['sid'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Subscription ID'),
-    '#size' => 35,
-    '#default_value' => isset($settings['sid']) ? $settings['sid'] : '',
-    '#required' => TRUE,
-  );
-
-  $form['enews_fieldset'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Enewsletter Pro Subscriptions'),
-    '#prefix' => '<div id="az-enews-fieldset-wrapper">',
-    '#suffix' => '</div>',
-  );
-
-  if (empty($form_state['num_enews'])) {
-    if (isset($settings['lists'])) {
-      $form_state['num_enews'] = sizeof($settings['lists']);
-    }
-    else {
-      $form_state['num_enews'] = 1;
-    }
-  }
-
-  for ($i = 0; $i < $form_state['num_enews']; $i++) {
-    $form['enews_fieldset']['lists'][$i] = array(
-      '#type' => 'container',
-      '#attributes' => array(
-        'class' => array(
-          'enews-list',
-        ),
-      ),
-    );
-    $form['enews_fieldset']['lists'][$i]['id'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Newsletter List ID'),
-      '#size' => 5,
-      '#default_value' => isset($settings['lists']) ? $lists_keys[$i] : '',
-      '#required' => TRUE,
-    );
-    $form['enews_fieldset']['lists'][$i]['name'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Newsletter Name'),
-      '#size' => 25,
-      '#default_value' => isset($settings['lists']) ? $settings['lists'][$lists_keys[$i]]['name'] : '',
-      '#required' => TRUE,
-    );
-    $form['enews_fieldset']['lists'][$i]['description'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Newsletter Description'),
-      '#size' => 25,
-      '#default_value' => isset($settings['lists']) ? $settings['lists'][$lists_keys[$i]]['description'] : '',
-    );
-  }
-
-  $form['enews_fieldset']['buttons'] = array(
-    '#type' => 'container',
-    '#attributes' => array(
-      'class' => array('enews-buttons'),
-    ),
-  );
-  $form['enews_fieldset']['buttons']['add_enews'] = array(
-    '#type' => 'submit',
-    '#value' => t('Add one more'),
-    '#submit' => array('az_enews_add_one'),
-    '#ajax' => array(
-      'callback' => 'az_enews_add_one_callback',
-      'wrapper' => 'az-enews-fieldset-wrapper',
-    ),
-  );
-
-  if ($form_state['num_enews'] > 1) {
-    $form['enews_fieldset']['buttons']['remove_enews'] = array(
-      '#type' => 'submit',
-      '#value' => t('Remove the last one'),
-      '#submit' => array('az_enews_remove_one'),
-      '#ajax' => array(
-        'callback' => 'az_enews_add_one_callback',
-        'wrapper' => 'az-enews-fieldset-wrapper',
-      ),
-    );
-  }
-
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => 'Save',
-  );
-
-  return $form;
-}
-
-/**
- * @param $form
- * @param $form_state
- *
- * Adds another newsletter fieldset
- */
-function az_enews_add_one($form, &$form_state) {
-  $form_state['num_enews']++;
-  $form_state['rebuild'] = TRUE;
-}
-
-/**
- * @param $form
- * @param $form_state
- * @return mixed
- */
-function az_enews_add_one_callback($form, $form_state) {
-  return $form['enews_fieldset'];
-}
-
-/**
- * @param $form
- * @param $form_state
- *
- * Removes the last newsletter set
- */
-function az_enews_remove_one($form, &$form_state) {
-  if ($form_state['num_enews'] > 1) {
-    $form_state['num_enews']--;
-  }
-  $form_state['rebuild'] = TRUE;
-}
-
-/**
- * @param $form
- * @param $form_state
- * @param $form_id
- *
- * Save function for enewsletter settings
- */
-function feature_enewsletter_config_submit(&$form, &$form_state) {
-  $lists = array();
-  foreach ($form_state['values']['enews_fieldset']['lists'] as $list) {
-    $lists[$list['id']] = array(
-      'name' => $list['name'],
-      'description' => $list['description'],
-    );
-  }
-  $settings = array(
-    'sid' => $form_state['values']['sid'],
-    'lists' => $lists,
-  );
-  variable_set('feature_enewsletter', $settings);
-  drupal_set_message(t('Configuration Settings Saved'));
-}
-
-/**
- *  Implements hook_form_ID_alter().
- *
- *  programtically adds a field based on module configurations
- *  which provides a select list of available newsletter listings
- */
-function feature_enewsletter_form_enewsletter_subscription_node_form_alter(&$form, &$form_state, $form_id) {
-  $settings = variable_get('feature_enewsletter');
-  $options = array();
-  if (isset($settings['lists'])) {
-    foreach ($settings['lists'] as $id => $list) {
-      $options[$id] = $list['name'];
-    }
-    $form['enewsletters'] = array(
-      '#type' => 'select',
-      '#title' => t('Enewsletter Listings'),
-      '#options' => $options,
-      '#multiple' => TRUE,
-      '#default_value' => explode(',', variable_get('feature_enewsletter_' . $form['nid']['#value'], ''))
-    );
-    $form['actions']['submit']['#submit'][] = 'az_enews_save_node';
-  }
-  else {
-    drupal_set_message(t('Module not configured for enewsletters. Please set the settings at <a href="/admin/config/content/az-enewsletter">module settings</a>'), 'warning');
-    foreach ($form as $key => &$value) {
-      if (is_array($value) && isset($value['#type'])) {
-        $value['#disabled'] = TRUE;
-      }
-    }
-  }
-}
-
-
-/**
- * @param $form
- * @param $form_state
- *
- * Custom save function to set variable for newsletter list
- */
-function az_enews_save_node($form, $form_state) {
-  if (isset($form_state['values']['enewsletters']) && !empty($form_state['values']['enewsletters'])) {
-    $lists = implode(',', $form_state['values']['enewsletters']);
-  }
-  else {
-    $settings = variable_get('feature_enewsletter', array());
-    $lists = implode(',', array_keys($settings['lists']));
-  }
-  variable_set('feature_enewsletter_' . $form_state['nid'], $lists);
-}
-
-/**
- *  Implements hook_node_delete().
- *
- * Deletes the variable for newsletter settings.
- */
-function feature_enewsletter_node_delete($node) {
-  if ($node->type == 'enewsletter_subscription') {
-    variable_del('feature_enewsletter_' . $node->nid);
-  }
 }
 
 /**
@@ -256,7 +110,6 @@ function feature_enewsletter_node_view($node, $view_mode, $langcode) {
   if ($node->type == 'enewsletter_subscription') {
     $node_wrapper = entity_metadata_wrapper('node', $node);
     $settings = variable_get('feature_enewsletter');
-    $lists = explode(',', variable_get('feature_enewsletter_' . $node->nid, ''));
 
     // gathers field values
     $vars = array(
@@ -280,15 +133,25 @@ function feature_enewsletter_node_view($node, $view_mode, $langcode) {
       'list' => array(),
     );
 
-    foreach ($lists as $key) {
-      if ($node->field_enews_descriptions['und'][0]['value']) {
-        $vars['list'][$key] = t($settings['lists'][$key]['name'] . ' - ' . $settings['lists'][$key]['description']);
-      }
-      else {
-        $vars['list'][$key] = t($settings['lists'][$key]['name']);
+    if(!empty($node->field_enews_letters)) {
+      foreach ($node->field_enews_letters['und'] as $value) {
+        if (!is_null($value['value'])) {
+          if ($node->field_enews_descriptions['und'][0]['value']) {
+            $vars['list'][$value['value']] = t($settings['lists'][$value['value']]['name'] . ' - ' . $settings['lists'][$value['value']]['description']);
+          }
+          else {
+            $vars['list'][$value['value']] = t($settings['lists'][$value['value']]['name']);
+          }
+        }
       }
     }
 
+    $vars['demographics'] = array();
+    if(!empty($node->field_enews_demos)) {
+      foreach ($node->field_enews_demos['und'] as $value) {
+        $vars['demographics'][$value['value']] = $value['value'];
+      }
+    }
 
     // build form for either subscripotion or unsubscripe form
     if ($vars['create_form'] == 'in') {
@@ -401,12 +264,14 @@ function feature_enewsletter_unsubscribe_form_submit($form, &$form_state) {
  * Opt-In Subscription Form
  */
 function feature_enewsletter_subscribe_form($form, &$form_state) {
+  $settings = variable_get('feature_enewsletter');
   // Salutation field
   if ($form_state['include_salutation']) {
     $form['Salutation'] = array(
       '#type' => 'select',
       '#title' => t('Salutation'),
       '#options' => array('Mr.' => 'Mr.', 'Mrs.' => 'Mrs.'),
+      '#chosen' => $settings['chosen'],
     );
   }
 
@@ -484,6 +349,60 @@ function feature_enewsletter_subscribe_form($form, &$form_state) {
       break;
   }
 
+  /**
+   * Demographics Fields
+   */
+  $demographics = array_filter($form_state['demographics']);
+  foreach ($demographics as $key => &$value) {
+    if (isset($settings['demos'][$key])) {
+      $value = $settings['demos'][$key];
+      switch ($value['data_type']) {
+        case 1:
+          $form[$key . '_label'] = array(
+            '#markup' => $value['name'],
+          );
+          $form[$key] = array(
+            '#type' => 'date',
+            '#required' => $value['required'],
+          );
+          break;
+        default:
+          if (empty($value['values'])) {
+            $form[$key] = array(
+              '#type' => 'textfield',
+              '#title' => $value['name'],
+              '#required' => $value['required'],
+              '#size' => 35,
+            );
+          }
+          else {
+            if (strpos($value['values'], ',,,') !== FALSE) {
+              $list_options = explode(',,,', $value['values']);
+            }
+            else {
+              $list_options = explode(',,', $value['values']);
+            }
+
+            $list_options = array_flip($list_options);
+            foreach ($list_options as $list_key => &$list_value) {
+              $list_value = $list_key;
+            }
+            $form[$key] = array(
+              '#type' => 'select',
+              '#title' => $value['name'],
+              '#required' => $value['required'],
+              '#options' => $list_options,
+              '#mutliple' => strpos($value['values'], ',,,'),
+              '#size' => 35,
+              '#chosen' => $settings['chosen'],
+            );
+          }
+          break;
+      }
+    }
+  }
+
+
   // Dislay the subscription list in desired format
   // Also includes a hidden field to indicate to enewsletter how to read.
   switch ($form_state['list_format']) {
@@ -510,6 +429,7 @@ function feature_enewsletter_subscribe_form($form, &$form_state) {
       $form['NewsletterListID'] = array(
         '#type' => $form_state['list_format'],
         '#options' => $form_state['list'],
+        '#required' => TRUE,
       );
       $form['JoinType'] = array(
         '#type' => 'hidden',
@@ -521,6 +441,8 @@ function feature_enewsletter_subscribe_form($form, &$form_state) {
         '#type' => $form_state['list_format'],
         '#title' => t('Select a Newsletter'),
         '#options' => $form_state['list'],
+        '#required' => TRUE,
+        '#chosen' => $settings['chosen'],
       );
       $form['JoinType'] = array(
         '#type' => 'hidden',
@@ -558,6 +480,7 @@ function feature_enewsletter_subscribe_form($form, &$form_state) {
         'AOL' => 'AOL Text',
       ),
       '#default_value' => 'HTML',
+      '#chosen' => $settings['chosen'],
     );
   }
 
@@ -638,15 +561,35 @@ function feature_enewsletter_subscribe_form($form, &$form_state) {
  * matches the initial email address.
  */
 function feature_enewsletter_subscribe_form_validate($form, &$form_state) {
+  $settings = variable_get('feature_enewsletter');
+  foreach ($settings['demos'] as $key => $value) {
+    if (isset($form_state['values'][$key])) {
+      $input = $form_state['values'][$key];
+
+      switch ($value['data_type']) {
+        case 2:
+          if (!ctype_digit($input)) {
+            form_set_error($key, t('Please enter a valid number.'));
+          }
+          break;
+        case 3:
+          if (!is_numeric($input)) {
+            form_set_error($key, t('Please enter a valid number.'));
+          }
+          break;
+      }
+    }
+  }
+
   if (isset($form_state['input']['Email'])) {
     $email = $form_state['input']['Email'];
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      form_set_error('title', t('Please enter a valid Email Address.'));
+      form_set_error('Email', t('Please enter a valid Email Address.'));
     }
 
     if (isset($form_state['input']['Email_Confirm'])) {
       if ($form_state['input']['Email_Confirm'] !== $form_state['input']['Email']) {
-        form_set_error('title', t('The emails you entered do not match.'));
+        form_set_error('Email_Confirm', t('The emails you entered do not match.'));
       }
     }
   }
@@ -660,6 +603,19 @@ function feature_enewsletter_subscribe_form_validate($form, &$form_state) {
  * Notifies the user of the appropriate message without going off site.
  */
 function feature_enewsletter_subscribe_form_submit($form, &$form_state) {
+  foreach ($form_state['values'] as $key => &$value) {
+    if (substr($key, 0, 17) == 'OptionalParameter') {
+      if (is_array($value)) {
+        if (isset($value['month'])) {
+          $value = implode('/', $value);
+        }
+        else {
+          $value = implode(', ', $value);
+        }
+      }
+    }
+  }
+
   $curl = curl_init();
   curl_setopt_array($curl, array(
     CURLOPT_RETURNTRANSFER => 1,
