@@ -1,7 +1,7 @@
 name = Agency Platform Calendar
 description = This is for Calendar functionality
 core = 7.x
-package = State of Arizona
+package = State of Arizona - Deprecated
 version = 7.x-1.0-Alpha1
 project = agency_platform_calendar
 dependencies[] = agency_platform_defaults
@@ -58,4 +58,4 @@ features_exclude[field_base][field_site_section] = field_site_section
 features_exclude[field_instance][node-event_calendar-field_site_section] = node-event_calendar-field_site_section
 features_exclude[variable][node_options_event_calendar] = node_options_event_calendar
 features_exclude[taxonomy][site_sections] = site_sections
-project path = sites/all/modules/features
+project path = sites/default/modules/features/agency_platform

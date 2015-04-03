@@ -1,0 +1,209 @@
+/* line 1, ../scss/comm-global.scss */
+#page {
+  font-family: "Oswald", sans-serif;
+}
+/* line 4, ../scss/comm-global.scss */
+#page h1#page-title {
+  line-height: 130%;
+  padding: 17px 0px 15px;
+  margin: 0px;
+  text-align: center;
+}
+/* line 11, ../scss/comm-global.scss */
+#page h2 {
+  border-bottom: 4px solid #dcd2c3;
+  padding: 00 5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  text-align: center;
+}
+/* line 17, ../scss/comm-global.scss */
+#page h2.block-title {
+  font-size: 24px;
+  margin-bottom: 0px;
+  padding: 15px 0px 0px;
+  border-bottom: none;
+}
+/* line 24, ../scss/comm-global.scss */
+#page h3 {
+  padding: 0px 0px 5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+/* line 29, ../scss/comm-global.scss */
+#page .region-menu .content > ul.menu > li > a {
+  text-shadow: 1px 1px 0px #fff, -1px 1px 0px #fff, 1px -1px 0px #fff, -1px -1px 0px #fff;
+  letter-spacing: 2px;
+}
+/* line 33, ../scss/comm-global.scss */
+#page .views-more-link {
+  display: inline-block;
+  width: auto;
+  background: url("../img/bullet-arrow.png") no-repeat scroll 95% center transparent;
+  padding: 7px 45px 7px 20px;
+  border-radius: 50px;
+  white-space: normal;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  font-weight: normal;
+}
+
+/* line 46, ../scss/comm-global.scss */
+#zone-footer .region {
+  text-align: center;
+  padding: 5px 0;
+}
+/* line 49, ../scss/comm-global.scss */
+#zone-footer .region > div.block {
+  display: inline-block;
+}
+/* line 53, ../scss/comm-global.scss */
+#zone-footer ul.menu {
+  padding: 5px;
+}
+/* line 55, ../scss/comm-global.scss */
+#zone-footer ul.menu li {
+  display: inline-block;
+}
+/* line 57, ../scss/comm-global.scss */
+#zone-footer ul.menu li a {
+  border-right: 1px solid #fff;
+  padding: 0 15px;
+}
+/* line 60, ../scss/comm-global.scss */
+#zone-footer ul.menu li a:hover {
+  color: #ffd046;
+}
+/* line 64, ../scss/comm-global.scss */
+#zone-footer ul.menu li:last-child a {
+  border-right: none;
+}
+
+/* line 71, ../scss/comm-global.scss */
+#page ul.menu a:hover {
+  background: transparent;
+}
+
+/* line 75, ../scss/comm-global.scss */
+.read-more a {
+  background: url("../img/bullet-arrow.png") no-repeat scroll 95% center transparent;
+  padding: 7px 45px 7px 20px;
+  border-radius: 50px;
+  white-space: normal;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  font-weight: normal;
+}
+
+/* line 85, ../scss/comm-global.scss */
+.follow-links a {
+  font-family: FontAwesome;
+  background: none;
+  padding: 0;
+  margin: 0 5px;
+  visibility: hidden;
+  font-size: 0px;
+}
+/* line 92, ../scss/comm-global.scss */
+.follow-links a:before {
+  font-size: 30px;
+  visibility: visible;
+}
+/* line 96, ../scss/comm-global.scss */
+.follow-links a.follow-link-facebook:before {
+  content: "\f082";
+  color: #3C5B9A;
+}
+/* line 100, ../scss/comm-global.scss */
+.follow-links a.follow-link-twitter:before {
+  content: "\f081";
+  color: #2BA8E0;
+}
+/* line 104, ../scss/comm-global.scss */
+.follow-links a.follow-link-youtube:before {
+  content: "\f166";
+  color: #BF2026;
+}
+/* line 108, ../scss/comm-global.scss */
+.follow-links a.follow-link-flickr:before {
+  content: "\f16e";
+  color: #3566B1;
+}
+/* line 112, ../scss/comm-global.scss */
+.follow-links a.follow-link-newsletter:before {
+  content: "\f199";
+  color: #1AA79C;
+}
+/* line 116, ../scss/comm-global.scss */
+.follow-links a.follow-link-instagram:before {
+  content: "\f16d";
+  color: #3E749D;
+}
+/* line 120, ../scss/comm-global.scss */
+.follow-links a.follow-link-googleplus:before {
+  content: "\f0d4";
+  color: #CD2027;
+}
+/* line 124, ../scss/comm-global.scss */
+.follow-links a.follow-link-vimeo:before {
+  content: "\f194";
+  color: #66B7E7;
+}
+/* line 128, ../scss/comm-global.scss */
+.follow-links a.follow-link-lastfm:before {
+  content: "\f203";
+  color: #DC1F26;
+}
+/* line 132, ../scss/comm-global.scss */
+.follow-links a.follow-link-linkedin:before {
+  content: "\f08c";
+  color: #1473A6;
+}
+/* line 136, ../scss/comm-global.scss */
+.follow-links a.follow-link-delicious:before {
+  content: "\f1a5";
+  color: #3F71B7;
+}
+/* line 140, ../scss/comm-global.scss */
+.follow-links a.follow-link-tumblr:before {
+  content: "\f174";
+  color: #2C4862;
+}
+/* line 144, ../scss/comm-global.scss */
+.follow-links a.follow-link-xing:before {
+  content: "\f169";
+  color: #0C6668;
+}
+/* line 148, ../scss/comm-global.scss */
+.follow-links a.follow-link-this-site:before {
+  content: "\f143";
+  color: #F38E35;
+}
+/* line 153, ../scss/comm-global.scss */
+.follow-links a.follow-link-myspace {
+  visibility: visible;
+  font-size: 14px;
+}
+/* line 157, ../scss/comm-global.scss */
+.follow-links a.follow-link-virb {
+  visibility: visible;
+  font-size: 14px;
+}
+/* line 161, ../scss/comm-global.scss */
+.follow-links a.follow-link-picasa {
+  visibility: visible;
+  font-size: 14px;
+}
+/* line 165, ../scss/comm-global.scss */
+.follow-links a.follow-link-bliptv {
+  visibility: visible;
+  font-size: 14px;
+}
+/* line 169, ../scss/comm-global.scss */
+.follow-links a.follow-link-viadeo {
+  visibility: visible;
+  font-size: 14px;
+}
+/* line 173, ../scss/comm-global.scss */
+.follow-links a.follow-link-spiceworks {
+  visibility: visible;
+  font-size: 14px;
+}

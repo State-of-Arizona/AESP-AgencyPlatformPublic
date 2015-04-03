@@ -1,7 +1,7 @@
 name = Agency Platform Defaults
 description = This is for baseline default features.  This is to remain as basic as possible
 core = 7.x
-package = State of Arizona
+package = State of Arizona - Deprecated
 version = 7.x-1.0-Alpha1
 project = agency_platform_defaults
 dependencies[] = features
@@ -278,4 +278,4 @@ features_exclude[dependencies][workflow_admin_ui] = workflow_admin_ui
 features_exclude[dependencies][workflow_revert] = workflow_revert
 features_exclude[dependencies][workflow_views] = workflow_views
 features_exclude[dependencies][xmlsitemap] = xmlsitemap
-project path = sites/all/modules/features
+project path = sites/default/modules/features/agency_platform

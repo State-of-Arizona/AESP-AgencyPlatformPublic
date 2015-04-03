@@ -152,12 +152,8 @@ function feature_enewsletter_config($form, &$form_state, $no_js_use = FALSE) {
       '#title' => t('Parameter ' . $i . ' Values'),
       '#size' => 25,
       '#default_value' => (isset($settings['demos']) && isset($settings['demos']['OptionalParameter' . $i])) ? $settings['demos']['OptionalParameter' . $i]['values'] : '',
+      '#maxlength' => 10000,
     );
-//    $form['demographics_fieldset']['demos']['OptionalParameter' . $i]['private'] = array(
-//      '#type' => 'checkbox',
-//      '#title' => 'Private',
-//      '#default_value' => (isset($settings['demos']) && isset($settings['demos']['OptionalParameter' . $i])) ? $settings['demos']['OptionalParameter' . $i]['private'] : 0,
-//    );
     $form['demographics_fieldset']['demos']['OptionalParameter' . $i]['required'] = array(
       '#type' => 'checkbox',
       '#title' => 'Required',
@@ -316,7 +312,7 @@ function feature_enewsletter_config_submit(&$form, &$form_state) {
     'sid' => $form_state['values']['sid'],
     'lists' => $lists,
     'demos' => $form_state['values']['demographics_fieldset']['demos'],
-    'chosen' => isset($form_state['values']['chosen'])?$form_state['values']['chosen']:0,
+    'chosen' => isset($form_state['values']['chosen']) ? $form_state['values']['chosen'] : 0,
   );
   variable_set('feature_enewsletter', $settings);
   drupal_set_message(t('Configuration Settings Saved'));

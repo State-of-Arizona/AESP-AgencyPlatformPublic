@@ -1,7 +1,7 @@
 name = Agency Platform Social Media
 description = This is for Social Media functionality
 core = 7.x
-package = State of Arizona
+package = State of Arizona - Deprecated
 version = 7.x-1.0-Alpha1
 project = agency_platform_social_media
 dependencies[] = features
@@ -13,4 +13,4 @@ features[user_permission][] = add authenticated twitter accounts
 features[user_permission][] = add twitter accounts
 features[user_permission][] = administer twitter accounts
 features_exclude[dependencies][ctools] = ctools
-project path = sites/all/modules/features
+project path = sites/default/modules/features/agency_platform
