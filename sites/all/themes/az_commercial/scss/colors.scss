@@ -9,10 +9,6 @@ body {
   }
 }
 
-#page .region-menu .content > ul.menu > li > a {
-  color:#000009;
-}
-
 #content-wrapper aside .region,
 #content,
 #footer-branding,
@@ -20,16 +16,23 @@ body {
 .total-postscripts-1 .mbp-defaults-row,
 .total-postscripts-2 .region,
 .total-postscripts-3 .region,
-.total-postscripts-4 .region
-{
+.total-postscripts-4 .region {
   background-color: #eae5d7;
 }
 
 #zone-branding {
-  .region-menu ul.menu ul {
-    a:hover {
-      background-color: #5c8984 !important;
-      color: #ffffff !important;
+  @media (max-width:600px) {
+    background-color: #5c8984;
+  }
+  .region-menu {
+    .content > ul.menu > li > a {
+      color: #000009;
+    }
+    ul.menu ul {
+      a:hover {
+        background-color: #5c8984 !important;
+        color: #ffffff !important;
+      }
     }
   }
 }
@@ -69,7 +72,7 @@ body {
   background-color: #c5d8db;
 }
 
-p.file, div.file, span.file, a.file, div.more-link, a.more-link, .read-more a, a.views-more-link  {
+p.file, div.file, span.file, a.file, div.more-link, a.more-link, .read-more a, a.views-more-link {
   background-color: #d9cfc6 !important;
 }
 

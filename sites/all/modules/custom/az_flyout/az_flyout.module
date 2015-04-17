@@ -220,3 +220,43 @@ function _az_flyout_content() {
   }
   return theme('az_flyout_output', $settings);
 }
+
+function things() {
+  $string = 'Authorization|Bearer df20dcacd1441a83a4173c946140e4';
+
+
+  // Get cURL resource
+  $curl = curl_init();
+// Set some options - we are passing in a useragent too here
+  curl_setopt_array($curl, array(
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_URL => 'http://api.integrateaz.gov/t/ad.az.gov/directory/1.0.0/get_emp_xml',
+    CURLOPT_USERAGENT => 'Codular Sample cURL Request',
+    CURLOPT_HTTPHEADER => array(
+      'Authorization|Bearer' => 'df20dcacd1441a83a4173c946140e4',
+    )
+  ));
+
+//  curl_setopt($curl, CURLOPT_HTTPHEADER, array('HeaderName: HeaderValue'));
+// Send the request & save response to $resp
+  $resp = curl_exec($curl);
+// Close request to clear up some resources
+
+  dpm($resp);
+  curl_close($curl);
+
+  $dir = 'public://css_injector';
+  file_prepare_directory($dir, FILE_CREATE_DIRECTORY);
+  $dir = 'public://js_injector';
+  file_prepare_directory($dir, FILE_CREATE_DIRECTORY);
+  
+  for($i=1; $i <20; $i++){
+    $source = 'http://www.azauditor.gov/sites/default/files/css_injector/css_injector_' . $i . '.css';
+    $path = 'public://css_injector/css_injector_' . $i . '.css';
+    system_retrieve_file($source, $path, FALSE, FILE_EXISTS_REPLACE);
+
+    $source = 'http://www.azauditor.gov/sites/default/files/js_injector/js_injector_' . $i . '.js';
+    $path = 'public://js_injector/js_injector_' . $i . '.js';
+    system_retrieve_file($source, $path, FALSE, FILE_EXISTS_REPLACE);
+  }
+}

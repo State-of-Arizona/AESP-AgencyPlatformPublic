@@ -12,12 +12,7 @@ body a:visited {
   color: #ad4321;
 }
 
-/* line 12, ../scss/colors.scss */
-#page .region-menu .content > ul.menu > li > a {
-  color: #000009;
-}
-
-/* line 24, ../scss/colors.scss */
+/* line 19, ../scss/colors.scss */
 #content-wrapper aside .region,
 #content,
 #footer-branding,
@@ -29,64 +24,74 @@ body a:visited {
   background-color: #eae5d7;
 }
 
-/* line 30, ../scss/colors.scss */
+@media (max-width: 600px) {
+  /* line 23, ../scss/colors.scss */
+  #zone-branding {
+    background-color: #5c8984;
+  }
+}
+/* line 28, ../scss/colors.scss */
+#zone-branding .region-menu .content > ul.menu > li > a {
+  color: #000009;
+}
+/* line 32, ../scss/colors.scss */
 #zone-branding .region-menu ul.menu ul a:hover {
   background-color: #5c8984 !important;
   color: #ffffff !important;
 }
 
-/* line 37, ../scss/colors.scss */
+/* line 40, ../scss/colors.scss */
 #zone-footer {
   background-color: #5e8a85;
 }
-/* line 39, ../scss/colors.scss */
+/* line 42, ../scss/colors.scss */
 #zone-footer p, #zone-footer div, #zone-footer span {
   color: #ffffff;
 }
-/* line 42, ../scss/colors.scss */
+/* line 45, ../scss/colors.scss */
 #zone-footer a {
   color: #eeeeee;
 }
-/* line 45, ../scss/colors.scss */
+/* line 48, ../scss/colors.scss */
 #zone-footer #region-footer-second {
   background-color: #8b8175;
 }
-/* line 48, ../scss/colors.scss */
+/* line 51, ../scss/colors.scss */
 #zone-footer #footer-contact a {
   color: #ed5c2d;
 }
 
-/* line 53, ../scss/colors.scss */
+/* line 56, ../scss/colors.scss */
 #zone-header .region {
   background-color: #494949;
 }
 
-/* line 57, ../scss/colors.scss */
+/* line 60, ../scss/colors.scss */
 #zone-header .region {
   color: #ffffff;
 }
 
-/* line 62, ../scss/colors.scss */
+/* line 65, ../scss/colors.scss */
 #preface-group h2.title, #preface-group .block-title {
   background-color: #6d9591;
   color: #ffffff;
 }
 
-/* line 68, ../scss/colors.scss */
+/* line 71, ../scss/colors.scss */
 #preface-group .mbp-defaults-row > div, #preface-group.total-prefaces-2 .region, #preface-group.total-prefaces-3 .region {
   background-color: #c5d8db;
 }
 
-/* line 72, ../scss/colors.scss */
+/* line 75, ../scss/colors.scss */
 p.file, div.file, span.file, a.file, div.more-link, a.more-link, .read-more a, a.views-more-link {
   background-color: #d9cfc6 !important;
 }
 
-/* line 78, ../scss/colors.scss */
+/* line 81, ../scss/colors.scss */
 .node-basic-slideshow .field-slideshow-pager a {
   background-color: #c5d8db;
 }
-/* line 81, ../scss/colors.scss */
+/* line 84, ../scss/colors.scss */
 .node-basic-slideshow .field-slideshow-pager a.activeSlide {
   background-color: #6d9591;
 }
