@@ -40,6 +40,10 @@
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
     font-weight: normal;
   }
+
+  .region-menu ul.menu a {
+    font-family: "Oswald", sans-serif;
+  }
 }
 
 #zone-footer {
@@ -89,65 +93,66 @@
     margin: 0 5px;
     visibility: hidden;
     font-size: 0px;
+    text-decoration: none;
     &:before {
       font-size: 30px;
       visibility: visible;
     }
     &.follow-link-facebook:before {
       content: "\f082";
-      color: #3C5B9A;
+      color: #3c5b9a;
     }
     &.follow-link-twitter:before {
       content: "\f081";
-      color: #2BA8E0;
+      color: #2ba8e0;
     }
     &.follow-link-youtube:before {
       content: "\f166";
-      color: #BF2026;
+      color: #bf2026;
     }
     &.follow-link-flickr:before {
       content: "\f16e";
-      color: #3566B1;
+      color: #3566b1;
     }
     &.follow-link-newsletter:before {
       content: "\f199";
-      color: #1AA79C;
+      color: #1aa79c;
     }
     &.follow-link-instagram:before {
       content: "\f16d";
-      color: #3E749D;
+      color: #3e749d;
     }
     &.follow-link-googleplus:before {
       content: "\f0d4";
-      color: #CD2027;
+      color: #cd2027;
     }
     &.follow-link-vimeo:before {
       content: "\f194";
-      color: #66B7E7;
+      color: #66b7e7;
     }
     &.follow-link-lastfm:before {
       content: "\f203";
-      color: #DC1F26;
+      color: #dc1f26;
     }
     &.follow-link-linkedin:before {
       content: "\f08c";
-      color: #1473A6;
+      color: #1473a6;
     }
     &.follow-link-delicious:before {
       content: "\f1a5";
-      color: #3F71B7;
+      color: #3f71b7;
     }
     &.follow-link-tumblr:before {
       content: "\f174";
-      color: #2C4862;
+      color: #2c4862;
     }
     &.follow-link-xing:before {
       content: "\f169";
-      color: #0C6668;
+      color: #0c6668;
     }
     &.follow-link-this-site:before {
       content: "\f143";
-      color: #F38E35;
+      color: #f38e35;
     }
 
     &.follow-link-myspace {
@@ -175,4 +180,8 @@
       font-size: 14px;
     }
   }
+}
+
+.view-commercial-slider .flexslider {
+  border: none;
 }

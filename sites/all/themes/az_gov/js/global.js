@@ -226,6 +226,10 @@
       $(window).resize(function () {
         menuadjust();
       });
+
+
+
+
     }
   }
 })(jQuery);

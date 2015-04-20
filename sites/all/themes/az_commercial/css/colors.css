@@ -73,25 +73,29 @@ body a:visited {
 
 /* line 65, ../scss/colors.scss */
 #preface-group h2.title, #preface-group .block-title {
-  background-color: #6d9591;
-  color: #ffffff;
+  color: #333333;
 }
 
-/* line 71, ../scss/colors.scss */
-#preface-group .mbp-defaults-row > div, #preface-group.total-prefaces-2 .region, #preface-group.total-prefaces-3 .region {
+/* line 70, ../scss/colors.scss */
+#preface-group .menu-block-placement-doesnt-exist {
   background-color: #c5d8db;
 }
 
-/* line 75, ../scss/colors.scss */
+/* line 74, ../scss/colors.scss */
+#preface-group .mbp-defaults-row > div {
+  background-color: #c5d8db;
+}
+
+/* line 78, ../scss/colors.scss */
 p.file, div.file, span.file, a.file, div.more-link, a.more-link, .read-more a, a.views-more-link {
   background-color: #d9cfc6 !important;
 }
 
-/* line 81, ../scss/colors.scss */
+/* line 84, ../scss/colors.scss */
 .node-basic-slideshow .field-slideshow-pager a {
   background-color: #c5d8db;
 }
-/* line 84, ../scss/colors.scss */
+/* line 87, ../scss/colors.scss */
 .node-basic-slideshow .field-slideshow-pager a.activeSlide {
   background-color: #6d9591;
 }

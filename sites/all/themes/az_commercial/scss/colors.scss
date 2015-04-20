@@ -21,7 +21,7 @@ body {
 }
 
 #zone-branding {
-  @media (max-width:600px) {
+  @media (max-width: 600px) {
     background-color: #5c8984;
   }
   .region-menu {
@@ -63,12 +63,15 @@ body {
 
 #preface-group {
   h2.title, .block-title {
-    background-color: #6d9591;
-    color: #ffffff;
+    color: #333333;
   }
 }
 
-#preface-group .mbp-defaults-row > div, #preface-group.total-prefaces-2 .region, #preface-group.total-prefaces-3 .region {
+#preface-group .menu-block-placement-doesnt-exist {
+  background-color: #c5d8db;
+}
+
+#preface-group .mbp-defaults-row > div {
   background-color: #c5d8db;
 }
 

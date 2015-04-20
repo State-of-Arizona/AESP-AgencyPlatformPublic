@@ -12,6 +12,10 @@
         border-top: 2px solid #ffd046;
         margin-top: -2px;
       }
+      &.menu-li-home:hover {
+        border-top: 0;
+        margin-top: 0;
+      }
 
       > a {
         padding: 10px;
@@ -39,6 +43,12 @@
 #page #preface-group, #page #postscript-group {
   padding-bottom: 20px;
   box-shadow: none;
+
+  &.total-prefaces-1 .menu-block-placement-doesnt-exist,
+  &.total-postscripts-1 .menu-block-placement-doesnt-exist {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
   &.total-prefaces-1, &.total-postscripts-1 {
     .view.total-results-2 {
       .mbp-defaults-row {
