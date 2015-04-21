@@ -56,16 +56,7 @@ function feature_basic_config_update_7010() {
   variable_set('search404_disable_error_message', '1');
   variable_set('search404_do_custom_search', '1');
   variable_set('search404_custom_search_path', 'search/node/@keys');
-
-  $dir = scandir(drupal_realpath('public://'));
-
-  foreach($dir as $file){
-    if(strpos($file, '.doc') === FALSE && strpos($file, '.gif') === FALSE && strpos($file, '.ppt') === FALSE && strpos($file, '.xls') === FALSE && strpos($file, '.jpg') === FALSE && strpos($file, '.png') === FALSE && strpos($file, '.pdf') === FALSE){
-      dpm($file);
-    }
-  }
-
-
+  
   if (module_exists('admin_menu')) {
     $permissions = array(
       'Contributor' => array(
