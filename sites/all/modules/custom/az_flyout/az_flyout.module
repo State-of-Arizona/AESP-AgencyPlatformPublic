@@ -1,11 +1,19 @@
 <?php
+/**
+ * Implements hook_ctools_plugin_api().
+ */
+function az_flyout_ctools_plugin_api($module = NULL, $api = NULL) {
+  if ($module == "context" && $api == "context") {
+    return array("version" => "3");
+  }
+}
 
 /**
  *  Implements hook_init().
  */
 function az_flyout_init() {
   $settings = variable_get('az_flyout', array());
-  drupal_add_js(array('azflyout' => array('hidemain' => $settings['hide_main'])), array('type' => 'setting'));
+  drupal_add_js(array('azflyout' => array('hidemain' => isset($settings['hide_main']) ? $settings['hide_main'] : 0)), array('type' => 'setting'));
   drupal_add_js(drupal_get_path('module', 'az_flyout') . '/js/az_flyout.js');
 }
 
@@ -203,60 +211,20 @@ function az_flyout_theme() {
 function _az_flyout_content() {
   $settings = variable_get('az_flyout', array());
 
-  if ($settings['header']) {
+  if (isset($settings['header']) && $settings['header']) {
     $settings['header'] = menu_tree_output(menu_tree_all_data($settings['header']));
   }
-  if ($settings['menu']) {
+  if (isset($settings['menu']) && $settings['menu']) {
     $settings['menu'] = menu_tree_output(menu_tree_all_data($settings['menu']));
   }
-  $settings['displays'] = $settings['displays'] ? 'mobile-only' : 'desktop-and-mobile';
-  if ($settings['image']) {
+  $settings['displays'] = isset($settings['displays']) && $settings['displays'] ? 'mobile-only' : 'desktop-and-mobile';
+  if (isset($settings['image']) && $settings['image']) {
     $file = file_load($settings['image']);
     $settings['image'] = file_create_url($file->uri);
   }
-  if ($settings['contact_map_image']) {
+  if (isset($settings['contact_map_image']) && $settings['contact_map_image']) {
     $file = file_load($settings['contact_map_image']);
     $settings['contact_map_image'] = file_create_url($file->uri);
   }
   return theme('az_flyout_output', $settings);
-}
-
-function things() {
-  $string = 'Authorization|Bearer df20dcacd1441a83a4173c946140e4';
-
-
-  // Get cURL resource
-  $curl = curl_init();
-// Set some options - we are passing in a useragent too here
-  curl_setopt_array($curl, array(
-    CURLOPT_RETURNTRANSFER => 1,
-    CURLOPT_URL => 'http://api.integrateaz.gov/t/ad.az.gov/directory/1.0.0/get_emp_xml',
-    CURLOPT_USERAGENT => 'Codular Sample cURL Request',
-    CURLOPT_HTTPHEADER => array(
-      'Authorization|Bearer' => 'df20dcacd1441a83a4173c946140e4',
-    )
-  ));
-
-//  curl_setopt($curl, CURLOPT_HTTPHEADER, array('HeaderName: HeaderValue'));
-// Send the request & save response to $resp
-  $resp = curl_exec($curl);
-// Close request to clear up some resources
-
-  dpm($resp);
-  curl_close($curl);
-
-  $dir = 'public://css_injector';
-  file_prepare_directory($dir, FILE_CREATE_DIRECTORY);
-  $dir = 'public://js_injector';
-  file_prepare_directory($dir, FILE_CREATE_DIRECTORY);
-  
-  for($i=1; $i <20; $i++){
-    $source = 'http://www.azauditor.gov/sites/default/files/css_injector/css_injector_' . $i . '.css';
-    $path = 'public://css_injector/css_injector_' . $i . '.css';
-    system_retrieve_file($source, $path, FALSE, FILE_EXISTS_REPLACE);
-
-    $source = 'http://www.azauditor.gov/sites/default/files/js_injector/js_injector_' . $i . '.js';
-    $path = 'public://js_injector/js_injector_' . $i . '.js';
-    system_retrieve_file($source, $path, FALSE, FILE_EXISTS_REPLACE);
-  }
 }

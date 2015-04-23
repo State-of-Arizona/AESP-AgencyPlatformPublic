@@ -2,7 +2,7 @@
   <div class="wrapper clearfix">
     <div class="fa fa-bars" title="Open Side Menu"></div>
 
-    <?php if ($image): ?>
+    <?php if (isset($image) && $image): ?>
       <div class="logo">
         <a href="/">
           <img src="<?php print $image; ?>" alt="Top Image Logo"/>
@@ -30,8 +30,8 @@
     <?php print render($menu); ?>
   </div>
   <div class="contact-info">
-    <?php if ($contact_title): ?>
-      <?php if ($contact_title_link): ?>
+    <?php if (isset($contact_title) && $contact_title): ?>
+      <?php if (isset($contact_title_link) && $contact_title_link): ?>
         <h3 class="contact-title">
           <a href="<?php print $contact_title_link; ?>"><?php print $contact_title; ?></a>
         </h3>
@@ -41,39 +41,39 @@
         </h3>
       <?php endif; ?>
     <?php endif; ?>
-    <?php if ($contact_name): ?>
+    <?php if (isset($contact_name) && $contact_name): ?>
       <div class="agency-name">
         <?php print $contact_name; ?>
       </div>
     <?php endif; ?>
-    <?php if ($contact_address1): ?>
+    <?php if (isset($contact_address1) && $contact_address1): ?>
       <div class="agency-address1">
         <?php print $contact_address1; ?>
       </div>
     <?php endif; ?>
-    <?php if ($contact_address2): ?>
+    <?php if (isset($contact_address2) && $contact_address2): ?>
       <div class="agency-address2">
         <?php print $contact_address2; ?>
       </div>
     <?php endif; ?>
-    <?php if ($contact_phone): ?>
+    <?php if (isset($contact_phone) && $contact_phone): ?>
       <div class="agency-phone">
         Phone: <?php print $contact_phone; ?>
       </div>
     <?php endif; ?>
-    <?php if ($contact_fax): ?>
+    <?php if (isset($contact_fax) && $contact_fax): ?>
       <div class="agency-fax">
         Fax: <?php print $contact_fax; ?>
       </div>
     <?php endif; ?>
-    <?php if ($contact_map_link): ?>
+    <?php if (isset($contact_map_link) && $contact_map_link): ?>
       <div class="contact-map-link">
         <a href="<?php print $contact_map_link; ?>">View in Google Maps</a>
       </div>
     <?php endif; ?>
 
-    <?php if ($contact_map_image): ?>
-      <?php if ($contact_map_link): ?>
+    <?php if (isset($contact_map_image) && $contact_map_image): ?>
+      <?php if (isset($contact_map_link) && $contact_map_link): ?>
         <div class="contact-map">
           <a href="<?php print $contact_map_link; ?>">
             <img src="<?php print $contact_map_image; ?>" alt="Map Image"/>
