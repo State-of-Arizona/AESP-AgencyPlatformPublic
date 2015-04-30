@@ -89,8 +89,8 @@
       }
     }
   }
-  &.total-prefaces-2 {
-    .preface {
+  &.total-prefaces-2, &.total-postscripts-2 {
+    .preface, .postscript {
       width: 49%;
       box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
       &:first-child {
@@ -101,12 +101,24 @@
       }
     }
   }
-  &.total-prefaces-3 {
-    .preface {
+  &.total-prefaces-3, &.total-postscripts-3 {
+    .preface, .postscript {
       width: 32%;
       box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
       &:nth-child(2) {
         margin: 0 2%;
+      }
+    }
+  }
+  &.total-postscripts-4 {
+    .postscript {
+      width: 23.5%;
+      box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+      &:nth-child(2) {
+        margin: 0 1% 0 2%;
+      }
+      &:nth-child(3) {
+        margin: 0 2% 0 1%;
       }
     }
   }
