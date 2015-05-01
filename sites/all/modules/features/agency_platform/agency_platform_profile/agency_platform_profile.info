@@ -1,7 +1,7 @@
 name = Agency Platform Profile
 description = This is for Profile functionality
 core = 7.x
-package = State of Arizona
+package = State of Arizona - Deprecated
 version = 7.x-1.0-Alpha1
 project = agency_platform_profile
 dependencies[] = email
@@ -78,4 +78,4 @@ features_exclude[field_base][field_site_section] = field_site_section
 features_exclude[field_instance][node-profile-field_site_section] = node-profile-field_site_section
 features_exclude[variable][node_options_profile] = node_options_profile
 features_exclude[taxonomy][site_sections] = site_sections
-project path = sites/all/modules/features
+project path = sites/default/modules/features/agency_platform

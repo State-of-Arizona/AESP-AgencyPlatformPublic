@@ -1,0 +1,255 @@
+/* line 1, ../scss/comm-600.scss */
+#zone-branding {
+  box-shadow: none;
+}
+/* line 4, ../scss/comm-600.scss */
+#zone-branding .site-details a.logo img {
+  width: auto;
+}
+/* line 11, ../scss/comm-600.scss */
+#zone-branding .region-menu .content > ul.menu > li:hover {
+  border-top: 2px solid #ffd046;
+  margin-top: -2px;
+}
+/* line 15, ../scss/comm-600.scss */
+#zone-branding .region-menu .content > ul.menu > li.menu-li-home:hover {
+  border-top: 0;
+  margin-top: 0;
+}
+/* line 20, ../scss/comm-600.scss */
+#zone-branding .region-menu .content > ul.menu > li > a {
+  padding: 10px;
+}
+/* line 22, ../scss/comm-600.scss */
+#zone-branding .region-menu .content > ul.menu > li > a:hover {
+  background: transparent;
+}
+
+/* line 30, ../scss/comm-600.scss */
+#zone-header .region.region-header-second {
+  background-color: transparent;
+  box-shadow: none;
+}
+/* line 33, ../scss/comm-600.scss */
+#zone-header .region.region-header-second #breadcrumb {
+  box-shadow: none;
+}
+/* line 35, ../scss/comm-600.scss */
+#zone-header .region.region-header-second #breadcrumb a {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* line 43, ../scss/comm-600.scss */
+#page #preface-group, #page #postscript-group {
+  padding-bottom: 20px;
+  box-shadow: none;
+}
+/* line 48, ../scss/comm-600.scss */
+#page #preface-group.total-prefaces-1 .menu-block-placement-doesnt-exist, #page #preface-group.total-postscripts-1 .menu-block-placement-doesnt-exist, #page #postscript-group.total-prefaces-1 .menu-block-placement-doesnt-exist, #page #postscript-group.total-postscripts-1 .menu-block-placement-doesnt-exist {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+/* line 54, ../scss/comm-600.scss */
+#page #preface-group.total-prefaces-1 .view.total-results-2 .mbp-defaults-row, #page #preface-group.total-postscripts-1 .view.total-results-2 .mbp-defaults-row, #page #postscript-group.total-prefaces-1 .view.total-results-2 .mbp-defaults-row, #page #postscript-group.total-postscripts-1 .view.total-results-2 .mbp-defaults-row {
+  width: 49%;
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+}
+/* line 57, ../scss/comm-600.scss */
+#page #preface-group.total-prefaces-1 .view.total-results-2 .mbp-defaults-row:first-child, #page #preface-group.total-postscripts-1 .view.total-results-2 .mbp-defaults-row:first-child, #page #postscript-group.total-prefaces-1 .view.total-results-2 .mbp-defaults-row:first-child, #page #postscript-group.total-postscripts-1 .view.total-results-2 .mbp-defaults-row:first-child {
+  margin: 0 1% 0 0;
+}
+/* line 60, ../scss/comm-600.scss */
+#page #preface-group.total-prefaces-1 .view.total-results-2 .mbp-defaults-row:last-child, #page #preface-group.total-postscripts-1 .view.total-results-2 .mbp-defaults-row:last-child, #page #postscript-group.total-prefaces-1 .view.total-results-2 .mbp-defaults-row:last-child, #page #postscript-group.total-postscripts-1 .view.total-results-2 .mbp-defaults-row:last-child {
+  margin: 0 0 0 1%;
+}
+/* line 66, ../scss/comm-600.scss */
+#page #preface-group.total-prefaces-1 .view.total-results-3 .mbp-defaults-row, #page #preface-group.total-postscripts-1 .view.total-results-3 .mbp-defaults-row, #page #postscript-group.total-prefaces-1 .view.total-results-3 .mbp-defaults-row, #page #postscript-group.total-postscripts-1 .view.total-results-3 .mbp-defaults-row {
+  width: 32%;
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+}
+/* line 69, ../scss/comm-600.scss */
+#page #preface-group.total-prefaces-1 .view.total-results-3 .mbp-defaults-row:nth-child(2), #page #preface-group.total-postscripts-1 .view.total-results-3 .mbp-defaults-row:nth-child(2), #page #postscript-group.total-prefaces-1 .view.total-results-3 .mbp-defaults-row:nth-child(2), #page #postscript-group.total-postscripts-1 .view.total-results-3 .mbp-defaults-row:nth-child(2) {
+  margin: 0 2%;
+}
+/* line 75, ../scss/comm-600.scss */
+#page #preface-group.total-prefaces-1 .view.total-results-4 .mbp-defaults-row, #page #preface-group.total-postscripts-1 .view.total-results-4 .mbp-defaults-row, #page #postscript-group.total-prefaces-1 .view.total-results-4 .mbp-defaults-row, #page #postscript-group.total-postscripts-1 .view.total-results-4 .mbp-defaults-row {
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+  width: 23.5%;
+}
+/* line 78, ../scss/comm-600.scss */
+#page #preface-group.total-prefaces-1 .view.total-results-4 .mbp-defaults-row:nth-child(2), #page #preface-group.total-postscripts-1 .view.total-results-4 .mbp-defaults-row:nth-child(2), #page #postscript-group.total-prefaces-1 .view.total-results-4 .mbp-defaults-row:nth-child(2), #page #postscript-group.total-postscripts-1 .view.total-results-4 .mbp-defaults-row:nth-child(2) {
+  margin: 0 1% 0 2%;
+}
+/* line 81, ../scss/comm-600.scss */
+#page #preface-group.total-prefaces-1 .view.total-results-4 .mbp-defaults-row:nth-child(3), #page #preface-group.total-postscripts-1 .view.total-results-4 .mbp-defaults-row:nth-child(3), #page #postscript-group.total-prefaces-1 .view.total-results-4 .mbp-defaults-row:nth-child(3), #page #postscript-group.total-postscripts-1 .view.total-results-4 .mbp-defaults-row:nth-child(3) {
+  margin: 0 2% 0 1%;
+}
+/* line 87, ../scss/comm-600.scss */
+#page #preface-group.total-prefaces-1 .view.total-results-5 .mbp-defaults-row, #page #preface-group.total-postscripts-1 .view.total-results-5 .mbp-defaults-row, #page #postscript-group.total-prefaces-1 .view.total-results-5 .mbp-defaults-row, #page #postscript-group.total-postscripts-1 .view.total-results-5 .mbp-defaults-row {
+  width: 49%;
+}
+/* line 93, ../scss/comm-600.scss */
+#page #preface-group.total-prefaces-2 .preface, #page #preface-group.total-prefaces-2 .postscript, #page #preface-group.total-postscripts-2 .preface, #page #preface-group.total-postscripts-2 .postscript, #page #postscript-group.total-prefaces-2 .preface, #page #postscript-group.total-prefaces-2 .postscript, #page #postscript-group.total-postscripts-2 .preface, #page #postscript-group.total-postscripts-2 .postscript {
+  width: 49%;
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+}
+/* line 96, ../scss/comm-600.scss */
+#page #preface-group.total-prefaces-2 .preface:first-child, #page #preface-group.total-prefaces-2 .postscript:first-child, #page #preface-group.total-postscripts-2 .preface:first-child, #page #preface-group.total-postscripts-2 .postscript:first-child, #page #postscript-group.total-prefaces-2 .preface:first-child, #page #postscript-group.total-prefaces-2 .postscript:first-child, #page #postscript-group.total-postscripts-2 .preface:first-child, #page #postscript-group.total-postscripts-2 .postscript:first-child {
+  margin: 0 1% 0 0;
+}
+/* line 99, ../scss/comm-600.scss */
+#page #preface-group.total-prefaces-2 .preface:last-child, #page #preface-group.total-prefaces-2 .postscript:last-child, #page #preface-group.total-postscripts-2 .preface:last-child, #page #preface-group.total-postscripts-2 .postscript:last-child, #page #postscript-group.total-prefaces-2 .preface:last-child, #page #postscript-group.total-prefaces-2 .postscript:last-child, #page #postscript-group.total-postscripts-2 .preface:last-child, #page #postscript-group.total-postscripts-2 .postscript:last-child {
+  margin: 0 0 0 1%;
+}
+/* line 105, ../scss/comm-600.scss */
+#page #preface-group.total-prefaces-3 .preface, #page #preface-group.total-prefaces-3 .postscript, #page #preface-group.total-postscripts-3 .preface, #page #preface-group.total-postscripts-3 .postscript, #page #postscript-group.total-prefaces-3 .preface, #page #postscript-group.total-prefaces-3 .postscript, #page #postscript-group.total-postscripts-3 .preface, #page #postscript-group.total-postscripts-3 .postscript {
+  width: 32%;
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+}
+/* line 108, ../scss/comm-600.scss */
+#page #preface-group.total-prefaces-3 .preface:nth-child(2), #page #preface-group.total-prefaces-3 .postscript:nth-child(2), #page #preface-group.total-postscripts-3 .preface:nth-child(2), #page #preface-group.total-postscripts-3 .postscript:nth-child(2), #page #postscript-group.total-prefaces-3 .preface:nth-child(2), #page #postscript-group.total-prefaces-3 .postscript:nth-child(2), #page #postscript-group.total-postscripts-3 .preface:nth-child(2), #page #postscript-group.total-postscripts-3 .postscript:nth-child(2) {
+  margin: 0 2%;
+}
+/* line 114, ../scss/comm-600.scss */
+#page #preface-group.total-postscripts-4 .postscript, #page #postscript-group.total-postscripts-4 .postscript {
+  width: 23.5%;
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+}
+/* line 117, ../scss/comm-600.scss */
+#page #preface-group.total-postscripts-4 .postscript:nth-child(2), #page #postscript-group.total-postscripts-4 .postscript:nth-child(2) {
+  margin: 0 1% 0 2%;
+}
+/* line 120, ../scss/comm-600.scss */
+#page #preface-group.total-postscripts-4 .postscript:nth-child(3), #page #postscript-group.total-postscripts-4 .postscript:nth-child(3) {
+  margin: 0 2% 0 1%;
+}
+
+/* line 127, ../scss/comm-600.scss */
+#content-wrapper {
+  box-shadow: none;
+}
+/* line 129, ../scss/comm-600.scss */
+#content-wrapper aside {
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+}
+
+/* line 134, ../scss/comm-600.scss */
+#content {
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+}
+/* line 136, ../scss/comm-600.scss */
+#content.both-sidebars {
+  width: 40%;
+  margin: 0 1.5%;
+}
+/* line 140, ../scss/comm-600.scss */
+#content.right-sidebar {
+  width: 66%;
+  margin-right: 2%;
+}
+/* line 144, ../scss/comm-600.scss */
+#content.left-sidebar {
+  width: 73%;
+  margin-left: 2%;
+}
+
+/* line 150, ../scss/comm-600.scss */
+#postscript-group {
+  padding-top: 20px;
+  box-shadow: none;
+}
+/* line 157, ../scss/comm-600.scss */
+#postscript-group.total-postscripts-2 .postscript {
+  width: 49%;
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+}
+/* line 160, ../scss/comm-600.scss */
+#postscript-group.total-postscripts-2 .postscript:first-child {
+  margin: 0 1% 0 0;
+}
+/* line 163, ../scss/comm-600.scss */
+#postscript-group.total-postscripts-2 .postscript:last-child {
+  margin: 0 0 0 1%;
+}
+/* line 168, ../scss/comm-600.scss */
+#postscript-group.total-postscripts-3 {
+  width: 32%;
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+}
+/* line 171, ../scss/comm-600.scss */
+#postscript-group.total-postscripts-3:nth-child(2) {
+  margin: 0 2%;
+}
+/* line 176, ../scss/comm-600.scss */
+#postscript-group.total-postscripts-4 .postscript {
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+  width: 23.5%;
+}
+/* line 179, ../scss/comm-600.scss */
+#postscript-group.total-postscripts-4 .postscript:nth-child(2) {
+  margin: 0 1% 0 2%;
+}
+/* line 182, ../scss/comm-600.scss */
+#postscript-group.total-postscripts-4 .postscript:nth-child(3) {
+  margin: 0 2% 0 1%;
+}
+
+/* line 189, ../scss/comm-600.scss */
+.view-commercial-slider {
+  margin: 0 0 30px;
+}
+/* line 191, ../scss/comm-600.scss */
+.view-commercial-slider .flexslider {
+  margin: 0;
+}
+/* line 194, ../scss/comm-600.scss */
+.view-commercial-slider .views-field {
+  margin-bottom: 0;
+}
+/* line 198, ../scss/comm-600.scss */
+.view-commercial-slider ul.slides > li {
+  position: relative;
+}
+/* line 202, ../scss/comm-600.scss */
+.view-commercial-slider .views-field-body {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  height: 70px;
+  background-color: rgba(255, 255, 255, 0.6);
+  font-size: 30px;
+}
+/* line 210, ../scss/comm-600.scss */
+.view-commercial-slider .views-field-body > div {
+  line-height: 70px;
+}
+/* line 213, ../scss/comm-600.scss */
+.view-commercial-slider .views-field-body a {
+  color: #000;
+  text-decoration: none;
+}
+/* line 218, ../scss/comm-600.scss */
+.view-commercial-slider .flex-direction-nav {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  line-height: 70px;
+}
+/* line 224, ../scss/comm-600.scss */
+.view-commercial-slider .flex-direction-nav a {
+  display: block !important;
+  opacity: 1;
+  height: 70px;
+  top: 25px;
+}
+/* line 229, ../scss/comm-600.scss */
+.view-commercial-slider .flex-direction-nav a.flex-prev {
+  left: 0;
+}
+/* line 232, ../scss/comm-600.scss */
+.view-commercial-slider .flex-direction-nav a.flex-next {
+  right: 0;
+}

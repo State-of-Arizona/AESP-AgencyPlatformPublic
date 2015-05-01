@@ -55,7 +55,7 @@ function feature_enewsletter_options_list($field, $instance, $entity_type, $enti
 
       break;
     case 'enews_demographics':
-      if(!empty($settings['demos'])) {
+      if (!empty($settings['demos'])) {
         foreach ($settings['demos'] as $key => $value) {
           $options[$key] = $value['name'];
         }
@@ -133,7 +133,7 @@ function feature_enewsletter_node_view($node, $view_mode, $langcode) {
       'list' => array(),
     );
 
-    if(!empty($node->field_enews_letters)) {
+    if (!empty($node->field_enews_letters)) {
       foreach ($node->field_enews_letters['und'] as $value) {
         if (!is_null($value['value'])) {
           if ($node->field_enews_descriptions['und'][0]['value']) {
@@ -147,7 +147,7 @@ function feature_enewsletter_node_view($node, $view_mode, $langcode) {
     }
 
     $vars['demographics'] = array();
-    if(!empty($node->field_enews_demos)) {
+    if (!empty($node->field_enews_demos)) {
       foreach ($node->field_enews_demos['und'] as $value) {
         $vars['demographics'][$value['value']] = $value['value'];
       }
@@ -376,11 +376,12 @@ function feature_enewsletter_subscribe_form($form, &$form_state) {
             );
           }
           else {
+            $list_options = explode(',,', $value['values']);
+            $multiple = FALSE;
+
             if (strpos($value['values'], ',,,') !== FALSE) {
               $list_options = explode(',,,', $value['values']);
-            }
-            else {
-              $list_options = explode(',,', $value['values']);
+              $multiple = TRUE;
             }
 
             $list_options = array_flip($list_options);
@@ -392,8 +393,8 @@ function feature_enewsletter_subscribe_form($form, &$form_state) {
               '#title' => $value['name'],
               '#required' => $value['required'],
               '#options' => $list_options,
-              '#mutliple' => strpos($value['values'], ',,,'),
-              '#size' => 35,
+              '#multiple' => $multiple,
+              '#size' => $multiple ? 5 : 1,
               '#chosen' => $settings['chosen'],
             );
           }
@@ -401,7 +402,6 @@ function feature_enewsletter_subscribe_form($form, &$form_state) {
       }
     }
   }
-
 
   // Dislay the subscription list in desired format
   // Also includes a hidden field to indicate to enewsletter how to read.
@@ -564,19 +564,20 @@ function feature_enewsletter_subscribe_form_validate($form, &$form_state) {
   $settings = variable_get('feature_enewsletter');
   foreach ($settings['demos'] as $key => $value) {
     if (isset($form_state['values'][$key])) {
-      $input = $form_state['values'][$key];
-
-      switch ($value['data_type']) {
-        case 2:
-          if (!ctype_digit($input)) {
-            form_set_error($key, t('Please enter a valid number.'));
-          }
-          break;
-        case 3:
-          if (!is_numeric($input)) {
-            form_set_error($key, t('Please enter a valid number.'));
-          }
-          break;
+      if (!empty($form_state['values'][$key])) {
+        $input = $form_state['values'][$key];
+        switch ($value['data_type']) {
+          case 2:
+            if (!ctype_digit($input)) {
+              form_set_error($key, t('Please enter a valid number.'));
+            }
+            break;
+          case 3:
+            if (!is_numeric($input)) {
+              form_set_error($key, t('Please enter a valid number.'));
+            }
+            break;
+        }
       }
     }
   }
