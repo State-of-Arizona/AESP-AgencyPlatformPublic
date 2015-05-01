@@ -1,7 +1,7 @@
 name = Agency Platform Workbench Access
 description = This will set up workbench access for all content types
 core = 7.x
-package = State of Arizona
+package = State of Arizona - Deprecated
 version = 7.x-1.0-Alpha1
 project = agency_platform_workbench_access
 dependencies[] = views
@@ -56,3 +56,4 @@ features_exclude[dependencies][options] = options
 features_exclude[dependencies][features] = features
 features_exclude[dependencies][strongarm] = strongarm
 features_exclude[dependencies][taxonomy] = taxonomy
+project path = sites/default/modules/features/agency_platform

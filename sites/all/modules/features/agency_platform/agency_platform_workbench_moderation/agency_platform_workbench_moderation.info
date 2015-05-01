@@ -1,7 +1,7 @@
 name = Agency Platform Workbench Moderation
 description = This will set up workbench modeartion for all content types
 core = 7.x
-package = State of Arizona
+package = State of Arizona - Deprecated
 version = 7.x-1.0-Alpha1
 project = agency_platform_workbench_moderation
 dependencies[] = views
@@ -47,3 +47,4 @@ features[views_view][] = moderation_state_change
 features_exclude[dependencies][ctools] = ctools
 features_exclude[dependencies][features] = features
 features_exclude[dependencies][strongarm] = strongarm
+project path = sites/default/modules/features/agency_platform

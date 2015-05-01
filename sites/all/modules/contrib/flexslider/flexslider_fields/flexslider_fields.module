@@ -17,12 +17,16 @@
 function flexslider_fields_field_formatter_info() {
   return array(
     'flexslider' => array(
-      'label' => t('flexslider'),
-      'field types' => array('image', 'media'),
+      'label' => t('Flexslider'),
+      'field types' => array('image', 'media', 'field_collection'),
       'settings' => array(
         'optionset' => 'default',
         'image_style' => '',
         'caption' => FALSE,
+        'flexslider_link' => '',
+        'flexslider_caption' => '',
+        'flexslider_caption_link' => '',
+        'flexslider_field_collection_image' => '',
       ),
     ),
   );
@@ -61,6 +65,61 @@ function flexslider_fields_field_formatter_settings_form($field, $instance, $vie
       '#default_value' => $settings['image_style'],
       '#empty_option' => t('None (original image)'),
       '#options' => $image_styles,
+  );
+
+  if ($field['type'] == 'field_collection') {
+    $form['flexslider_field_collection_image'] = array(
+      '#title'          => t('Image field'),
+      '#type'           => 'select',
+      '#default_value'  => $settings['flexslider_field_collection_image'],
+      '#empty_option'   => t('None'),
+      '#options'        => _flexslider_fields_get_fields(array('image', 'imagefield_crop'), $field['type'], $field['field_name']),
+      '#required'       => TRUE,
+    );
+  }
+
+  $links = array(
+    'content' => t('Content'),
+    'file'    => t('File'),
+  );
+  if ($field['type'] == 'media' || $field['type'] == 'field_collection')
+    $links += _flexslider_fields_get_fields(array('link_field', 'node_reference'), $field['type'], $field['field_name']);
+  $form['flexslider_link'] = array(
+    '#title'          => t('Link image to'),
+    '#type'           => 'select',
+    '#default_value'  => $settings['flexslider_link'],
+    '#empty_option'   => t('Nothing'),
+    '#options'        => $links,
+  );
+
+  if ($field['type'] == 'media' || $field['type'] == 'field_collection')
+    $captions = _flexslider_fields_get_fields(array('text'), $field['type'], $field['field_name']);
+  else {
+    $captions = array(
+      'link_both' => t('Title and Alt text (linkable)'),
+      'title'   => t('Title text only'),
+      'alt'     => t('Alt text only'),
+    );
+  }
+  $form['flexslider_caption'] = array(
+    '#title'          => t('Caption'),
+    '#type'           => 'select',
+    '#default_value'  => $settings['flexslider_caption'],
+    '#empty_option'   => t('Title and Alt text'),
+    '#options'        => $captions,
+  );
+
+  $form['flexslider_caption_link'] = array(
+    '#title'          => t('Link caption to'),
+    '#type'           => 'select',
+    '#default_value'  => $settings['flexslider_caption_link'],
+    '#empty_option'   => t('Nothing'),
+    '#options'        => $links,
+    '#states' => array(
+      'invisible' => array(
+        ':input[name$="[settings_edit_form][settings][flexslider_caption]"]' => array('value' => ''),
+      ),
+    ),
   );
 
   // If the image field doesn't have the Title field enabled, tell the user.
@@ -116,6 +175,33 @@ function flexslider_fields_field_formatter_settings_summary($field, $instance, $
   $summary[] = t('Option set: %optionset', array('%optionset' => $optionset));
   $summary[] = $is;
 
+  $link_types = array(
+    'content'   => t('content'),
+    'file'      => t('file'),
+    'colorbox'  => t('Colorbox'),
+  );
+  if ($field['type'] == 'media' || $field['type'] == 'field_collection')
+    $link_types += _flexslider_fields_get_fields(array('link_field', 'node_reference'), $field['type'], $field['field_name']);
+
+  if (isset($link_types[$settings['flexslider_link']])) {
+    $link_type_message = t('Link to: @link', array('@link' => $link_types[$settings['flexslider_link']]));
+    $summary[] = $link_type_message;
+  }
+
+  if ($field['type'] == 'media' || $field['type'] == 'field_collection')
+    $caption_types = _flexslider_fields_get_fields(array('text'), $field['type'], $field['field_name']);
+  else $caption_types = array(
+    'link_both' => t('Title and Alt text (linkable)'),
+    'title' => t('Title text'),
+    'alt'   => t('Alt text'),
+  );
+  // Display this setting only if there's a caption.
+  if(!isset($caption_types[$settings['flexslider_caption']]))
+    $caption_types[$settings['flexslider_caption']] = 'Title and Alt text';
+  $caption_message = t('Caption: @caption', array('@caption' => $caption_types[$settings['flexslider_caption']]));
+  if (isset($link_types[$settings['flexslider_caption_link']])) $caption_message .= ' (' . t('Link to: @link', array('@link' => $link_types[$settings['flexslider_caption_link']])) . ')';
+  $summary[] = $caption_message;
+
   return implode('<br />', $summary);
 }
 
@@ -125,6 +211,7 @@ function flexslider_fields_field_formatter_settings_summary($field, $instance, $
  * Prepares a renderable array of images and adds the neccessary JS and CSS
  */
 function flexslider_fields_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $settings = $display['settings'];
 
   $element = array();
   if (count($items) > 0) {

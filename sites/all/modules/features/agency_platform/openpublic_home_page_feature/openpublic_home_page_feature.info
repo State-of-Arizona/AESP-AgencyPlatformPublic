@@ -1,7 +1,7 @@
 name = Home Page Feature
 description = Includes the Home Page Feature content type and associated content.
 core = 7.x
-package = State of Arizona
+package = State of Arizona - Deprecated
 version = 7.x-1.0
 project = openpublic_home_page_feature
 dependencies[] = context
@@ -57,4 +57,4 @@ features_exclude[field_instance][node-home_page_feature-field_site_section] = no
 features_exclude[variable][node_options_home_page_feature] = node_options_home_page_feature
 features_exclude[taxonomy][site_sections] = site_sections
 files[] = theme/home-page-rotator.css
-project path = sites/all/modules/features
+project path = sites/default/modules/features/agency_platform

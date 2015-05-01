@@ -1,7 +1,7 @@
 name = Agency Platform Blog
 description = This is for blog functionality
 core = 7.x
-package = State of Arizona
+package = State of Arizona - Deprecated
 version = 7.x-1.0-Alpha1
 project = agency_platform_blog
 dependencies[] = agency_platform_defaults
@@ -60,3 +60,4 @@ features_exclude[dependencies][agency_platform_workbench_access] = agency_platfo
 features_exclude[dependencies][agency_platform_workbench_moderation] = agency_platform_workbench_moderation
 features_exclude[variable][node_options_blog_entry] = node_options_blog_entry
 no autodetect = 1
+project path = sites/default/modules/features/agency_platform

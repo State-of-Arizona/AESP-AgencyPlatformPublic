@@ -67,7 +67,7 @@ function menu_block_placement_field_settings_form($field, $instance) {
       'individ' => 'Include \'Individual Pages\' checkbox',
     ),
     '#default_value' => $settings['default_selects'],
-    '#description' => t('Which select lists to include in the widget.<br>WARNING: These settings can not be altered after data has been entered.'),
+    '#description' => t('Which select lists to include in the widget.<br />WARNING: These settings can not be altered after data has been entered.'),
   );
 
   //choose from the available menus, which to include in the dropdown.
@@ -76,7 +76,7 @@ function menu_block_placement_field_settings_form($field, $instance) {
     '#title' => t('Default Menu Options'),
     '#options' => $options,
     '#default_value' => $settings['default_menus'],
-    '#description' => t('Select which menus will be available to the content editor.<br>WARNING: These settings can not be altered after data has been entered.'),
+    '#description' => t('Select which menus will be available to the content editor.<br />WARNING: These settings can not be altered after data has been entered.'),
   );
 
   //if data has been entered, disable the default selects field
@@ -195,8 +195,8 @@ function menu_block_placement_field_formatter_view($entity_type, $entity, &$fiel
       $html_output = !empty($output['mlid']) ? 'Menu Items: <ul><li>' : '';
       $html_output .= !empty($output['mlid']) ? implode('</li><li>', $output['mlid']) : '';
       $html_output .= !empty($output['mlid']) ? '</li></ul>' : '';
-      $html_output .= !empty($output['region']) ? 'Region: ' . $output['region'] . '<br>' : '';
-      $html_output .= !empty($output['individual_pages']) ? 'Show on individual pages: ' . $output['individual_pages'] . '<br>' : '';
+      $html_output .= !empty($output['region']) ? 'Region: ' . $output['region'] . '<br />' : '';
+      $html_output .= !empty($output['individual_pages']) ? 'Show on individual pages: ' . $output['individual_pages'] . '<br />' : '';
 
       $element = array(
         array(
@@ -301,7 +301,7 @@ function menu_block_placement_form_alter(&$form, &$form_state, $form_id) {
       //queries the db to find all the mlid's for the current node
       $items = array();
       //dpm($form);
-      if(isset($form['nid'])) {
+      if (isset($form['nid'])) {
         $items = db_select('field_data_' . $field, 'f')
           ->fields('f', array($field . '_mlid'))
           ->condition('entity_id', $form['nid']['#value'])
