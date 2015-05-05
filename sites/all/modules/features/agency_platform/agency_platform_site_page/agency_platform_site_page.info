@@ -1,7 +1,7 @@
 name = Agency Platform Site Page
 description = This is for Site Page functionality
 core = 7.x
-package = State of Arizona
+package = State of Arizona - Deprecated
 version = 7.x-1.0-Alpha1
 project = agency_platform_site_page
 dependencies[] = agency_platform_defaults
@@ -57,4 +57,5 @@ features_exclude[field_base][field_detail_page_title] = field_detail_page_title
 features_exclude[field_base][field_files] = field_files
 features_exclude[field_base][field_related_content] = field_related_content
 features_exclude[field_base][field_summary] = field_summary
-project path = sites/all/modules/features
+project path = sites/default/modules/features/agency_platform
+

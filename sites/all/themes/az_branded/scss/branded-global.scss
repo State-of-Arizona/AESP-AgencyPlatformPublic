@@ -7,9 +7,10 @@ body {
   font: 13px/1.5 Verdana, Helvetica, Arial, sans-serif;
   line-height: 1.4em;
 }
+
 #page {
   h2 {
-    border:none;
+    border: none;
   }
 }
 
@@ -18,16 +19,17 @@ body {
     background-color: rgba(51, 51, 51, 0.2);
   }
 }
+
 #breadcrumb {
   background-color: rgba(251, 251, 251, 0.6);
   ul.breadcrumb a {
-    color:#000;
+    color: #000;
   }
   ul.breadcrumb a.active {
-    color:#2B2B2B;
+    color: #2b2b2b;
   }
   .breadcrumb > li + li:before {
-    color:#000;
+    color: #000;
   }
   border-radius: 0 0 3px 3px;
 }
@@ -41,19 +43,21 @@ body {
     box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
   }
 }
+
 #zone-content {
-  margin-top:20px;
+  margin-top: 20px;
 }
+
 #content-wrapper {
   box-shadow: none;
-  padding-bottom:20px;
+  padding-bottom: 20px;
   .region {
     box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
   }
   #page-title {
     box-shadow: 6px 0px 5px -6px rgba(0, 0, 0, 0.5), -6px 0px 5px -6px rgba(0, 0, 0, 0.5)
   }
-  aside .region{
+  aside .region {
     border-radius: 3px;
   }
   #page-title {
@@ -61,6 +65,15 @@ body {
   }
   #content .region {
     border-radius: 0 0 3px 3px;
+  }
+}
+
+#preface-group {
+  &.total-prefaces-1,
+  &.total-postscripts-1 {
+    .menu-block-placement-doesnt-exist .block-inner > .content {
+      padding:10px 20px;
+    }
   }
 }
 
@@ -81,7 +94,7 @@ body {
 }
 
 #footer-branding {
-  margin-bottom:20px;
+  margin-bottom: 20px;
   .footer-wrapper .footer-field {
     color: #000;
   }
@@ -94,8 +107,8 @@ body {
     padding: 10px 10px 0 0;
   }
   .footer-title {
-    border:none;
-    padding-bottom:7px;
+    border: none;
+    padding-bottom: 7px;
   }
   .footer-title:before {
     background: url('../img/icons/icon-contactus.png') no-repeat scroll 13px 8px #d9cfc6;
@@ -109,5 +122,5 @@ body {
 }
 
 #messages .alert {
-  magin-bottom:0;
+  magin-bottom: 0;
 }

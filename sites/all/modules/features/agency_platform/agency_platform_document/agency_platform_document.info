@@ -1,7 +1,7 @@
 name = Agency Platform Document
 description = This is for Document functionality
 core = 7.x
-package = State of Arizona
+package = State of Arizona - Deprecated
 version = 7.x-1.0-Alpha1
 project = agency_platform_document
 dependencies[] = agency_platform_defaults

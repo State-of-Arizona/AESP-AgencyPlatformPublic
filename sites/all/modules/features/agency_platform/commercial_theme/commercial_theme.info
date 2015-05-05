@@ -1,7 +1,7 @@
 name = Commercial Theme
 description = Enables the settings for the commercial theme
 core = 7.x
-package = State of Arizona
+package = State of Arizona - Deprecated
 version = 7.x-1.1
 project = commercial_theme
 dependencies[] = context
@@ -21,4 +21,4 @@ features[image][] = commercial_slider
 features[views_view][] = commercial_slider
 features_exclude[dependencies][ctools] = ctools
 features_exclude[dependencies][image] = image
-project status url = /sites/all/modules/features/
+project path = sites/default/modules/features/agency_platform

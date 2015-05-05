@@ -174,7 +174,7 @@ function mbp_defaults_views_default_views() {
     $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
     $handler->display->display_options['fields']['edit_node']['label'] = '';
     $handler->display->display_options['fields']['edit_node']['alter']['alter_text'] = TRUE;
-    $handler->display->display_options['fields']['edit_node']['alter']['text'] = '<br>[edit_node]';
+    $handler->display->display_options['fields']['edit_node']['alter']['text'] = '<br />[edit_node]';
     $handler->display->display_options['fields']['edit_node']['element_label_colon'] = FALSE;
     $handler->display->display_options['fields']['edit_node']['text'] = 'Edit';
     $handler->display->display_options['defaults']['sorts'] = FALSE;

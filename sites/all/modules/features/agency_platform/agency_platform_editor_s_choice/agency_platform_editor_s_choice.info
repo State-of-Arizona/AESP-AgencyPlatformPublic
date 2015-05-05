@@ -1,7 +1,7 @@
 name = Agency Platform Editor's Choice
 description = This is for Editor's Choice functionality
 core = 7.x
-package = State of Arizona
+package = State of Arizona - Deprecated
 version = 7.x-1.0-Alpha1
 project = agency_platform_editor_s_choice
 dependencies[] = agency_platform_defaults
