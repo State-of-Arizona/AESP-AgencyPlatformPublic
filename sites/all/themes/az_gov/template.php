@@ -241,3 +241,24 @@ function az_gov_date_nav_title($params) {
     return $title;
   }
 }
+
+function az_gov_preprocess_region(&$vars) {
+  switch ($vars['region']) {
+    case 'preface_first':
+    case 'preface_second':
+    case 'preface_third':
+    case 'postscript_first':
+    case 'postscript_second':
+    case 'postscript_third':
+    case 'postscript_fourth':
+      $keys = array_keys($vars['elements']);
+      $mbp = FALSE;
+      foreach ($keys as $key) {
+        if (strpos($key, 'mbp_defaults') !== FALSE) {
+          $mbp = TRUE;
+        }
+      }
+      $vars['classes_array'][] = $mbp ? 'menu-block-placement-exists' : 'menu-block-placement-doesnt-exist';
+      break;
+  }
+}
