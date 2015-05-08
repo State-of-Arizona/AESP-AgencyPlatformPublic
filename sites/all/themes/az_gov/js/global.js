@@ -216,7 +216,8 @@
           $(this).children('li').each(function () {
             width += $(this).outerWidth(true);
           });
-          if ($(window).width() < width && $(window).width() > 600) {
+          console.log(width);
+          if (($(window).width() < width || width > 960) && $(window).width() > 600) {
             $(this).css('display', 'table');
             $(this).children('li').css('display', 'table-cell').css('float', 'none');
           }
@@ -226,8 +227,6 @@
       $(window).resize(function () {
         menuadjust();
       });
-
-
 
 
     }
