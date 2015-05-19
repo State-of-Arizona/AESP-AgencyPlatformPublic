@@ -216,7 +216,6 @@
           $(this).children('li').each(function () {
             width += $(this).outerWidth(true);
           });
-          console.log(width);
           if (($(window).width() < width || width > 960) && $(window).width() > 600) {
             $(this).css('display', 'table');
             $(this).children('li').css('display', 'table-cell').css('float', 'none');
