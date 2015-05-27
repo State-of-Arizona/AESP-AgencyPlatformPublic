@@ -176,8 +176,13 @@
 
 
       $('.menu-block-wrapper ul.menu li.expanded').once(function () {
-        $(this).find('ul').hide();
-        $(this).prepend('<span class="glyphicon glyphicon-chevron-right"/>');
+        if($(this).hasClass('active-trail')){
+          $(this).prepend('<span class="glyphicon glyphicon-chevron-down"/>');
+        } else {
+          $(this).find('ul').hide();
+          $(this).prepend('<span class="glyphicon glyphicon-chevron-right"/>');
+        }
+
         $(this).find('.glyphicon').click(function () {
           $(this).siblings('ul').slideToggle('slow');
           $(this).toggleClass('glyphicon-chevron-down');
