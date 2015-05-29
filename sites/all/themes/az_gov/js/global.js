@@ -175,6 +175,7 @@
       });
 
 
+      //glyphicons and click event for right sidebar menu block
       $('.menu-block-wrapper ul.menu li.expanded').once(function () {
         if($(this).hasClass('active-trail')){
           $(this).prepend('<span class="glyphicon glyphicon-chevron-down"/>');
@@ -200,8 +201,10 @@
         });
       });
 
+      //glyphicon for home icon
       $('.region-menu .menu-li-home a').css('background', 'none').html('<span class="glyphicon glyphicon-home"/>Home');
 
+      //if child menu items are too far to the right in the window, moves them to the left
       $('#zone-branding .region-menu li > ul').each(function () {
         $(this).css('z-index', '10');
         var left = $(this).offset().left;
@@ -213,6 +216,7 @@
         }
       });
 
+      //if the menus are too wide, it applies different css to keep them on the same line
       var menuadjust = function () {
         $('.region-menu .content > ul.menu').each(function () {
           $(this).css('display', '');
