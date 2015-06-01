@@ -75,7 +75,9 @@ class QuickSet {
         $qs = new self($name, $contents, $settings);
       }
       catch (InvalidQuickSetException $e) {
-        watchdog('Quicktabs', $e->getMessage());
+        if(variable_get('quicktabs_logging', 0)) {
+          watchdog('Quicktabs', $e->getMessage());
+        }
         return NULL;
       }
       return new $class($qs);

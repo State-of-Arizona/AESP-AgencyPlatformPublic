@@ -3,7 +3,7 @@ name = "Agency Platform Distribution"
 distribution_name = "Agency Platform"
 description = "Arizona's Distribution Platform"
 exclusive = "1"
-version = "7.x-3.5"
+version = "7.x-3.7"
 ;
 core = "7.x"
 ; ----------
