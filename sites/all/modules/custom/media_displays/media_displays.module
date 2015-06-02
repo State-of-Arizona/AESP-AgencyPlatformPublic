@@ -116,6 +116,38 @@ function media_displays_field_formatter_view($entity_type, $entity, $field, $ins
   return $element;
 }
 
-function media_displays_init(){
+/**
+ *  Implements hook_filter_info_alter().
+ */
+function media_displays_filter_info_alter(&$info) {
+  $info['media_filter']['process callback'] = '_media_displays_filter';
+}
+
+function _media_displays_filter($text) {
+  $offset = 0;
+  while (preg_match('/\[\[{.*?}\]\]/m', $text, $match, 0, $offset)) {
+    $token = str_replace('[[', '', $match[0]);
+    $token = str_replace(']]', '', $token);
+    $json = json_decode($token, TRUE);
+
+    if (isset($json['direct_download']) && $json['direct_download']) {
+      $file = file_load($json['fid']);
+      $url = file_create_url($file->uri);
+      $options = array('attributes' => isset($json['attributes']) ? $json['attributes'] : array());
+      $options['attributes']['title'] = $json['fields']['title'];
+      $text = str_replace($match, l($json['fields']['link_text'], $url, $options), $text);
+    }
+    else {
+      $offset = strpos($text, $match[0], $offset) + strlen($match[0]);
+    }
+  }
+  $text = media_wysiwyg_filter($text);
+  return $text;
+}
+
+/**
+ *  Implements hook_init().
+ */
+function media_displays_init() {
   drupal_add_css('.view-media-default iframe {width:200px; height:140px;}', 'inline');
 }
