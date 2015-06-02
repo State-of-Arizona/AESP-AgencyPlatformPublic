@@ -175,9 +175,15 @@
       });
 
 
+      //glyphicons and click event for right sidebar menu block
       $('.menu-block-wrapper ul.menu li.expanded').once(function () {
-        $(this).find('ul').hide();
-        $(this).prepend('<span class="glyphicon glyphicon-chevron-right"/>');
+        if($(this).hasClass('active-trail')){
+          $(this).prepend('<span class="glyphicon glyphicon-chevron-down"/>');
+        } else {
+          $(this).find('ul').hide();
+          $(this).prepend('<span class="glyphicon glyphicon-chevron-right"/>');
+        }
+
         $(this).find('.glyphicon').click(function () {
           $(this).siblings('ul').slideToggle('slow');
           $(this).toggleClass('glyphicon-chevron-down');
@@ -195,8 +201,10 @@
         });
       });
 
+      //glyphicon for home icon
       $('.region-menu .menu-li-home a').css('background', 'none').html('<span class="glyphicon glyphicon-home"/>Home');
 
+      //if child menu items are too far to the right in the window, moves them to the left
       $('#zone-branding .region-menu li > ul').each(function () {
         $(this).css('z-index', '10');
         var left = $(this).offset().left;
@@ -208,6 +216,7 @@
         }
       });
 
+      //if the menus are too wide, it applies different css to keep them on the same line
       var menuadjust = function () {
         $('.region-menu .content > ul.menu').each(function () {
           $(this).css('display', '');
@@ -216,7 +225,6 @@
           $(this).children('li').each(function () {
             width += $(this).outerWidth(true);
           });
-          console.log(width);
           if (($(window).width() < width || width > 960) && $(window).width() > 600) {
             $(this).css('display', 'table');
             $(this).children('li').css('display', 'table-cell').css('float', 'none');

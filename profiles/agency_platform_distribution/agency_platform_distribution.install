@@ -11,6 +11,7 @@ function agency_platform_distribution_install() {
   theme_enable(array(
     'theme_default' => 'az_gov',
     'agency2_theme' => 'az_branded',
+    'agency3_theme' => 'az_commercial',
     //'comm_theme' => 'comm',
   ));
   variable_set('theme_default', 'az_gov');
