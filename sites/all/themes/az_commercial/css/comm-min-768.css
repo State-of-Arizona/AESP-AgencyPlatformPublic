@@ -7,7 +7,7 @@
   box-shadow: none;
 }
 #page #breadcrumb a, #page #breadcrumb li + li::before {
-  color: #FFF;
+  color: #fff;
   font-size: 14px;
 }
 
@@ -27,6 +27,15 @@
 }
 #postscript-group .mbp-defaults-row:only-child {
   margin: 0;
+}
+#postscript-group .postscript {
+  display: flex;
+}
+#postscript-group .postscript > div {
+  width: 100%;
+}
+#postscript-group .postscript > .region.menu-block-placement-doesnt-exist {
+  margin: 0 5px;
 }
 
 #zone-branding {

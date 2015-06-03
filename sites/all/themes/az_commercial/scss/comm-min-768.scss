@@ -1,16 +1,18 @@
 #zone-branding .region-menu {
   background: none;
 }
+
 #page {
   #breadcrumb {
     background: none;
     box-shadow: none;
     a, li + li::before {
-      color: #FFF;
+      color: #fff;
       font-size: 14px;
     }
   }
 }
+
 #page #zone-header .region {
   background-color: transparent;
   box-shadow: none;
@@ -27,6 +29,15 @@
     }
     &:only-child {
       margin: 0;
+    }
+  }
+  .postscript {
+    display: flex;
+    > div {
+      width: 100%;
+    }
+    > .region.menu-block-placement-doesnt-exist {
+      margin: 0 5px;
     }
   }
 }
