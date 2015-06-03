@@ -1,7 +1,7 @@
 name = AZ Commercial
 description = A theme based on 'Bootstrap' for Arizona Government Agencies
 core = 7.x
-base theme = az_gov
+base theme = az_branded
 screenshot = 'screenshot.png'
 
 dependencies[] = jquery_update
@@ -31,9 +31,9 @@ regions[footer_second] = 'Footer Second'
 
 stylesheets[all][] = css/colors.css
 stylesheets[all][] = css/comm-global.css
-stylesheets[all][] = css/comm-nodes.css
-stylesheets[(min-width:600px)][] = css/comm-600.css
-stylesheets[(min-width:960px)][] = css/comm-960.css
+stylesheets[(min-width:768px)][] = css/comm-min-768.css
+stylesheets[(min-width:920px)][] = css/comm-min-920.css
+stylesheets[(min-width:1240px)][] = css/comm-min-1240.css
 
 settings[bootstrap_breadcrumb_home] = 1
 settings[bootstrap_region_well-branding] = ''
