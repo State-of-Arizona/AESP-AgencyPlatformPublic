@@ -11,23 +11,16 @@
 #footer-first,
 #footer-second,
 #footer-first-contact {
-  width: 960px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
-#zone-content {
-  padding-bottom: 285px;
-}
-
-#footer-first-contact.full-contact {
-  display: table;
-  #footer-branding {
-    width: 40%;
-    display: table-cell;
+#preface-group, #postscript-group {
+  [class*="view-mbp-"].view-display-id-block > .view-content{
+    display:flex;
   }
-  #footer-contact {
-    width: 60%;
-    display: table-cell;
-    vertical-align: top;
+  .total-results-5 .mbp-defaults-row,
+  .total-results-5 .mbp-defaults-row.views-row-first {
+    width: 20%;
   }
 }

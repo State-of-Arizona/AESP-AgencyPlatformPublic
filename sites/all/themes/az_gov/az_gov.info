@@ -33,8 +33,10 @@ stylesheets[all][] = css/contextual.css
 stylesheets[all][] = css/colors.css
 stylesheets[all][] = css/reset.css
 stylesheets[all][] = css/global.css
-stylesheets[(min-width:600px)][] = css/600.css
-stylesheets[(min-width:960px)][] = css/960.css
+stylesheets[(min-width:600px)][] = css/min-600.css
+stylesheets[(min-width:760px)][] = css/min-768.css
+stylesheets[(min-width:920px)][] = css/min-920.css
+stylesheets[(min-width:1240px)][] = css/min-1240.css
 stylesheets[all][] = css/nodes.css
 
 

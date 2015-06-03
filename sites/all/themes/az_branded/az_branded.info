@@ -32,8 +32,11 @@ regions[footer_second] = 'Footer Second'
 stylesheets[all][] = css/colors.css
 stylesheets[all][] = css/branded-global.css
 stylesheets[all][] = css/branded-nodes.css
-stylesheets[(min-width:600px)][] = css/branded-600.css
-stylesheets[(min-width:960px)][] = css/branded-960.css
+;stylesheets[(min-width:600px)][] = css/branded-600.css
+;stylesheets[(min-width:960px)][] = css/branded-960.css
+stylesheets[(min-width:768px)][] = css/branded-min-768.css
+stylesheets[(min-width:920px)][] = css/branded-min-720.css
+stylesheets[(min-width:1240px)][] = css/branded-min-1240.css
 
 settings[bootstrap_breadcrumb_home] = 1
 settings[bootstrap_region_well-branding] = ''

@@ -1,11 +1,10 @@
 <?php
 
 function az_gov_preprocess_node(&$vars) {
-
   if (isset($vars['field_basic_slideshow_style'])) {
     if (!empty($vars['field_basic_slideshow_style'][LANGUAGE_NONE][0]['value'])) {
       $style = $vars['field_basic_slideshow_style'][LANGUAGE_NONE][0]['value'];
-      $vars['content']['field_basic_slideshow_images'][0]['#js_variables']['fx'] = $vars['field_basic_slideshow_effect']['und'][0]['value'];
+      $vars['content']['field_basic_slideshow_images'][0]['#js_variables']['fx'] = $vars['field_basic_slideshow_effect'][LANGUAGE_NONE][0]['value'];
     }
     else {
       $style = 'basic-slideshow-style-1';
@@ -34,25 +33,19 @@ function az_gov_preprocess_page(&$vars) {
   if (theme_get_setting('footer_map_image')) {
     $vars['footer_settings']['map'] = file_create_url(file_load(theme_get_setting('footer_map_image'))->uri);
   }
-  if ($vars['footer_settings']['show branding'] && $vars['footer_settings']['show contact']) {
-    $vars['footer_settings']['class'] = 'full-contact';
-  }
-  else {
-    $vars['footer_settings']['class'] = '';
-  }
 
   //creates a variable that is used for alt tags on image regardless if the 'Show Site Name' setting is unchecked.
   $vars['persistent_site_name'] = variable_get('site_name', '');
 
   //checks for existence of the sidebars and will create variable to wrap the main content region
   if ($vars['page']['sidebar_first'] && !$vars['page']['sidebar_second']) {
-    $vars['content_class'] = 'left-sidebar';
+    $vars['content_class'] = 'col-sm-9 col-md-10';
   }
   elseif (!$vars['page']['sidebar_first'] && $vars['page']['sidebar_second']) {
-    $vars['content_class'] = 'right-sidebar';
+    $vars['content_class'] = 'col-sm-8 col-md-8';
   }
   elseif ($vars['page']['sidebar_first'] && $vars['page']['sidebar_second']) {
-    $vars['content_class'] = 'both-sidebars';
+    $vars['content_class'] = 'col-sm-5 col-md-6';
   }
   else {
     $vars['content_class'] = '';
@@ -69,10 +62,22 @@ function az_gov_preprocess_page(&$vars) {
   if ($vars['page']['preface_third']) {
     $num_preface += 1;
   }
-  $vars['preface'] = array(
-    'count' => $num_preface,
-    'class' => 'total-prefaces-' . $num_preface,
-  );
+  switch ($num_preface) {
+    case 2:
+      $vars['preface_first'] = 'col-sm-6';
+      $vars['preface_second'] = 'col-sm-6';
+      $vars['preface_third'] = 'col-sm-6';
+      break;
+    case 3:
+      $vars['preface_first'] = 'col-md-4';
+      $vars['preface_second'] = 'col-sm-6 col-md-4';
+      $vars['preface_third'] = 'col-sm-6 col-md-4';
+      break;
+    default:
+      $vars['preface_first'] = '';
+      $vars['preface_second'] = '';
+      $vars['preface_third'] = '';
+  }
 
   //checks for the number of regions in the postscript area being used and will wrap them in an appropriate class
   $num_postscripts = 0;
@@ -88,18 +93,23 @@ function az_gov_preprocess_page(&$vars) {
   if ($vars['page']['postscript_fourth']) {
     $num_postscripts += 1;
   }
-  $vars['postscript'] = array(
-    'count' => $num_postscripts,
-    'class' => 'total-postscripts-' . $num_postscripts,
-  );
 
-
-//if site logo, slogan, and name are not displayed, this will make a class to wrap the branding region to force 100%
-  if (!$vars['site_name'] && !$vars['logo'] && !$vars['site_slogan']) {
-    $vars['region_wrapper'] = 'no-site-info';
-  }
-  else {
-    $vars['region_wrapper'] = '';
+  switch ($num_postscripts) {
+    case 2:
+      $vars['postscript'] = 'col-sm-6';
+      $vars['postscript_num'] = 'two-postscript';
+      break;
+    case 3:
+      $vars['postscript'] = 'col-sm-4';
+      $vars['postscript_num'] = 'three-postscript';
+      break;
+    case 4:
+      $vars['postscript'] = 'col-sm-6 col-md-3';
+      $vars['postscript_num'] = 'four-postscript';
+      break;
+    default:
+      $vars['postscript'] = '';
+      $vars['postscript_num'] = 'single-postscript';
   }
 }
 
@@ -129,13 +139,13 @@ function az_gov_preprocess_html(&$vars) {
   drupal_add_html_head($meta_ie_render_engine, 'meta_ie_render_engine');
 
   //if a background image is uploaded, it will apply the css needed
-  if (theme_get_setting('main_background')) {
-    $background = image_load(file_load(theme_get_setting('main_background'))->uri);
+  if ($image = theme_get_setting('main_background')) {
+    $background = image_load(file_load($image)->uri);
     $bg_url = file_create_url($background->source);
     $bg_width = $background->info['width'];
 
     $bg_stretch = '
-    @media(min-width: 600px) {
+    @media(min-width: 768px) {
         body {
           background: url("' . $bg_url . '") no-repeat center center fixed !important;
           -webkit-background-size: cover !important;
@@ -146,7 +156,7 @@ function az_gov_preprocess_html(&$vars) {
       }';
 
     $bg_repeat = '
-    @media(min-width: 600px) {
+    @media(min-width: 768px) {
         body {
           background: url("' . $bg_url . '") fixed !important;
           background-size: contain;

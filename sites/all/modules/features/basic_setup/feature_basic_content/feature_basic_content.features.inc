@@ -37,13 +37,13 @@ function feature_basic_content_image_default_styles() {
 
   // Exported image style: slideshow_image.
   $styles['slideshow_image'] = array(
-    'label' => 'Slideshow Image (620 x 280)',
+    'label' => 'Slideshow Image (1240 x 460)',
     'effects' => array(
       1 => array(
         'name' => 'image_scale_and_crop',
         'data' => array(
-          'width' => 960,
-          'height' => 440,
+          'width' => 1240,
+          'height' => 460,
         ),
         'weight' => 1,
       ),

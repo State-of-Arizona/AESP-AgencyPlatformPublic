@@ -13,10 +13,11 @@ body {
 #content,
 #footer-branding,
 #footer-contact,
-.total-postscripts-1 .mbp-defaults-row,
-.total-postscripts-2 .region,
-.total-postscripts-3 .region,
-.total-postscripts-4 .region {
+.single-postscript .mbp-defaults-row,
+.single-postscript .region.menu-block-placement-doesnt-exist,
+.two-postscript .region,
+.threee-postscript .region,
+.four-postscript .region {
   background-color: #eae5d7;
 }
 

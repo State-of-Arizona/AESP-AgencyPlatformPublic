@@ -55,75 +55,86 @@ body {
 #zone-content {
   margin-top: 20px;
 }
+/* line 50, ../scss/branded-global.scss */
+#zone-content #preface-group {
+  margin-bottom: 10px;
+  box-shadow: none;
+}
+/* line 53, ../scss/branded-global.scss */
+#zone-content #preface-group .preface {
+  border-right: none;
+}
+/* line 55, ../scss/branded-global.scss */
+#zone-content #preface-group .preface > div.menu-block-placement-doesnt-exist {
+  margin: 5px 5px 0;
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+}
+/* line 61, ../scss/branded-global.scss */
+#zone-content #preface-group .mbp-defaults-row {
+  border: none;
+}
+/* line 63, ../scss/branded-global.scss */
+#zone-content #preface-group .mbp-defaults-row > div {
+  margin: 0 5px;
+}
 
-/* line 51, ../scss/branded-global.scss */
+/* line 70, ../scss/branded-global.scss */
 #content-wrapper {
   box-shadow: none;
   padding-bottom: 20px;
 }
-/* line 54, ../scss/branded-global.scss */
+/* line 73, ../scss/branded-global.scss */
 #content-wrapper .region {
   box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
 }
-/* line 57, ../scss/branded-global.scss */
+/* line 76, ../scss/branded-global.scss */
 #content-wrapper #page-title {
   box-shadow: 6px 0px 5px -6px rgba(0, 0, 0, 0.5), -6px 0px 5px -6px rgba(0, 0, 0, 0.5);
 }
-/* line 60, ../scss/branded-global.scss */
+/* line 79, ../scss/branded-global.scss */
 #content-wrapper aside .region {
   border-radius: 3px;
 }
-/* line 63, ../scss/branded-global.scss */
+/* line 82, ../scss/branded-global.scss */
 #content-wrapper #page-title {
   border-radius: 3px 3px 0 0;
 }
-/* line 66, ../scss/branded-global.scss */
+/* line 86, ../scss/branded-global.scss */
+#content-wrapper #content > .content {
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+}
+/* line 89, ../scss/branded-global.scss */
 #content-wrapper #content .region {
   border-radius: 0 0 3px 3px;
-}
-
-/* line 74, ../scss/branded-global.scss */
-#preface-group.total-prefaces-1 .menu-block-placement-doesnt-exist .block-inner > .content, #preface-group.total-postscripts-1 .menu-block-placement-doesnt-exist .block-inner > .content {
-  padding: 10px 20px;
-}
-
-/* line 81, ../scss/branded-global.scss */
-#preface-group.total-prefaces-1 #region-preface-first .region {
-  background-color: transparent;
   box-shadow: none;
-}
-
-/* line 87, ../scss/branded-global.scss */
-#preface-group {
-  padding: 0 0 20px;
-  box-shadow: none;
-}
-/* line 91, ../scss/branded-global.scss */
-#preface-group .mbp-defaults-row > div, #preface-group .region {
-  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
 }
 
 /* line 96, ../scss/branded-global.scss */
+#content {
+  z-index: 10;
+}
+
+/* line 126, ../scss/branded-global.scss */
 #footer-branding {
   margin-bottom: 20px;
 }
-/* line 98, ../scss/branded-global.scss */
+/* line 128, ../scss/branded-global.scss */
 #footer-branding .footer-wrapper .footer-field {
   color: #000;
 }
 
-/* line 104, ../scss/branded-global.scss */
+/* line 134, ../scss/branded-global.scss */
 #footer-contact .footer-info .footer-address {
   background: none;
   box-shadow: none;
   padding: 10px 10px 0 0;
 }
-/* line 109, ../scss/branded-global.scss */
+/* line 139, ../scss/branded-global.scss */
 #footer-contact .footer-title {
   border: none;
   padding-bottom: 7px;
 }
-/* line 113, ../scss/branded-global.scss */
+/* line 143, ../scss/branded-global.scss */
 #footer-contact .footer-title:before {
   background: url("../img/icons/icon-contactus.png") no-repeat scroll 13px 8px #d9cfc6;
   display: block;
@@ -132,9 +143,4 @@ body {
   width: 60px;
   content: "";
   margin: -10px 10px 0 0;
-}
-
-/* line 124, ../scss/branded-global.scss */
-#messages .alert {
-  magin-bottom: 0;
 }
