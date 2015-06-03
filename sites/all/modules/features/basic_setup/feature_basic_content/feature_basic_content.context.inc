@@ -49,7 +49,7 @@ function feature_basic_content_context_default_contexts() {
           'module' => 'menu_block',
           'delta' => '3',
           'region' => 'sidebar_second',
-          'weight' => '0',
+          'weight' => '-99',
         ),
       ),
     ),
