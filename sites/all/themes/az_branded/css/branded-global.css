@@ -76,65 +76,62 @@ body {
 /* line 63, ../scss/branded-global.scss */
 #zone-content #preface-group .mbp-defaults-row > div {
   margin: 0 5px;
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
 }
 
-/* line 70, ../scss/branded-global.scss */
+/* line 71, ../scss/branded-global.scss */
 #content-wrapper {
   box-shadow: none;
   padding-bottom: 20px;
 }
-/* line 73, ../scss/branded-global.scss */
+/* line 74, ../scss/branded-global.scss */
 #content-wrapper .region {
   box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
 }
-/* line 76, ../scss/branded-global.scss */
-#content-wrapper #page-title {
-  box-shadow: 6px 0px 5px -6px rgba(0, 0, 0, 0.5), -6px 0px 5px -6px rgba(0, 0, 0, 0.5);
-}
-/* line 79, ../scss/branded-global.scss */
+/* line 77, ../scss/branded-global.scss */
 #content-wrapper aside .region {
   border-radius: 3px;
 }
-/* line 82, ../scss/branded-global.scss */
+/* line 80, ../scss/branded-global.scss */
 #content-wrapper #page-title {
   border-radius: 3px 3px 0 0;
 }
-/* line 86, ../scss/branded-global.scss */
-#content-wrapper #content > .content {
-  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
-}
-/* line 89, ../scss/branded-global.scss */
+/* line 84, ../scss/branded-global.scss */
 #content-wrapper #content .region {
   border-radius: 0 0 3px 3px;
   box-shadow: none;
 }
+/* line 89, ../scss/branded-global.scss */
+#content-wrapper #region-content {
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+}
 
-/* line 96, ../scss/branded-global.scss */
+/* line 94, ../scss/branded-global.scss */
 #content {
   z-index: 10;
 }
 
-/* line 126, ../scss/branded-global.scss */
+/* line 98, ../scss/branded-global.scss */
 #footer-branding {
   margin-bottom: 20px;
 }
-/* line 128, ../scss/branded-global.scss */
+/* line 100, ../scss/branded-global.scss */
 #footer-branding .footer-wrapper .footer-field {
   color: #000;
 }
 
-/* line 134, ../scss/branded-global.scss */
+/* line 106, ../scss/branded-global.scss */
 #footer-contact .footer-info .footer-address {
   background: none;
   box-shadow: none;
   padding: 10px 10px 0 0;
 }
-/* line 139, ../scss/branded-global.scss */
+/* line 111, ../scss/branded-global.scss */
 #footer-contact .footer-title {
   border: none;
   padding-bottom: 7px;
 }
-/* line 143, ../scss/branded-global.scss */
+/* line 115, ../scss/branded-global.scss */
 #footer-contact .footer-title:before {
   background: url("../img/icons/icon-contactus.png") no-repeat scroll 13px 8px #d9cfc6;
   display: block;

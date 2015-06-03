@@ -62,6 +62,7 @@ body {
       border: none;
       > div {
         margin: 0 5px;
+        box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
       }
     }
   }
@@ -73,9 +74,6 @@ body {
   .region {
     box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
   }
-  #page-title {
-    box-shadow: 6px 0px 5px -6px rgba(0, 0, 0, 0.5), -6px 0px 5px -6px rgba(0, 0, 0, 0.5)
-  }
   aside .region {
     border-radius: 3px;
   }
@@ -83,45 +81,19 @@ body {
     border-radius: 3px 3px 0 0;
   }
   #content {
-    > .content {
-      box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
-    }
     .region {
       border-radius: 0 0 3px 3px;
       box-shadow: none;
     }
+  }
+  #region-content {
+    box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
   }
 }
 
 #content {
   z-index: 10;
 }
-
-//
-//#preface-group {
-//  &.total-prefaces-1,
-//  &.total-postscripts-1 {
-//    .menu-block-placement-doesnt-exist .block-inner > .content {
-//      padding: 10px 20px;
-//    }
-//  }
-//}
-//
-//#preface-group.total-prefaces-1 #region-preface-first {
-//  .region {
-//    background-color: transparent;
-//    box-shadow: none;
-//  }
-//}
-//
-//#preface-group {
-//  padding: 0 0 20px;
-//  box-shadow: none;
-//
-//  .mbp-defaults-row > div, .region {
-//    box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
-//  }
-//}
 
 #footer-branding {
   margin-bottom: 20px;
