@@ -23,12 +23,19 @@ function feature_basic_content_context_default_contexts() {
       ),
     ),
   );
+  $id = 8;
+  foreach(variable_get('mbp_defaults') as $field){
+    if($field == 'field_basic_slideshow_assignment'){
+      $field = field_info_field($field);
+      $id = $field['id'];
+    }
+  }
   $context->reactions = array(
     'block' => array(
       'blocks' => array(
-        'mbp_defaults-mbp-10' => array(
+        'mbp_defaults-mbp-' . $id => array(
           'module' => 'mbp_defaults',
-          'delta' => 'mbp-10',
+          'delta' => 'mbp-' . $id,
           'region' => 'header_second',
           'weight' => '-10',
         ),
@@ -42,7 +49,7 @@ function feature_basic_content_context_default_contexts() {
           'module' => 'menu_block',
           'delta' => '3',
           'region' => 'sidebar_second',
-          'weight' => '0',
+          'weight' => '-99',
         ),
       ),
     ),

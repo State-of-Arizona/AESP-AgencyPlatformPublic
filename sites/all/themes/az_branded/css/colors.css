@@ -14,7 +14,7 @@ body a:visited {
 
 /* line 16, ../scss/colors.scss */
 #content-wrapper aside .region,
-#content,
+#content > div,
 #footer-branding,
 #footer-contact,
 #postscript-group {
