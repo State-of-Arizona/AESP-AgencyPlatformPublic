@@ -109,7 +109,7 @@
       .field-slideshow-slide {
         width: 100% !important;
         max-height: 440px;
-        a, img {
+        > a, img {
           width: 100% !important;
         }
       }
