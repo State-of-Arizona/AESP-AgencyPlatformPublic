@@ -15,7 +15,7 @@ function az_gov_form_system_theme_settings_alter(&$form, &$form_state) {
   //Custom Background Image
   $form['background'] = array(
     '#type' => 'fieldset',
-    '#group' => 'general',
+    '#group' => 'global',
     '#title' => t('Custom Background'),
     '#description' => t('Uplaod the file you would like to use as your background file instead of the default background.'),
   );
@@ -33,7 +33,7 @@ function az_gov_form_system_theme_settings_alter(&$form, &$form_state) {
   $form['footer_settings'] = array(
     '#type' => 'fieldset',
     '#title' => 'Footer Settings',
-    '#group' => 'general',
+    '#group' => 'global',
   );
   //Toggle display of the branding block in the footer
   $form['footer_settings']['display_footer_branding'] = array(
