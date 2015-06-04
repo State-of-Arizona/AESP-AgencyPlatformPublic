@@ -130,6 +130,19 @@ html, body {
         }
       }
     }
+
+    &.horizontal-tabs-list {
+      margin: 0;
+      > li {
+        list-style-type: none;
+      }
+    }
+  }
+  ul.horizontal-tabs-list {
+    margin: 0;
+    > li {
+      list-style-type: none;
+    }
   }
   ul.chosen-results {
     margin: 0;
