@@ -126,6 +126,18 @@ html, body {
 #page .node ul ul ul li, #page .view .views-field ul ul ul li, #page .view .field-content ul ul ul li, #colorbox .node ul ul ul li, #colorbox .view .views-field ul ul ul li, #colorbox .view .field-content ul ul ul li {
   list-style-type: square;
 }
+#page .node ul.horizontal-tabs-list, #page .view .views-field ul.horizontal-tabs-list, #page .view .field-content ul.horizontal-tabs-list, #colorbox .node ul.horizontal-tabs-list, #colorbox .view .views-field ul.horizontal-tabs-list, #colorbox .view .field-content ul.horizontal-tabs-list {
+  margin: 0;
+}
+#page .node ul.horizontal-tabs-list > li, #page .view .views-field ul.horizontal-tabs-list > li, #page .view .field-content ul.horizontal-tabs-list > li, #colorbox .node ul.horizontal-tabs-list > li, #colorbox .view .views-field ul.horizontal-tabs-list > li, #colorbox .view .field-content ul.horizontal-tabs-list > li {
+  list-style-type: none;
+}
+#page ul.horizontal-tabs-list, #colorbox ul.horizontal-tabs-list {
+  margin: 0;
+}
+#page ul.horizontal-tabs-list > li, #colorbox ul.horizontal-tabs-list > li {
+  list-style-type: none;
+}
 #page ul.chosen-results, #colorbox ul.chosen-results {
   margin: 0;
 }
