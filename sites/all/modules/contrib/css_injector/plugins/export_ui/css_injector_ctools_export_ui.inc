@@ -54,11 +54,11 @@ function css_injector_ctools_export_ui_form(&$form, &$form_state) {
     '#default_value' => $rule->css,
     '#required' => TRUE,
   );
-  
-  
+
+
   // all drupal_add_css options should be settings
   // https://api.drupal.org/api/drupal/includes%21common.inc/function/drupal_add_css/7
-  
+
   // advanced options fieldset
   $form['advanced'] = array(
     '#type' => 'fieldset',
@@ -76,6 +76,21 @@ function css_injector_ctools_export_ui_form(&$form, &$form_state) {
       'screen' => t('Screen'),
     ),
     '#default_value' => $rule->media,
+  );
+  $themes = array();
+  foreach(list_themes() as $key=>$theme){
+    if($theme->status) {
+      $themes[$key] = $theme->info['name'];
+    }
+  }
+
+  $form['advanced']['rule_themes'] = array(
+    '#type' => 'select',
+    '#title' => 'Theme',
+    '#description' => t('Which themes is the CSS used.'),
+    '#options' => $themes,
+    '#multiple' => TRUE,
+    '#default_value' => unserialize($rule->rule_themes),
   );
   $form['advanced']['preprocess'] = array(
     '#type' => 'checkbox',
@@ -141,6 +156,15 @@ function css_injector_ctools_export_ui_form_validate($form, &$form_state) {
   if (preg_match('/[^A-Za-z0-9_\-\ ]+/', $form_state['values']['name'])) {
     form_set_error('name', t('Illegal characters found in the friendly name, please remove them.'));
   }
+
+  $existing = db_select('css_injector_rule','c')
+    ->fields('c')
+    ->condition('name', $form_state['values']['name'])
+    ->execute()
+    ->fetchAssoc();
+  if(!empty($existing)){
+    form_set_error('name', t('Injector already exists with that name'));
+  }
 }
 
 /**
@@ -148,4 +172,5 @@ function css_injector_ctools_export_ui_form_validate($form, &$form_state) {
  */
 function css_injector_ctools_export_ui_form_submit($form, &$form_state) {
   // not used
+  $form_state['values']['rule_themes'] = serialize($form_state['values']['rule_themes']);
 }
