@@ -42,59 +42,6 @@
       //adds a class to any email input form
       $('input.email').addClass('form-control');
 
-      //matches the heights of the preface rows or the preface regions.
-      var preface_match = function () {
-        var maxHeight = 0;
-        $('.total-prefaces-1 .mbp-defaults-row > div, .total-prefaces-2 .preface > div, .total-prefaces-3 .preface > div').each(function () {
-          $(this).height('auto');
-          maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
-        });
-        if ($(window).width() >= 600) {
-          $('.total-prefaces-1 .mbp-defaults-row > div, .total-prefaces-2 .preface > div, .total-prefaces-3 .preface > div').each(function () {
-            $(this).height(maxHeight);
-          });
-        }
-
-        maxHeight = 0;
-        $('#preface-group h2.node-title, #preface-group h2.block-title').each(function () {
-          $(this).height('auto');
-          maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
-        });
-        if ($(window).width() >= 600) {
-          $('#preface-group h2.node-title, #preface-group h2.block-title').each(function () {
-            $(this).height(maxHeight);
-          })
-        }
-
-        //postscripts
-        maxHeight = 0;
-        $('.total-postscripts-1 .mbp-defaults-row > div, .total-postscripts-2 .postscript > div, .total-postscripts-3 .postscript > div, .total-postscripts-4 .postscript > div').each(function () {
-          $(this).height('auto');
-          maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
-        });
-        if ($(window).width() >= 600) {
-          $('.total-postscripts-1 .mbp-defaults-row > div, .total-postscripts-2 .postscript > div, .total-postscripts-3 .postscript > div, .total-postscripts-4 .postscript > div').each(function () {
-            $(this).height(maxHeight);
-          });
-        }
-
-        maxHeight = 0;
-        $('#postscript-group h2.node-title, #postscript-group h2.block-title').each(function () {
-          $(this).height('auto');
-          maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
-        });
-        if ($(window).width() >= 600) {
-          $('#postscript-group h2.node-title, #postscript-group h2.block-title').each(function () {
-            $(this).height(maxHeight);
-          })
-        }
-      };
-      //invokes the preface match function above
-      preface_match();
-      $(window).resize(function () {
-        preface_match();
-      });
-
 
       //expandable page node
       $('.node-expandable-page .field-name-field-expandable-page-text').once(function () {
@@ -104,16 +51,6 @@
         });
       });
 
-      //adjusts the padding on the content zone since the footer is an absolute position
-      //this helps with a dynamic footer height so that the footer can remain at the bottom even on short pages
-      $('#zone-content').css('padding-bottom', $('#zone-footer').height() + 20);
-      $(window).resize(function () {
-        $('#zone-content').css('padding-bottom', $('#zone-footer').height() + 20);
-      });
-
-      $(window).resize(function () {
-        $('#block-system-main-menu .glyphicon-minus-sign').click();
-      });
 
       //moves the sliver within the page tag for container height fixes
       var sliver = $('.sliver-container');
@@ -177,7 +114,7 @@
 
       //glyphicons and click event for right sidebar menu block
       $('.menu-block-wrapper ul.menu li.expanded').once(function () {
-        if($(this).hasClass('active-trail')){
+        if ($(this).hasClass('active-trail')) {
           $(this).prepend('<span class="glyphicon glyphicon-chevron-down"/>');
         } else {
           $(this).find('ul').hide();
@@ -201,42 +138,62 @@
         });
       });
 
-      //glyphicon for home icon
-      $('.region-menu .menu-li-home a').css('background', 'none').html('<span class="glyphicon glyphicon-home"/>Home');
+      $('#mobile-menu').once(function () {
+        if ($(window).width() > 768) {
+          $('.region-menu').show();
+        } else {
+          $('.region-menu').hide();
+        }
+        $(this).click(function () {
+          $('.region-menu').slideToggle('slow');
+        });
+      });
 
       //if child menu items are too far to the right in the window, moves them to the left
-      $('#zone-branding .region-menu li > ul').each(function () {
-        $(this).css('z-index', '10');
-        var left = $(this).offset().left;
-        var width = $(this).width();
-        var windowwidth = $(window).width();
-        if (left > windowwidth || left + width > windowwidth) {
-          $(this).css('left', '-99%').css('z-index', $(this).closest('ul').css('z-index') + 1);
-          $(this).find('ul').css('left', '-99%');
-        }
-      });
-
-      //if the menus are too wide, it applies different css to keep them on the same line
-      var menuadjust = function () {
-        $('.region-menu .content > ul.menu').each(function () {
-          $(this).css('display', '');
-          $(this).children('li').css('display', '').css('float', '');
-          var width = 20;
-          $(this).children('li').each(function () {
-            width += $(this).outerWidth(true);
-          });
-          if (($(window).width() < width || width > 960) && $(window).width() > 600) {
-            $(this).css('display', 'table');
-            $(this).children('li').css('display', 'table-cell').css('float', 'none');
+      var resized = function () {
+        $('#zone-branding .region-menu li > ul').each(function(){
+          $(this).css('left', '').css('z-index', '');
+        });
+        $('#zone-branding .region-menu li > ul').each(function () {
+          $(this).css('z-index', '10');
+          var left = $(this).offset().left;
+          var width = $(this).width();
+          var windowwidth = $(window).width();
+          if (left > windowwidth || left + width > windowwidth) {
+            if ($(this).parent().parent().parent('div').length) {
+              $(this).css('left', '-180px').css('z-index', $(this).closest('ul').css('z-index') + 1);
+              $(this).find('ul').css('left', '-101%');
+            } else {
+              $(this).css('left', '-101%').css('z-index', $(this).closest('ul').css('z-index') + 1);
+              $(this).find('ul').css('left', '-101%');
+            }
           }
-        })
-      };
-      menuadjust();
+        });
+
+        if ($(window).width() > 768) {
+          $('.region-menu').show();
+        } else {
+          $('.region-menu').hide();
+        }
+
+        if ($(window).width() >= 768) {
+          $('.region-menu ul.menu .glyphicon-minus-sign').each(function () {
+            $(this).removeClass('glyphicon-minus-sign');
+            $(this).addClass('glyphicon-plus-sign');
+          });
+
+          $('.region-menu ul.menu').css('display', '');
+        }
+
+        //adjusts the padding on the content zone since the footer is an absolute position
+        //this helps with a dynamic footer height so that the footer can remain at the bottom even on short pages
+        $('#zone-content').css('padding-bottom', $('#zone-footer').height() + 20);
+      }
+
+      resized();
       $(window).resize(function () {
-        menuadjust();
+        resized();
       });
-
-
     }
   }
 })(jQuery);

@@ -1,6 +1,6 @@
 <div id="zone-branding" class="zone">
   <div class="silhouette">
-    <div id="region-branding" class="clearfix <?php echo $region_wrapper; ?>">
+    <div id="region-branding" class="clearfix">
       <?php if ($logo || $site_name || $site_slogan): ?>
         <div class="site-details clearfix">
           <?php if ($logo): ?>
@@ -14,9 +14,11 @@
             <div class="site-info">
               <?php if ($site_name): ?>
                 <div class="site-name">
-                  <a href="/">
-                    <h1><?php echo $site_name; ?></h1>
-                  </a>
+                  <h1>
+                    <a href="/">
+                      <?php echo $site_name; ?>
+                    </a>
+                  </h1>
                 </div>
               <?php endif; ?>
               <?php if ($site_slogan): ?>
@@ -32,7 +34,8 @@
         <?php print render($page['branding']); ?>
       <?php endif; ?>
     </div>
-
+    <div id="mobile-menu">
+    </div>
     <?php if ($page['menu']) : ?>
       <?php print render($page['menu']); ?>
     <?php endif; ?>
