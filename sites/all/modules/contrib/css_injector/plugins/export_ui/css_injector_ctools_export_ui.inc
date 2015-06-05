@@ -156,6 +156,15 @@ function css_injector_ctools_export_ui_form_validate($form, &$form_state) {
   if (preg_match('/[^A-Za-z0-9_\-\ ]+/', $form_state['values']['name'])) {
     form_set_error('name', t('Illegal characters found in the friendly name, please remove them.'));
   }
+
+  $existing = db_select('css_injector_rule','c')
+    ->fields('c')
+    ->condition('name', $form_state['values']['name'])
+    ->execute()
+    ->fetchAssoc();
+  if(!empty($existing)){
+    form_set_error('name', t('Injector already exists with that name'));
+  }
 }
 
 /**
