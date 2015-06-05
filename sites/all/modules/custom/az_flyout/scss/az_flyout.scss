@@ -101,8 +101,10 @@
   }
 
   ul.menu {
+    margin-top: 5px;
     li {
       font-size: 18px;
+      margin-bottom: 5px;
       .fa {
         position: absolute;
         z-index: 120;
@@ -128,7 +130,7 @@
   }
 }
 
-@media(max-width: 600px) {
+@media(max-width: 768px) {
   #top-nav {
     display: block !important;
     position: relative;
@@ -149,5 +151,8 @@
 
   .region-menu.hide-mobile {
     display: none !important;
+  }
+  #mobile-menu {
+    display: none;
   }
 }

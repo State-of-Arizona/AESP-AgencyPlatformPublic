@@ -1,15 +1,25 @@
-/* line 1, ../scss/comm-global.scss */
+#content-wrapper #content > .content, #content h1#page-title, #zone-branding, #postscript-group {
+  box-shadow: none;
+}
+
 #page {
   font-family: "Oswald", sans-serif;
 }
-/* line 4, ../scss/comm-global.scss */
+#page #content,
+#page #preface-group .mbp-defaults-row > div,
+#page #postscript-group .region.menu-block-placement-doesnt-exist,
+#page #postscript-group .mbp-defaults-row {
+  box-shadow: 0px 6px 7px -1px rgba(0, 0, 0, 0.5);
+}
+#page #postscript-group .postscript:only-child .region {
+  padding: 0;
+}
 #page h1#page-title {
   line-height: 130%;
   padding: 17px 0px 15px;
   margin: 0px;
   text-align: center;
 }
-/* line 11, ../scss/comm-global.scss */
 #page h2 {
   border-bottom: 4px solid #dcd2c3;
   padding: 00 5px;
@@ -17,25 +27,21 @@
   margin-bottom: 10px;
   text-align: center;
 }
-/* line 17, ../scss/comm-global.scss */
 #page h2.block-title {
   font-size: 24px;
   margin-bottom: 0px;
   padding: 15px 0px 0px;
   border-bottom: none;
 }
-/* line 24, ../scss/comm-global.scss */
 #page h3 {
   padding: 0px 0px 5px;
   text-transform: uppercase;
   margin-bottom: 10px;
 }
-/* line 29, ../scss/comm-global.scss */
 #page .region-menu .content > ul.menu > li > a {
   text-shadow: 1px 1px 0px #fff, -1px 1px 0px #fff, 1px -1px 0px #fff, -1px -1px 0px #fff;
   letter-spacing: 2px;
 }
-/* line 33, ../scss/comm-global.scss */
 #page .views-more-link {
   display: inline-block;
   width: auto;
@@ -46,48 +52,38 @@
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
   font-weight: normal;
 }
-/* line 44, ../scss/comm-global.scss */
 #page .region-menu ul.menu a {
   font-family: "Oswald", sans-serif;
 }
 
-/* line 50, ../scss/comm-global.scss */
 #zone-footer .region {
   text-align: center;
   padding: 5px 0;
 }
-/* line 53, ../scss/comm-global.scss */
 #zone-footer .region > div.block {
   display: inline-block;
 }
-/* line 57, ../scss/comm-global.scss */
 #zone-footer ul.menu {
   padding: 5px;
 }
-/* line 59, ../scss/comm-global.scss */
 #zone-footer ul.menu li {
   display: inline-block;
 }
-/* line 61, ../scss/comm-global.scss */
 #zone-footer ul.menu li a {
   border-right: 1px solid #fff;
   padding: 0 15px;
 }
-/* line 64, ../scss/comm-global.scss */
 #zone-footer ul.menu li a:hover {
   color: #ffd046;
 }
-/* line 68, ../scss/comm-global.scss */
 #zone-footer ul.menu li:last-child a {
   border-right: none;
 }
 
-/* line 75, ../scss/comm-global.scss */
 #page ul.menu a:hover {
   background: transparent;
 }
 
-/* line 79, ../scss/comm-global.scss */
 .read-more a {
   background: url("../img/bullet-arrow.png") no-repeat scroll 95% center transparent;
   padding: 7px 45px 7px 20px;
@@ -97,7 +93,6 @@
   font-weight: normal;
 }
 
-/* line 89, ../scss/comm-global.scss */
 .follow-links a {
   font-family: FontAwesome;
   background: none;
@@ -107,113 +102,91 @@
   font-size: 0px;
   text-decoration: none;
 }
-/* line 97, ../scss/comm-global.scss */
 .follow-links a:before {
   font-size: 30px;
   visibility: visible;
 }
-/* line 101, ../scss/comm-global.scss */
 .follow-links a.follow-link-facebook:before {
   content: "\f082";
   color: #3c5b9a;
 }
-/* line 105, ../scss/comm-global.scss */
 .follow-links a.follow-link-twitter:before {
   content: "\f081";
   color: #2ba8e0;
 }
-/* line 109, ../scss/comm-global.scss */
 .follow-links a.follow-link-youtube:before {
   content: "\f166";
   color: #bf2026;
 }
-/* line 113, ../scss/comm-global.scss */
 .follow-links a.follow-link-flickr:before {
   content: "\f16e";
   color: #3566b1;
 }
-/* line 117, ../scss/comm-global.scss */
 .follow-links a.follow-link-newsletter:before {
   content: "\f199";
   color: #1aa79c;
 }
-/* line 121, ../scss/comm-global.scss */
 .follow-links a.follow-link-instagram:before {
   content: "\f16d";
   color: #3e749d;
 }
-/* line 125, ../scss/comm-global.scss */
 .follow-links a.follow-link-googleplus:before {
   content: "\f0d4";
   color: #cd2027;
 }
-/* line 129, ../scss/comm-global.scss */
 .follow-links a.follow-link-vimeo:before {
   content: "\f194";
   color: #66b7e7;
 }
-/* line 133, ../scss/comm-global.scss */
 .follow-links a.follow-link-lastfm:before {
   content: "\f203";
   color: #dc1f26;
 }
-/* line 137, ../scss/comm-global.scss */
 .follow-links a.follow-link-linkedin:before {
   content: "\f08c";
   color: #1473a6;
 }
-/* line 141, ../scss/comm-global.scss */
 .follow-links a.follow-link-delicious:before {
   content: "\f1a5";
   color: #3f71b7;
 }
-/* line 145, ../scss/comm-global.scss */
 .follow-links a.follow-link-tumblr:before {
   content: "\f174";
   color: #2c4862;
 }
-/* line 149, ../scss/comm-global.scss */
 .follow-links a.follow-link-xing:before {
   content: "\f169";
   color: #0c6668;
 }
-/* line 153, ../scss/comm-global.scss */
 .follow-links a.follow-link-this-site:before {
   content: "\f143";
   color: #f38e35;
 }
-/* line 158, ../scss/comm-global.scss */
 .follow-links a.follow-link-myspace {
   visibility: visible;
   font-size: 14px;
 }
-/* line 162, ../scss/comm-global.scss */
 .follow-links a.follow-link-virb {
   visibility: visible;
   font-size: 14px;
 }
-/* line 166, ../scss/comm-global.scss */
 .follow-links a.follow-link-picasa {
   visibility: visible;
   font-size: 14px;
 }
-/* line 170, ../scss/comm-global.scss */
 .follow-links a.follow-link-bliptv {
   visibility: visible;
   font-size: 14px;
 }
-/* line 174, ../scss/comm-global.scss */
 .follow-links a.follow-link-viadeo {
   visibility: visible;
   font-size: 14px;
 }
-/* line 178, ../scss/comm-global.scss */
 .follow-links a.follow-link-spiceworks {
   visibility: visible;
   font-size: 14px;
 }
 
-/* line 185, ../scss/comm-global.scss */
 .view-commercial-slider .flexslider {
   border: none;
 }

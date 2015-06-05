@@ -157,7 +157,6 @@ function az_flyout_admin_submit($form, &$form_state) {
     $file->status = FILE_STATUS_PERMANENT;
     file_save($file);
     file_usage_add($file, 'theme', 'az_commercial', 1);
-    dpm($file);
     file_move($file, 'public://az_flyout/' . $file->filename);
   }
   if ($form_state['values']['contact_map_image'] && !$form_state['input']['contact_map_image']['fid']) {

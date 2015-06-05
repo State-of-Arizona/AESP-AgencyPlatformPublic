@@ -130,12 +130,19 @@ function _media_displays_filter($text) {
     $token = str_replace(']]', '', $token);
     $json = json_decode($token, TRUE);
 
-    if (isset($json['direct_download']) && $json['direct_download']) {
+    if ((isset($json['direct_download']) && $json['direct_download'])) {
       $file = file_load($json['fid']);
       $url = file_create_url($file->uri);
       $options = array('attributes' => isset($json['attributes']) ? $json['attributes'] : array());
       $options['attributes']['title'] = $json['fields']['title'];
       $text = str_replace($match, l($json['fields']['link_text'], $url, $options), $text);
+    }
+    elseif ($json['view_mode'] == 'default' && isset($json['fields']['field_alt_text[und][0][value]'])) {
+      $file = file_load($json['fid']);
+      $url = file_create_url($file->uri);
+      $options = array('attributes' => isset($json['attributes']) ? $json['attributes'] : array());
+      $options['attributes']['title'] = $json['fields']['field_alt_text[und][0][value]'];
+      $text = str_replace($match, l($json['fields']['field_alt_text[und][0][value]'], $url, $options), $text);
     }
     else {
       $offset = strpos($text, $match[0], $offset) + strlen($match[0]);
