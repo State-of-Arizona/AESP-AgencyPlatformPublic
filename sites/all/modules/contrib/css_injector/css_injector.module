@@ -139,6 +139,11 @@ function css_injector_init() {
     if (!isset($rule->crid) ) {
       continue;
     }
+    global $theme;
+    $themes = unserialize($rule->rule_themes);
+    if(!empty($themes) && !in_array($theme, $themes)){
+      continue;
+    }
  
     // check if the rule is disabled in the ctools UI, if so skip it
     if (isset($rule->disabled) && $rule->disabled == TRUE) {
