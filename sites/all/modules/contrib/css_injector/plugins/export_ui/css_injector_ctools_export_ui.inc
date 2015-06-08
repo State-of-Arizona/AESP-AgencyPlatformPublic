@@ -162,7 +162,7 @@ function css_injector_ctools_export_ui_form_validate($form, &$form_state) {
     ->condition('name', $form_state['values']['name'])
     ->execute()
     ->fetchAssoc();
-  if(!empty($existing)){
+  if(!empty($existing) && $form_state['item']->crid != $existing['crid']){
     form_set_error('name', t('Injector already exists with that name'));
   }
 }
