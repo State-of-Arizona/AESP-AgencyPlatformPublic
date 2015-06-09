@@ -244,3 +244,24 @@ function agency_platform_distribution_update_7036() {
     }
   }
 }
+
+/**
+ * Moves data in css injector table to proper columns for 2.x module
+ */
+function agency_platform_distribution_update_7037() {
+  if (
+    module_exists('css_injector') &&
+    db_table_exists('css_injector_rule') &&
+    db_field_exists('css_injector_rule', 'page_visibility') &&
+    db_field_exists('css_injector_rule', 'rule_type') &&
+    db_field_exists('css_injector_rule', 'page_visibility_pages') &&
+    db_field_exists('css_injector_rule', 'rule_conditions')
+  ) {
+    db_query('update css_injector_rule set page_visibility = rule_type where rule_conditions is not null and page_visibility_pages is null');
+    db_query('update css_injector_rule set page_visibility_pages = rule_conditions where rule_conditions is not null and page_visibility_pages is null');
+    db_query('update css_injector_rule set admin_description = name where admin_description is null');
+    db_query('update_css_injector_rule set preprocess = "0"');
+    db_drop_field('css_injector_rule', 'rule_type');
+    db_drop_field('css_injector_rule', 'rule_conditions');
+  }
+}
