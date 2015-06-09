@@ -282,6 +282,9 @@ function css_injector_update_7205(&$sandbox) {
   }
 }
 
+/**
+ * Moves legacy page data to new fields
+ */
 function css_injector_update_7206(&$sandbox) {
   if (
     db_field_exists('css_injector_rule', 'page_visibility') &&
@@ -289,9 +292,26 @@ function css_injector_update_7206(&$sandbox) {
     db_field_exists('css_injector_rule', 'page_visibility_pages') &&
     db_field_exists('css_injector_rule', 'rule_conditions')
   ) {
-    db_query('update css_injector_rule set page_visibility = rule_type where rule_conditions is not null and page_visibility_pages is null');
-    db_query('update css_injector_rule set page_visibility_pages = rule_conditions where rule_conditions is not null and page_visibility_pages is null');
-    db_query('update css_injector_rule set admin_description = name where admin_description is null');
+    $query = db_select('css_injector_rule', 'c')
+      ->fields('c')
+      ->execute();
+    while ($row = $query->fetchAssoc()) {
+      if (is_null($row['page_visibility_pages']) && $row['rule_conditions']) {
+        db_update('css_injector_rule')
+          ->condition('crid', $row['crid'])
+          ->fields(array(
+            'page_visibility' => $row['rule_type'],
+            'page_visibility_pages' => $row['rule_conditions'],
+          ))
+          ->execute();
+      }
+      if(is_null($row['admin_description'])){
+        db_update('css_injector_rule')
+          ->condition('crid', $row['crid'])
+          ->fields(array('admin_description' => $row['name']))
+          ->execute();
+      }
+    }
     db_drop_field('css_injector_rule', 'rule_type');
     db_drop_field('css_injector_rule', 'rule_conditions');
   }
