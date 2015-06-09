@@ -246,9 +246,15 @@ function agency_platform_distribution_update_7036() {
 }
 
 /**
- * Moves data in css injector table to proper columns for 2.x module
+ * Moved to update 7038
  */
 function agency_platform_distribution_update_7037() {
+}
+
+/**
+ * Moves data in css injector table to proper columns for 2.x module
+ */
+function agency_platform_distribution_update_7038() {
   if (
     module_exists('css_injector') &&
     db_table_exists('css_injector_rule') &&
