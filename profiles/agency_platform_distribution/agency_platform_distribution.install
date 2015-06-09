@@ -256,6 +256,7 @@ function agency_platform_distribution_update_7037() {
   ) {
     db_query('update css_injector_rule set page_visibility = rule_type where rule_conditions is not null and page_visibility_pages is null');
     db_query('update css_injector_rule set page_visibility_pages = rule_conditions where rule_conditions is not null and page_visibility_pages is null');
+    db_query('update css_injector_rule set admin_description = name where admin_description is null');
     db_drop_field('css_injector_rule', 'rule_type');
     db_drop_field('css_injector_rule', 'rule_conditions');
   }
