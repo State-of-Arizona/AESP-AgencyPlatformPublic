@@ -151,7 +151,7 @@
 
       //if child menu items are too far to the right in the window, moves them to the left
       var resized = function () {
-        $('#zone-branding .region-menu li > ul').each(function(){
+        $('#zone-branding .region-menu li > ul').each(function () {
           $(this).css('left', '').css('z-index', '');
         });
         $('#zone-branding .region-menu li > ul').each(function () {
@@ -194,7 +194,14 @@
       $(window).resize(function () {
         resized();
       });
+
+      $('.views-fieldset.collapsible').once(function () {
+        $(this).find('legend').css('cursor', 'pointer');
+        var set = $(this);
+        $(this).find('legend').click(function () {
+          set.find('.fieldset-wrapper').slideToggle('slow');
+        })
+      });
     }
   }
 })(jQuery);
-
