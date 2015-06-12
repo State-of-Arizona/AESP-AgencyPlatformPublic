@@ -22,7 +22,7 @@
         });
       });
 
-      $(document).ready(function () {
+      $(window).load(function () {
         //Fix basic slideshow heights
         var slideshow_heights = function () {
           if ($('.node-basic-slideshow .field-slideshow-slide').length > 1) {
