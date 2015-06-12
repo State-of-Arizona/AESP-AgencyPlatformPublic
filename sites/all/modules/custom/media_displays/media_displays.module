@@ -132,21 +132,21 @@ function _media_displays_filter($text) {
     $not_this_display = TRUE;
 
     if (isset($json['view_mode'])) {
-      $displays = file_displays_load('document', $json['view_mode'], TRUE);
+      $file = file_load($json['fid']);
+      $displays = file_displays_load($file->type, $json['view_mode'], TRUE);
       if (isset($displays['file_field_direct_download_alt']) && $displays['file_field_direct_download_alt']->status) {
-        $file = file_load($json['fid']);
-        $url = file_create_url($file->uri);
-        $options = array(
-          'attributes' => array_merge(array(
-            'title' => isset($json['fields']['field_document_title[und][0][value]']) ? $json['fields']['field_document_title[und][0][value]'] : '',
-          ), $json['attributes']),
-        );
+          $url = file_create_url($file->uri);
+          $options = array(
+            'attributes' => array_merge(array(
+              'title' => isset($json['fields']['field_document_title[und][0][value]']) ? $json['fields']['field_document_title[und][0][value]'] : '',
+            ), $json['attributes']),
+          );
 
-        $link_text = isset($json['link_text']) ? $json['link_text'] : $json['fields']['field_alt_text[und][0][value]'];
+          $link_text = isset($json['link_text']) ? $json['link_text'] : $json['fields']['field_alt_text[und][0][value]'];
 
-        $text = str_replace($match, l(html_entity_decode($link_text), $url, $options), $text);
-        $not_this_display = FALSE;
-      }
+          $text = str_replace($match, l(html_entity_decode($link_text), $url, $options), $text);
+          $not_this_display = FALSE;
+        }
     }
 
     if ($not_this_display) {
