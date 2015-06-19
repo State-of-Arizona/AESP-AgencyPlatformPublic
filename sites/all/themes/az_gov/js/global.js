@@ -1,6 +1,7 @@
 (function ($) {
   Drupal.behaviors.azgov = {
     attach: function (context, settings) {
+      // Surrounds image with link if one exists
       $('.media .file-image > a').once(function () {
         if ($(this).attr('href') != "") {
           $(this).parent().wrap('<a>');
@@ -15,6 +16,10 @@
 
       $('.quicktabs-tabpage').addClass('clearfix');
 
+      //adds a class to any email input form
+      $('input.email').addClass('form-control');
+
+      //Moves image attributes to the container
       $('.media').once(function () {
         var self = this;
         $(this).find('.file-image img').once(function () {
@@ -38,10 +43,6 @@
           slideshow_heights();
         });
       });
-
-      //adds a class to any email input form
-      $('input.email').addClass('form-control');
-
 
       //expandable page node
       $('.node-expandable-page .field-name-field-expandable-page-text').once(function () {
@@ -188,7 +189,7 @@
         //adjusts the padding on the content zone since the footer is an absolute position
         //this helps with a dynamic footer height so that the footer can remain at the bottom even on short pages
         $('#zone-content').css('padding-bottom', $('#zone-footer').height() + 20);
-      }
+      };
 
       resized();
       $(window).resize(function () {
@@ -199,6 +200,12 @@
         $(this).find('legend').css('cursor', 'pointer');
         var set = $(this);
         $(this).find('legend').click(function () {
+          if ($(this).hasClass('open-fieldset')) {
+            $(this).removeClass('open-fieldset');
+          }
+          else {
+            $(this).addClass('open-fieldset');
+          }
           set.find('.fieldset-wrapper').slideToggle('slow');
         })
       });
