@@ -8,7 +8,7 @@ function rubik_preprocess_html(&$vars) {
   }
 
    // add in a specific stylesheet for overrides in IE7. (BLAH)
-  drupal_add_css(drupal_get_path('theme', 'rubik') . '/ie.css', array(
+  drupal_add_css(drupal_get_path('theme', 'rubik') . '/css/ie.css', array(
     'browsers' => array(
       '!IE' => FALSE,
     ),
@@ -25,10 +25,10 @@ function rubik_preprocess_html(&$vars) {
  */
 function rubik_css_alter(&$css) {
   if (isset($css['modules/overlay/overlay-child.css'])) {
-    $css['modules/overlay/overlay-child.css']['data'] = drupal_get_path('theme', 'rubik') . '/overlay-child.css';
+    $css['modules/overlay/overlay-child.css']['data'] = drupal_get_path('theme', 'rubik') . '/css/overlay-child.css';
   }
   if (isset($css['modules/shortcut/shortcut.css'])) {
-    $css['modules/shortcut/shortcut.css']['data'] = drupal_get_path('theme', 'rubik') . '/shortcut.css';
+    $css['modules/shortcut/shortcut.css']['data'] = drupal_get_path('theme', 'rubik') . '/css/shortcut.css';
   }
 }
 
@@ -499,7 +499,8 @@ function rubik_admin_drilldown_menu_item_link($link) {
  */
 function rubik_preprocess_textfield(&$vars) {
   if ($vars['element']['#size'] >= 30 && empty($vars['element']['#field_prefix']) && empty($vars['element']['#field_suffix'])) {
-    $vars['element']['#size'] = '';
+    // Set text field to default size.
+    $vars['element']['#size'] = 20;
     if (!isset($vars['element']['#attributes']['class'])
       || !is_array($vars['element']['#attributes']['class'])) {
        $vars['element']['#attributes']['class'] = array();
