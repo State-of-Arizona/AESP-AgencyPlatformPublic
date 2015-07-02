@@ -17,7 +17,7 @@ function template_preprocess_google_cse_results(&$variables) {
 
   if (google_cse_validate_request()) {
     drupal_add_js($variables['path'] . '/google_cse_results.js', array('scope' => 'footer'));
-    drupal_add_js('https://www.google.com/afsonline/show_afs_search.js', array('type' => 'external', 'scope' => 'footer'));
+    drupal_add_js($variables['path'] . '/show_afs_search.js', array('scope' => 'footer'));
   }
 }
 
